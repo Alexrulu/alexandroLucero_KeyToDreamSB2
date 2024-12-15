@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "montserrat";
+}
+
+body{
+  margin: 0 30%;
+}
+
+h2{
+  margin: 10px 0;
+}
+.back-box{
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+.back-box>p{
+  font-weight: bold;
+  transform: translateY(-1px);
+}
+main>p:nth-child(3){
+  margin: 20px 0 10px 0;
+  font-weight: bold;
+}
+main>p:nth-child(4){
+  margin: 20px 0 10px 0;
+  font-weight: bold;
+
+}
+.user-box{
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  border-bottom: 2px solid black;
+  justify-content: space-between;
+}
+.user-box>p{
+  color: gray;
+}
+main>p:nth-child(6){
+  border-bottom: 2px solid black;
+  margin: 30px 0;
+  color: gray;
+}
+.password-box{
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+  border-bottom: 2px solid black;
+  margin: 30px 0;
+}
+main>p:nth-child(8){
+  margin: 10px 0;
+  font-weight: bold;
+
+}
+.name-social-box{
+  display: flex;
+  gap: 30px;
+  margin: 10px 0;
+}
+.name-social-box>p:first-child{
+  width: 50%;
+  border-bottom: 2px solid black;
+  color: gray;
+}
+.name-social-box>p:nth-child(2){
+  width: 50%;
+  border-bottom: 2px solid black;
+  color: gray;
+}
+main>p:nth-child(10){
+  margin: 20px 0 10px 0;
+  font-weight: bold;
+}
+.condition-dni-box{
+  display: flex;
+  gap: 30px;
+  margin: 10px 0;
+}
+.condition-box{
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  border-bottom: 2px solid black;
+}
+.condition-box>p{
+  color: gray;
+}
+.condition-dni-box>p:nth-child(2){
+  width: 50%;
+  border-bottom: 2px solid black;
+  color: gray;
+}
+.phone-box{
+  display: flex;
+  gap: 30px;
+  margin: 30px 0;
+}
+.phone-box>p:first-child{
+  width: 50%;
+  color: gray;
+  border-bottom: 2px solid black;
+}
+.phone-box>p:nth-child(2){
+  width: 50%;
+  color: gray;
+  border-bottom: solid 2px black;
+}
+.termins-box{
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.politic-box{
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.register-button-box{
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+.register-button-box>p{
+  background-color: black;
+  color: white;
+  padding: 10px 50px;
+}
+
+/* Login page */
+
+.login-box>h2{
+  margin-top: 15px;
+}
+.login-box>p:nth-child(4){
+  margin: 40px 0 10px ;
+}
+.login-box>p:nth-child(5){
+  color: gray;
+  border-bottom: 2px solid black;
+}
+.login-box>p:nth-child(6){
+  border-bottom: none;
+  color: black;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+}
+.login-box>p:nth-child(7){
+  color: gray;
+  border-bottom: 2px solid black;
+  margin: 10px 0
+}
+.login-button-box{
+  margin: 30px 0 50px 0;
+  display: flex;
+  justify-content: center;
+}
+.login-button-box>p{
+  background-color: black;
+  color: white;
+  padding: 10px 50px;
+}
+.login-box>p:nth-child(9){
+  text-align: center;
+  font-weight: bold;
+}
+.login-shortcuts-box{
+  display: flex;
+  justify-content: center;
+  font-size:xx-large;
+  gap: 10%;
+  margin: 30px 0;
+}
+.login-box>p:nth-child(11){
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0;
+}
+.login-register-here-box{
+  display: flex;
+  justify-content: center;
+}
+.login-register-here-box>p{
+  border-bottom: 2px solid black;
+  width: 150px;
+  text-align: center;
+  font-weight: bold;
+}
