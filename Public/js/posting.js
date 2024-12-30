@@ -21,7 +21,7 @@ postingButton.addEventListener('click', () => {
 
       // Redirigir a index.html
       setTimeout(() => {
-        window.location.href = 'index.html';
+        window.location.href = '/';
       }, 2000); // Esperar un poco para redirigir
     }
   },);

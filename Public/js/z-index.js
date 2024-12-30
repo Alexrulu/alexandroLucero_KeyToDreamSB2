@@ -40,9 +40,9 @@ zIndex10click.forEach((img) => {
 const imgR = document.getElementById('carruselRecomendado');
 
 const imagesRecomendado = [
-  '../Public/recomendado.png',
-  '../Public/emprendimiento.png',
-  '../Public/usaelmapa.jpg'
+  '/images/recomendado.png',
+  '/images/emprendimiento.png',
+  '/images/usaelmapa.jpg'
 ];
 let currentIndexRecomendado = 0;
 
@@ -73,9 +73,9 @@ imgR.addEventListener('click', (event) => {
 const imgE = document.getElementById('carruselEmprendimiento');
 
 const imagesEmprendimiento = [
-  '../Public/emprendimiento.png',
-  '../Public/recomendado.png',
-  '../Public/usaelmapa.jpg'
+  '/images/emprendimiento.png',
+  '/images/recomendado.png',
+  '/images/usaelmapa.jpg'
 ];
 let currentIndexEmprendimiento = 0;
 
