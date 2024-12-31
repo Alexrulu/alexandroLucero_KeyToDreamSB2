@@ -193,13 +193,26 @@ logoutButton.addEventListener('click', () => {
 
     if (progress >= 100) {
       clearInterval(interval);
-      // Recargar la página
+
+      // Esperar que la animación termine antes de redirigir y hacer logout
       setTimeout(() => {
-        location.reload();
-      }, 1500); // Esperar un poco para recargar
+        // Aquí hacemos la redirección a la ruta de logout
+        window.location.href = '/logout'; 
+
+        // Después de 1.5 segundos de la redirección, la página se recargará automáticamente
+        setTimeout(() => {
+          location.reload(); // Recargar la página después de logout
+        }, 100); // Tiempo de espera pequeño para que la redirección ocurra antes de la recarga
+      }, 1500); // Esperamos 1.5 segundos antes de redirigir al logout
     }
-  },);
+  }, 30); // Intervalo de animación
 });
+
+
+
+
+
+
 
 //----------(click unico - MENU BURGER (bars))
 const barsButton = document.querySelector('.left-header>.fa-bars');

@@ -64,7 +64,7 @@ imgR.addEventListener('click', (event) => {
     imgR.src = imagesRecomendado[currentIndexRecomendado];
   } else {
     //al hacer click en el centro de la imagen
-    window.location.href = 'articulo.html'
+    window.location.href = '/articulo'
   }
 });
 
