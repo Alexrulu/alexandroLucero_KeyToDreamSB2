@@ -442,11 +442,13 @@ h3{
 }
 .micuenta-click>div:nth-child(3)>input{
   border: none;
-  border-bottom: 2px solid black;
   color: black;
   width: 130px;
   outline: none;
   font-size: medium;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .micuenta-click>p:nth-child(5){
   text-wrap: wrap;
@@ -471,7 +473,6 @@ h3{
 .micuenta-click>div:nth-child(7)>div>input{
   color: black;
   border: none;
-  border-bottom: black solid 2px;
   width: 130px;
   outline: none;
   font-size: medium;

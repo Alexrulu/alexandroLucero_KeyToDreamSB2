@@ -1,7 +1,5 @@
 const propiedades_type = { VENTA: 1, ALQUILER: 2, TEMPORADA: 3 };
 const propiedades_model = { CASA: 1, DEPARTAMENTO: 2, PH: 3, CONDOMINIO: 4 };
-
-
 let propiedades = [
   {
     id: 1,
@@ -112,74 +110,25 @@ let propiedades = [
     description: 'Hermosa casa tecnológica totalmente automatizada con sistema ALEXA. Todos los sistemas eléctricos y electrónicos se pueden activar por comandos de Voz y desde el Celular a distancia. Riego, Televisores, Luminarias, Aires Acondicionados, Lavarropas, Cafetera Etc. La casa está toda reciclada a nueva, en impecable estado y armoniosamente decorada, totalmente amoblada y equipada.'
   }
 ]
-//leve protección de seguridad
-if (!propiedades_type[req.body.tipo] || !propiedades_model[req.body.modelo]) {
-  return res.status(400).send('Valores inválidos en tipo o modelo.');
-}
+module.exports = { propiedades };
 
-// Validar que se completen los campos
-const requiredFields = [
-  'type', 'model', 'adress', 'city', 'm2tot', 'm2cov', 'ambiente', 'bathroom',
-  'cars', 'bedroom', 'kitchen', 'pool', 'balcony', 'grill', 'laundry', 
-  'vigilance', 'principalImage', 'secondaryImages', 'contact', 'email', 
-  'personalName', 'phoneBusiness', 'phonePersonal', 'paidPeriod', 'price', 
-  'description'
-];
-const validateFields = (req, res, next) => {
-  for (const field of requiredFields) {
-    if (!req.body[field]) {
-      return res.status(400).send(`El campo ${field} es obligatorio.`);
-    }
-  }
-  if (!/\S+@\S+\.\S+/.test(req.body.email)) {
-    return res.status(400).send('El correo electrónico no es válido.');
-  }
-  next();
-};
-// Generar un nuevo ID
-const generateNewId = () => Math.max(...propiedades.map(p => p.id)) + 1;
-// Función para obtener las propiedades
-exports.getPropiedades = (req, res) => {
-  res.render('propiedades', { propiedades });
-};
-// Agregar una propiedad
-exports.addPropiedad = [validateFields, (req, res) => {
-  const newId = generateNewId();
-  const newPropiedad = {
-    id: newId,
-    type: parseInt(req.body.type),
-    model: parseInt(req.body.model),
-    adress: req.body.adress,
-    city: req.body.city,
-    m2tot: parseInt(req.body.m2tot),
-    m2cov: parseInt(req.body.m2cov),
-    ambiente: parseInt(req.body.ambiente),
-    bathroom: parseInt(req.body.bathroom),
-    cars: parseInt(req.body.cars),
-    bedroom: parseInt(req.body.bedroom),
-    kitchen: parseInt(req.body.kitchen),
-    pool: parseInt(req.body.pool),
-    balcony: parseInt(req.body.balcony),
-    grill: parseInt(req.body.grill),
-    laundry: parseInt(req.body.laundry),
-    vigilance: parseInt(req.body.vigilance),
-    principalImage: req.body.principalImage,
-    secondaryImages: req.body.secondaryImages ? req.body.secondaryImages.split(',').map(img => img.trim()): [],
-    plan: req.body.plan,
-    video: req.body.video,
-    contact: parseInt(req.body.contact),
-    email: req.body.email,
-    personalName: req.body.personalName,
-    phoneBusiness: parseInt(req.body.phoneBusiness),
-    phonePersonal: parseInt(req.body.phonePersonal),
-    paidPeriod: parseInt(req.body.paidPeriod),
-    price: parseInt(req.body.price),
-    description: req.body.description,
-  };
-  // Validación del número máximo de imágenes secundarias
-  if (newPropiedad.secondaryImages.length > 32) {
-    return res.status(400).send('El número máximo de imágenes secundarias es 32.');
-  }
-  propiedades.push(newPropiedad);
-  res.redirect('/');
-}];
+// let propiedades = [
+// {
+//    id: 1,
+//   adress: 'La alameda 22',
+//   city: 'Nordelta, Buenos aires',
+//   price: 299999
+// },
+// {
+//   id: 2,
+//   adress: 'Islas del Canal 03',
+//   city: 'Mar del plata, Buenos aires',
+//   price: 4500,  
+// },
+// {
+//   id: 3,
+//   adress: 'Santa Barbara 234',
+//   city: 'Troncos del Talar, Buenos Aires',
+//   price: 149999,
+// }
+//

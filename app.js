@@ -8,6 +8,19 @@ const session = require('express-session');
 
 const router = express.Router(); // Definir el enrutador
 
+const db = require('./controllers/db');
+
+router.get('/', (req, res) => {
+    // Usamos las propiedades directamente
+    const carruseles = {
+      recomendado: db.propiedades.map(prop => prop.principalImage), // Usamos la imagen principal de cada propiedad
+      emprendimiento: db.propiedades.map(prop => prop.principalImage)
+    };
+  
+    // Pasamos el objeto carruseles a la vista
+    res.render('index', { carruseles });
+  });
+
 // Middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -15,16 +28,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//ocultar contraseña
-require('dotenv').config();
-// Configurar el middleware de sesión
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}));
 
+//(temporal)
+app.use(session({
+  secret: 'una-secreta-clave', // Puedes usar un valor fijo
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+// require('dotenv').config(); // Descomentar esto en caso de producción (datos sensibles)
+// Configurar el middleware de sesión
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }
+// }));
+//"dotenv": "^16.4.7", <-(devolver a dependencias en package.json, en caso de produccion)
+
+// Middleware para bloquear métodos no permitidos
+// app.use((req, res, next) => {
+//     if (req.method === 'PUT' || req.method === 'DELETE') {
+//       return res.status(403).send('Modificación de código no permitida.');
+//     }
+//     next();
+// });
 
 // Middleware para pasar el usuario de la sesión a las vistas
 app.use((req, res, next) => {

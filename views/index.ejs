@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    window.carruseles = <%- JSON.stringify(carruseles) %>;
+  </script>
   <link rel="icon" href="/images/favicon.png" type="image/png">
   <link rel="stylesheet" href="/styles/header.css">
   <link rel="stylesheet" href="/styles/styles.css">
   <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
+  
   <title>KEY TO DREAM</title>
 </head>
 <body class="index-html">
@@ -39,7 +43,7 @@
         <i class="fa-solid fa-user" onclick="handleUserIconClick()"></i>
         <% if (user) { %>
           <div class="header-user">
-            <p><%= user.name %></p>
+            <p><%= user.name.toUpperCase() %></p>
             <p><%= user.email %></p>
             <span class="span-rule"></span>
             <i class="mismensajes-button fa-regular fa-message"><span class="span-i">MIS MENSAJES</span></i>
@@ -66,8 +70,6 @@
             }
           }
         </script>
-        
-
 
         <div class="mismensajes-click">
           <p>ATRÁS<span>MIS MENSAJES</span></p>
@@ -301,17 +303,13 @@
       
     </div>
   </header>
-
-  <main class="index-main">
-    <img id="carruselRecomendado" src="/images/recomendado.png">
-    <img id="carruselEmprendimiento" src="/images/emprendimiento.png">
-    <img src="/images/usaelmapa.jpg">
-    <script>//js detecta map=open en la url entonces abre el mapa
-      if (window.location.search.includes('map=open')) {
-          document.querySelector('.index-main > img:nth-child(3)').classList.add('expandida');
-      }
-    </script>
   
+  <main class="index-main">
+    <img id="carruselRecomendado">
+    <img id="carruselEmprendimiento">
+
+    <img src="/images/usaelmapa.jpg">
+
     <div class="recomendado-text">
       <p>RECOMENDADO</p>
       <div>
@@ -362,6 +360,11 @@
       <i class="fa-solid fa-minus"></i>
     </div>
 
+    <script>//js detecta map=open en la url entonces abre el mapa
+      if (window.location.search.includes('map=open')) {
+          document.querySelector('.index-main > img:nth-child(3)').classList.add('expandida');
+      }
+    </script>
   </main>
 
   <footer>
@@ -380,9 +383,10 @@
       <button id="closePopup">Cerrar</button>
     </div>
   </div>
-
   <script src="/js/z-index.js"></script>
   <script src="/js/clickHeader.js"></script>
   <script src="/js/posting-index.js"></script>
+  <script src="/js/carruselClick.js"></script>
+  <script src="/js/carrusel.js"></script>
 </body>
 </html>

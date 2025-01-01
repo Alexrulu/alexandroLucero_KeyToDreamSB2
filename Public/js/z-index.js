@@ -36,67 +36,15 @@ zIndex10click.forEach((img) => {
 
 
 
-// para que al hacer click en los bordes de las imagenes estas cambien (Recomendado box)
-const imgR = document.getElementById('carruselRecomendado');
 
-const imagesRecomendado = [
-  '/images/recomendado.png',
-  '/images/emprendimiento.png',
-  '/images/usaelmapa.jpg'
-];
-let currentIndexRecomendado = 0;
 
-// Detectar clic en áreas específicas
-imgR.addEventListener('click', (event) => {
-  const imgWidth = imgR.clientWidth; // Ancho de la imagen
-  const clickX = event.offsetX; // Posición del clic dentro de la imagen
 
-  const leftLimit = imgWidth * 0.2; // 20% del lado izquierdo
-  const rightLimit = imgWidth * 0.8; // 20% del lado derecho
 
-  if (clickX < leftLimit) {
-    // Clic en el 20% izquierdo
-    currentIndexRecomendado = (currentIndexRecomendado - 1 + imagesRecomendado.length) % imagesRecomendado.length;
-    imgR.src = imagesRecomendado[currentIndexRecomendado];
-  } else if (clickX > rightLimit) {
-    // Clic en el 20% derecho
-    currentIndexRecomendado = (currentIndexRecomendado + 1) % imagesRecomendado.length;
-    imgR.src = imagesRecomendado[currentIndexRecomendado];
-  } else {
-    //al hacer click en el centro de la imagen
-    window.location.href = '/articulo'
-  }
-});
 
-//----------------------------------- (Emprendimiento box)
 
-const imgE = document.getElementById('carruselEmprendimiento');
 
-const imagesEmprendimiento = [
-  '/images/emprendimiento.png',
-  '/images/recomendado.png',
-  '/images/usaelmapa.jpg'
-];
-let currentIndexEmprendimiento = 0;
 
-// Detectar clic en áreas específicas
-imgE.addEventListener('click', (event) => {
-  const imgWidth = imgE.clientWidth; // Ancho de la imagen
-  const clickX = event.offsetX; // Posición del clic dentro de la imagen
 
-  const leftLimit = imgWidth * 0.2; // 20% del lado izquierdo
-  const rightLimit = imgWidth * 0.8; // 20% del lado derecho
-
-  if (clickX < leftLimit) {
-    // Clic en el 20% izquierdo
-    currentIndexEmprendimiento = (currentIndexEmprendimiento - 1 + imagesEmprendimiento.length) % imagesEmprendimiento.length;
-    imgE.src = imagesEmprendimiento[currentIndexEmprendimiento];
-  } else if (clickX > rightLimit) {
-    // Clic en el 20% derecho
-    currentIndexEmprendimiento = (currentIndexEmprendimiento + 1) % imagesEmprendimiento.length;
-    imgE.src = imagesEmprendimiento[currentIndexEmprendimiento];
-  }
-});
 
 //---------------- (Mapa box, para que se extienda al clickear)
 

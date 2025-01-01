@@ -208,12 +208,6 @@ logoutButton.addEventListener('click', () => {
   }, 30); // Intervalo de animación
 });
 
-
-
-
-
-
-
 //----------(click unico - MENU BURGER (bars))
 const barsButton = document.querySelector('.left-header>.fa-bars');
 let isOpenBars = false;

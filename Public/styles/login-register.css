@@ -10,8 +10,12 @@
 body{
   margin: 0 30%;
 }
+input:focus, select:focus {
+  outline: none;
+}
 .register-box{
   margin: 5% 10%;
+  overflow: hidden;
 }
 h2{
   margin: 10px 0;
@@ -25,126 +29,93 @@ h2{
   font-weight: bold;
   transform: translateY(-1px);
 }
-main>p:nth-child(3){
+.ingresaLosDatosParaCrearTuCuenta{
   margin: 20px 0 10px 0;
   font-weight: bold;
 }
-main>p:nth-child(4){
-  margin: 20px 0 10px 0;
-  font-weight: bold;
+.tipoDeUsuario{
+  margin: 20px 0 0 0;
 }
-.user-box{
-  display: flex;
+.select-usuario{
   margin: 10px 0;
-  align-items: center;
+  border: none;
   border-bottom: 2px solid black;
+  width: 100%;
+}
+.email-register-input{
+  border: none;
+  border-bottom: 2px solid black;
+  width: 100%;
+  margin-top: 10px;
+}
+.password-register-input{
+  border: none;
+  border-bottom: 2px solid black;
+  width: 100%;
+  margin-top: 20px;
+}
+.datos-register{
+  margin: 20px 0 0 0;
+}
+.datos-box-register{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.datos-box-register>input{
+  border: none;
+  border-bottom: 2px solid black;
+  width: 48%;
+}
+.fiscal-register{
+  margin: 10px 0;
+}
+.fiscal-dni-box-register{
+  display: flex;
   justify-content: space-between;
 }
-.user-box>p{
-  color: gray;
-}
-main>p:nth-child(6){
+.fiscal-dni-box-register>input, .fiscal-dni-box-register>select{
+  border: none;
   border-bottom: 2px solid black;
-  margin: 30px 0;
-  color: gray;
+  width: 48%;
 }
-.password-box{
+.telefono-register{
+  margin: 10px 0;
+}
+.telefono-box-register{
   display: flex;
   justify-content: space-between;
-  color: gray;
+}
+.telefono-box-register>input{
+  border: none;
   border-bottom: 2px solid black;
-  margin: 30px 0;
+  width: 48%;
 }
-main>p:nth-child(8){
-  margin: 10px 0;
-  font-weight: bold;
-
-}
-.name-social-box{
-  display: flex;
-  gap: 30px;
-  margin: 10px 0;
-}
-.name-social-box>p:first-child{
-  width: 50%;
-  border-bottom: 2px solid black;
-  color: gray;
-}
-.name-social-box>p:nth-child(2){
-  width: 50%;
-  border-bottom: 2px solid black;
-  color: gray;
-}
-main>p:nth-child(10){
-  margin: 20px 0 10px 0;
-  font-weight: bold;
-}
-.condition-dni-box{
-  display: flex;
-  gap: 30px;
-  margin: 10px 0;
-}
-.condition-box{
-  display: flex;
-  width: 50%;
-  justify-content: space-between;
-  border-bottom: 2px solid black;
-}
-.condition-box>p{
-  color: gray;
-}
-.condition-dni-box>p:nth-child(2){
-  width: 50%;
-  border-bottom: 2px solid black;
-  color: gray;
-}
-.phone-box{
-  display: flex;
-  gap: 30px;
-  margin: 30px 0;
-}
-.phone-box>p:first-child{
-  width: 50%;
-  color: gray;
-  border-bottom: 2px solid black;
-}
-.phone-box>p:nth-child(2){
-  width: 50%;
-  color: gray;
-  border-bottom: solid 2px black;
-}
-.termins-box{
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
-}
-.politic-box{
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
-}
-.register-button-box{
-  margin: 30px 0;
-  display: flex;
-  justify-content: center;
-}
-.register-button-box>p{
-  background-color: black;
+.register-button{
+  padding: 10px;
   color: white;
-  padding: 10px 50px;
+  background-color: black;
+  margin: 0 50%;
+  transform: translateX(-50%);
+  border: none;
+  margin-top: 20px;
 }
-
+.register-button:hover{
+  background-color: gray;
+}
 /* Login page */
 .login-box{
   margin: 10%;
+  overflow: hidden;
+
 }
 .login-box>h2{
   margin-top: 15px;
 }
-.login-box>p:nth-child(4){
-  margin: 40px 0 10px ;
+.ingresaTuEmail{
+  margin: 30px 0 10px 0;
 }
-.login-box>input{
+.login-box>form>input{
   color: black;
   border: none;
   border-bottom: 2px solid black;
@@ -152,33 +123,23 @@ main>p:nth-child(10){
   width: 100%;
   font-size: medium;
 }
-.login-box>p:nth-child(6){
-  border-bottom: none;
-  color: black;
-  font-weight: bold;
+.ingresaTuContra{
   margin: 20px 0 10px 0;
 }
-.login-box>p:nth-child(7){
-  color: gray;
-  border-bottom: 2px solid black;
-  margin: 10px 0
-}
-.login-button-box{
-  margin: 30px 0 50px 0;
-  display: flex;
-  justify-content: center;
-}
-.login-button-box>a{
-  background-color: black;
+.ingresarButton{
+  border: none;
   color: white;
-  padding: 10px 50px;
-  text-decoration: none;
-  transition: all 0.2s ease;
+  background-color: black;
+  padding: 10px;
+  margin: 20px 50%;
+  transform: translateX(-50%);
+  width: 90px;
 }
-.login-button-box>a:hover{
+.ingresarButton:hover{
+  color: white;
   background-color: gray;
 }
-.login-box>p:nth-child(9){
+.ingresarCon{
   text-align: center;
   font-weight: bold;
 }
@@ -189,7 +150,7 @@ main>p:nth-child(10){
   gap: 10%;
   margin: 30px 0;
 }
-.login-box>p:nth-child(11){
+.noTenesCuenta{
   text-align: center;
   font-weight: bold;
   margin: 20px 0;
@@ -250,8 +211,5 @@ main>p:nth-child(10){
 @media(max-width:425px){
   body{
     margin: 0;
-  }
-  .password-box>p:nth-child(2){
-    font-size: 14px;
   }
 }

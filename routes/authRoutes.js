@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// Simulamos una base de datos con un array
-let usersDatabase = [];
+// Simulamos una base de datos en memoria
+let usersDatabase = []; 
+// Al cerrar la aplicación, los datos desaparecen
 
 // Ruta para la página principal
 router.get('/', (req, res) => {
@@ -14,7 +15,6 @@ router.get('/', (req, res) => {
     res.render('index');
   }
 });
-
 
 //----------------------------------------------------------REGISTER---------------
 // Ruta para procesar el registro
@@ -57,7 +57,7 @@ router.post('/process-login', (req, res) => {
 
   // Verificar si los campos están completos
   if (!email || !password) {
-    return res.status(400).send('Por favor, complete todos los campos.');
+    return res.status(400).json({ success: false, message: 'Por favor, complete todos los campos.' });
   }
 
   // Buscar al usuario en la "base de datos"
@@ -65,14 +65,15 @@ router.post('/process-login', (req, res) => {
 
   // Si el usuario no existe o la contraseña no coincide
   if (!user || user.password !== password) {
-    return res.status(400).send('Email o contraseña incorrectos.');
+    return res.status(400).json({ success: false, message: 'Email o contraseña incorrectos.' });
   }
 
   // Si todo es correcto, guardamos los datos del usuario en la sesión
   req.session.user = user;
 
   // Redirigir a la página de inicio
-  res.redirect('/');  // Asegúrate de que esta ruta esté definida
+  res.json({ success: true, redirectTo: '/' });
 });
+
 
 module.exports = router;
