@@ -1,7 +1,7 @@
 ## No olvidar ejecutar `npm install`
 
 ### Flujo de login-register 
-*Funcional solo en "/" (index.ejs) temporalmente.* ✔️
+*Funcional solo en "/" (index.ejs) temporalmente. (Falta manejo de cookies para autocompletar)* ✔️
 
 Hay algunas incongruencias:
 - Las descripciones no coinciden con las imágenes que se muestran.
