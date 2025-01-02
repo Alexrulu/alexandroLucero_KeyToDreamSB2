@@ -23,12 +23,9 @@ router.get('/', (req, res) => {
 
 // Middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
-
 // Middleware para procesar los datos del formulario
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-
 //(temporal)
 app.use(session({
   secret: 'una-secreta-clave', // Puedes usar un valor fijo
@@ -36,47 +33,23 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
-// require('dotenv').config(); // Descomentar esto en caso de producción (datos sensibles)
-// Configurar el middleware de sesión
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false }
-// }));
-//"dotenv": "^16.4.7", <-(devolver a dependencias en package.json, en caso de produccion)
-
-// Middleware para bloquear métodos no permitidos
-// app.use((req, res, next) => {
-//     if (req.method === 'PUT' || req.method === 'DELETE') {
-//       return res.status(403).send('Modificación de código no permitida.');
-//     }
-//     next();
-// });
-
 // Middleware para pasar el usuario de la sesión a las vistas
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null; // Define `user` como variable local disponible en todas las vistas
     next();
 });
-
 // Aquí defines la ruta de cerrar sesión
 router.get('/logout', (req, res) => {
     req.session.destroy(); // Eliminar la sesión
     console.log("Sesión destruida"); // Verificación en el servidor
 });
-
-
  // Usar el enrutador en la aplicación
 app.use('/', router); // Asegúrate de usar el enrutador
-
 // Rutas de autenticación
 app.use('/auth', routes);
-
 // Configurar las vistas
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 // Rutas de archivos estáticos
 const staticRoutes = {
     '/': 'index',
@@ -98,7 +71,16 @@ Object.keys(staticRoutes).forEach(route => {
         res.render(staticRoutes[route]);
     });
 });
-
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+// require('dotenv').config(); // Descomentar esto en caso de producción (manipulacion de registros)
+// Configurar el middleware de sesión
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }
+// }));
+//"dotenv": "^16.4.7", <-(devolver a dependencias en package.json, en caso de produccion)
+
