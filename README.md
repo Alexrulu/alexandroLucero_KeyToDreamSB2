@@ -1,9 +1,9 @@
 ## No olvidar ejecutar `npm install`
 
 ### Flujo de login-register 
-*Funcional solo en "/" (index.ejs) temporalmente. 
-*Los usuarios registrados se pierden al reinicar el servidor
-*Se pueden usar datos falsos
+- Funcional solo en "/" (index.ejs) temporalmente. 
+- Los usuarios registrados se pierden al reinicar el servidor
+- Se pueden usar datos falsos
 
 Hay algunas incongruencias:
 - Las descripciones no coinciden con las imágenes que se muestran.
