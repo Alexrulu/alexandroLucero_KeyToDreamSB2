@@ -2,6 +2,7 @@
 
 ### Flujo de login-register 
 *Funcional solo en "/" (index.ejs) temporalmente. (Falta manejo de cookies para autocompletar)* ✔️
+Se pueden usar datos falsos
 
 Hay algunas incongruencias:
 - Las descripciones no coinciden con las imágenes que se muestran.
