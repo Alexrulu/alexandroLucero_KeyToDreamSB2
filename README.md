@@ -6,8 +6,8 @@
 - Se pueden usar datos falsos
 
 Hay algunas incongruencias:
-- Las descripciones no coinciden con las imágenes que se muestran.
 - Falta conectar el backend con el frontend para publicar propiedades.
+- Las propiedades publicadas en las vistas "alquilar" o "comprar" no corresponden a la base de datos.
 - Y muchas cosas más por ajustar.
 
 Pero quería entregar el sprint 2 para recibir algún feedback. La web debería estar completa para el sprint 3.
