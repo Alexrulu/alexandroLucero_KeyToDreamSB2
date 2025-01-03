@@ -74,6 +74,11 @@ router.post('/process-login', (req, res) => {
   // Redirigir a la página de inicio
   res.json({ success: true, redirectTo: '/' });
 });
+//---------------------------------------------------cerrar sesión
+router.get('/logout', (req, res) => {
+    req.session.destroy(); // Eliminar la sesión
+    console.log("Sesión destruida"); // Verificación en el servidor
+});
 
 
 module.exports = router;

@@ -13,8 +13,8 @@ const db = require('./controllers/db');
 router.get('/', (req, res) => {
     // Usamos las propiedades directamente
     const carruseles = {
-      recomendado: db.propiedades.map(prop => prop.principalImage), // Usamos la imagen principal de cada propiedad
-      emprendimiento: db.propiedades.map(prop => prop.principalImage)
+      recomendado: db.propiedades,
+      emprendimiento: db.propiedades // Usamos la imagen principal de cada propiedad
     };
   
     // Pasamos el objeto carruseles a la vista
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //(temporal)
 app.use(session({
-  secret: 'una-secreta-clave', // Puedes usar un valor fijo
+  secret: 'una-secreta-clave',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
