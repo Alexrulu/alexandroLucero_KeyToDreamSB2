@@ -6,7 +6,6 @@
 - Se pueden usar datos falsos.
 
 Hay algunas incongruencias:
-- Las descripciones no coinciden con las imágenes que se muestran.
 - Falta conectar el backend con el frontend para publicar propiedades.
 - Y muchas cosas más por ajustar.
 
