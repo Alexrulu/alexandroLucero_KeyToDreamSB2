@@ -28,14 +28,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (id == "recomendado") {
-        city.innerText = window.carruseles.recomendado[currentIndex].city
-        adress.innerText = window.carruseles.recomendado[currentIndex].adress
-        price.innerText = window.carruseles.recomendado[currentIndex].price
+        city.innerText = window.carruseles.recomendado[currentIndex].city.toUpperCase();
+        adress.innerText = window.carruseles.recomendado[currentIndex].adress.toUpperCase();
+        
+        price.innerText = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(window.carruseles.recomendado[currentIndex].price);
       } else {
-        city2.innerText = window.carruseles.emprendimiento[currentIndex].city
-        adress2.innerText = window.carruseles.emprendimiento[currentIndex].adress
-        price2.innerText = window.carruseles.emprendimiento[currentIndex].price
+        city2.innerText = window.carruseles.emprendimiento[currentIndex].city.toUpperCase();
+        adress2.innerText = window.carruseles.emprendimiento[currentIndex].adress.toUpperCase();
+        
+        price2.innerText = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(window.carruseles.emprendimiento[currentIndex].price);
       }
+
       // Actualizar el `src` de la imagen
       img.src = images[currentIndex].principalImage;
     });

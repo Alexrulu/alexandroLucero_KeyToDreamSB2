@@ -16,22 +16,26 @@ window.onload = function() {
   adress.innerText = ''
   price.innerText = ''
   
-  // Asegurarnos de que la primera imagen de cada array se cargue por defecto
+  // Asegurarnos de que la primera imagen de cada array se cargue por defecto, el upperCase y el localeString tambien son necesarios aqui
   if (window.carruseles.recomendado && window.carruseles.recomendado.length > 0) {
     carruselRecomendado.src = window.carruseles.recomendado[0].principalImage;
-    console.log(window.carruseles.recomendado);
-    city.innerText = window.carruseles.recomendado[0].city
-    adress.innerText = window.carruseles.recomendado[0].adress
-    price.innerText = window.carruseles.recomendado[0].price
-
-    
+    city.innerText = window.carruseles.recomendado[0].city.toUpperCase()
+    adress.innerText = window.carruseles.recomendado[0].adress.toUpperCase()
+    price.innerText = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(window.carruseles.recomendado[0].price);
   }
 
   if (window.carruseles.emprendimiento && window.carruseles.emprendimiento.length > 1) {
-    carruselEmprendimiento.src = window.carruseles.emprendimiento[1].principalImage; // Asignamos la primera imagen del array
-    city2.innerText = window.carruseles.emprendimiento[1].city
-    adress2.innerText = window.carruseles.emprendimiento[1].adress
-    price2.innerText = window.carruseles.emprendimiento[1].price
+    carruselEmprendimiento.src = window.carruseles.emprendimiento[1].principalImage;
+    city2.innerText = window.carruseles.emprendimiento[1].city.toUpperCase()
+    adress2.innerText = window.carruseles.emprendimiento[1].adress.toUpperCase()
+    price2.innerText = window.carruseles.emprendimiento[1].price.toLocaleString()
+    price2.innerText = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(window.carruseles.emprendimiento[1].price);
   }
 
   // Ahora, también agregamos las imágenes para el cambio

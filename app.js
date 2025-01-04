@@ -16,10 +16,9 @@ router.get('/', (req, res) => {
       recomendado: db.propiedades,
       emprendimiento: db.propiedades // Usamos la imagen principal de cada propiedad
     };
-  
     // Pasamos el objeto carruseles a la vista
     res.render('index', { carruseles });
-  });
+});
 
 // Middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
