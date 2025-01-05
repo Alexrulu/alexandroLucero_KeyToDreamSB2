@@ -1,41 +1,47 @@
-
 window.onload = function() {
   const carruselRecomendado = document.getElementById('carruselRecomendado');
   const carruselEmprendimiento = document.getElementById('carruselEmprendimiento');
-  const city = document.getElementById('city')
-  const adress = document.getElementById('adress')
-  const price = document.getElementById('price')
-  const city2 = document.getElementById('city2')
-  const adress2 = document.getElementById('adress2')
-  const price2 = document.getElementById('price2')
-  
+  const city = document.getElementById('city');
+  const adress = document.getElementById('adress');
+  const price = document.getElementById('price');
+  const city2 = document.getElementById('city2');
+  const adress2 = document.getElementById('adress2');
+  const price2 = document.getElementById('price2');
+
   // Asegurarnos de que las imágenes están vacías inicialmente
   carruselRecomendado.src = '';  // Limpiamos la imagen de carruselRecomendado
   carruselEmprendimiento.src = '';  // Limpiamos la imagen de carruselEmprendimiento
-  city.innerText = ''
-  adress.innerText = ''
-  price.innerText = ''
-  
-  // Asegurarnos de que la primera imagen de cada array se cargue por defecto, el upperCase y el localeString tambien son necesarios aqui
+  city.innerText = '';
+  adress.innerText = '';
+  price.innerText = '';
+
+  // Función para obtener un índice aleatorio
+  function getRandomIndex(arrayLength) {
+    return Math.floor(Math.random() * arrayLength);
+  }
+
+  // Cargar carrusel recomendado con una imagen aleatoria
   if (window.carruseles.recomendado && window.carruseles.recomendado.length > 0) {
-    carruselRecomendado.src = window.carruseles.recomendado[0].principalImage;
-    city.innerText = window.carruseles.recomendado[0].city.toUpperCase()
-    adress.innerText = window.carruseles.recomendado[0].adress.toUpperCase()
+    const randomIndexRecomendado = getRandomIndex(window.carruseles.recomendado.length);
+    carruselRecomendado.src = window.carruseles.recomendado[randomIndexRecomendado].principalImage;
+    city.innerText = window.carruseles.recomendado[randomIndexRecomendado].city.toUpperCase();
+    adress.innerText = window.carruseles.recomendado[randomIndexRecomendado].adress.toUpperCase();
     price.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-    }).format(window.carruseles.recomendado[0].price);
+    }).format(window.carruseles.recomendado[randomIndexRecomendado].price);
   }
 
-  if (window.carruseles.emprendimiento && window.carruseles.emprendimiento.length > 1) {
-    carruselEmprendimiento.src = window.carruseles.emprendimiento[1].principalImage;
-    city2.innerText = window.carruseles.emprendimiento[1].city.toUpperCase()
-    adress2.innerText = window.carruseles.emprendimiento[1].adress.toUpperCase()
-    price2.innerText = window.carruseles.emprendimiento[1].price.toLocaleString()
+  // Cargar carrusel emprendimiento con una imagen aleatoria
+  if (window.carruseles.emprendimiento && window.carruseles.emprendimiento.length > 0) {
+    const randomIndexEmprendimiento = getRandomIndex(window.carruseles.emprendimiento.length);
+    carruselEmprendimiento.src = window.carruseles.emprendimiento[randomIndexEmprendimiento].principalImage;
+    city2.innerText = window.carruseles.emprendimiento[randomIndexEmprendimiento].city.toUpperCase();
+    adress2.innerText = window.carruseles.emprendimiento[randomIndexEmprendimiento].adress.toUpperCase();
     price2.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-    }).format(window.carruseles.emprendimiento[1].price);
+    }).format(window.carruseles.emprendimiento[randomIndexEmprendimiento].price);
   }
 
   // Ahora, también agregamos las imágenes para el cambio

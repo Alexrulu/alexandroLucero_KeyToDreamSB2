@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   Object.keys(carruseles).forEach((id) => {
     const img = document.querySelector(`#carrusel${id.charAt(0).toUpperCase() + id.slice(1)}`); // Selecciona las imágenes
     const images = carruseles[id]; // Obtén las imágenes del carrusel
-    
-    let currentIndex = 0;
+
+    // Generar un índice aleatorio dentro del rango de las imágenes disponibles
+    let currentIndex = Math.floor(Math.random() * images.length);
 
     img.addEventListener('click', (event) => {
       const imgWidth = img.clientWidth;
@@ -30,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (id == "recomendado") {
         city.innerText = window.carruseles.recomendado[currentIndex].city.toUpperCase();
         adress.innerText = window.carruseles.recomendado[currentIndex].adress.toUpperCase();
-        
         price.innerText = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         city2.innerText = window.carruseles.emprendimiento[currentIndex].city.toUpperCase();
         adress2.innerText = window.carruseles.emprendimiento[currentIndex].adress.toUpperCase();
-        
         price2.innerText = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -48,5 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Actualizar el `src` de la imagen
       img.src = images[currentIndex].principalImage;
     });
+
+    // Cargar la imagen aleatoria al cargar la página
+    img.src = images[currentIndex].principalImage;
   });
 });
