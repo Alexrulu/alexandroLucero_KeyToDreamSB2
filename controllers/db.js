@@ -33,7 +33,6 @@ let propiedades = [
     personalName: 'TIZADO PROPERTIESS',
     phoneBusiness: 44551234,
     phonePersonal: 1123456789,
-    paidPeriod: 4, //  1:mensual, 2:3 meses, 3:anual, 4:compra
     price: 299999,
     description: 'Gran calidad constructiva y excelente lote con un fondo con quincha y lugar para asador!!!! La galeria con una gran parrilla y muy espaciosa! La casa esta impecable por donde la mires, tiene una gran cocina, impecable, un Family pegado a la cocina y salida a la galeria que hace que se viva permanentemente en este lugar. Losa radiante, lote ubicado cercano a la guardia y próximo a la laguna del barrio.'
   },
@@ -69,7 +68,6 @@ let propiedades = [
     personalName: 'AB BROKERS',
     phoneBusiness: 44551234,
     phonePersonal: 1123456789,
-    paidPeriod: 1, //  1:mensual, 2:3 meses, 3:anual, 4:compra
     price: 4500,
     description: 'Living comedor con espectacular vista al agua. Cocina integrada.Mesada con isla de silestone. Muy luminoso con gran vista desde todo el ambiente.Dependencia y Lavadero. Dos dormitorios en suite con salida al balcón. Suite principal con vestidor y baño con box de ducha revestido en porcelanato.'
   },
@@ -105,7 +103,6 @@ let propiedades = [
     personalName: 'Esteban Quito',
     phoneBusiness: 44551234,
     phonePersonal: 1123456789,
-    paidPeriod: 4, //  1:mensual, 2:3 meses, 3:anual, 4:compra
     price: 149999,
     description: 'Hermosa casa tecnológica totalmente automatizada con sistema ALEXA. Todos los sistemas eléctricos y electrónicos se pueden activar por comandos de Voz y desde el Celular a distancia. Riego, Televisores, Luminarias, Aires Acondicionados, Lavarropas, Cafetera Etc. La casa está toda reciclada a nueva, en impecable estado y armoniosamente decorada, totalmente amoblada y equipada.'
   },
@@ -141,7 +138,6 @@ let propiedades = [
     personalName: 'BLANCO PROPERTIESS',
     phoneBusiness: 44223344,
     phonePersonal: 1122334455,
-    paidPeriod: 2,
     price: 215000,
     description: 'Amplia casa con excelente distribución, patio interno, sistema de cámaras de seguridad y cerramientos modernos.'
   },
@@ -177,7 +173,6 @@ let propiedades = [
     personalName: 'Laura Gómez',
     phoneBusiness: 44112233,
     phonePersonal: 1133445566,
-    paidPeriod: 2,
     price: 1000,
     description: 'Cómodo departamento en zona céntrica con excelentes accesos y cercanía a todos los servicios. Consta de 2 habitaciones, amplio balcón y espacio de cochera.'
   },
@@ -213,7 +208,6 @@ let propiedades = [
     personalName: 'TIZ4DO',
     phoneBusiness: 45554433,
     phonePersonal: 1133224433,
-    paidPeriod: 4,
     price: 500000,
     description: 'Casa en venta con piscina, jardín amplio, parrilla y cochera para varios autos. Ideal para familias grandes que busquen comodidad y tranquilidad.'
   },
@@ -249,7 +243,6 @@ let propiedades = [
     personalName: 'METRO REALTY',
     phoneBusiness: 44113344,
     phonePersonal: 1122336677,
-    paidPeriod: 2,
     price: 750,
     description: 'Departamento de 2 habitaciones, cocina independiente, con balcón y cochera. Ideal para parejas o personas solas que busquen comodidad y buena ubicación.'
   },
@@ -285,9 +278,17 @@ let propiedades = [
     personalName: 'Juan Pérez',
     phoneBusiness: 45556677,
     phonePersonal: 1144332255,
-    paidPeriod: 2,
     price: 1300,
     description: 'Hermosa casa con jardín, piscina, parrilla y cochera. Ubicada en zona residencial tranquila y segura. Perfecta para familias que busquen un espacio amplio y cómodo.'
   }
 ]
-module.exports = { propiedades, propiedades_type };
+// Función para agregar una nueva propiedad
+function agregarPropiedad(nuevaPropiedad) {
+  const nuevoId = propiedades[propiedades.length - 1].id + 1; // Genera el ID automáticamente
+  const propiedadConId = { id: nuevoId, ...nuevaPropiedad };
+  propiedades.push(propiedadConId);
+  console.log(`Propiedad con ID ${nuevoId} agregada exitosamente.`);
+}
+
+// Exportar módulos
+module.exports = { propiedades, propiedades_type, propiedades_model, agregarPropiedad };

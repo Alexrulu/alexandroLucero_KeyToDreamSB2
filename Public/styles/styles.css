@@ -534,18 +534,15 @@ footer>a:hover{
   align-items: center;
   margin: 20px 0;
 }
-.post-1-first>div{
-  display: flex;
-  gap: 10px;
-}
-.post-1-first>div>a:first-child{
-  border: 2px solid gray;
-  padding: 5px;
-}
-.post-1-first>div>a:nth-child(2){
+.submit-post1{
   padding: 7px;
   background-color: black;
   color: white;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+.submit-post1:hover{
+  background-color: dodgerblue;
 }
 .post-1-second{
   display: flex;
@@ -554,6 +551,15 @@ footer>a:hover{
   justify-content: space-between;
   border: 2px solid gray;
   padding: 5px;
+}
+.post-1-second input{
+  display: none;
+}
+.post-1-second label.clickp{
+  background-color: dodgerblue;
+  color: white;
+  padding: 2px 3px;
+  border-radius: 2px;
 }
 .post-1-third{
   display: flex;
@@ -564,134 +570,75 @@ footer>a:hover{
   padding: 5px;
   margin-top: 30px;
 }
-.post-1-box>p:nth-child(6){
-  margin-top: 30px;
+.post-1-third input{
+  display: none;
 }
-.post-1-box>p:nth-child(7){
-  margin-top: 20px;
-  border-bottom: 2px solid black;
-  width: 200px;
-  color: gray;
+.post-1-third label.clickp{
+  background-color: dodgerblue;
+  color: white;
+  padding: 2px 3px;
+  border-radius: 2px;
 }
-.post-1-box>p:nth-child(8){
+.adress-city-post-box{
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.adress-city-post-box input{
+  border: none;
   border-bottom: 2px solid black;
   width: 300px;
-  color: gray;
+  font-size: medium;
 }
-.post-1-box>p:nth-child(9){
-  margin-top: 30px;
+.adress-city-post-box input:focus{
+  outline: none;
 }
-
+.adress-city-post-box label{
+  display: none;
+}
+.caracteristicas-post{
+  margin: 30px 0;
+}
 .post-1-last{
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
-  gap: 10px;
 }
 .post-1-last-left{
-  width: 70%;
   display: flex;
+  width: 60%;
   gap: 20px;
   flex-wrap: wrap;
 }
-.post-1-last-left>div:first-child{
+.post-1-last-left div{
   display: flex;
   gap: 10px;
-  font-size: x-large;
   align-items: center;
 }
-.post-1-last-left>div:first-child>p{
-  font-size: medium;
+.post-1-last-left input{
+  height: 20px;
+  border: none;
   border-bottom: 2px solid black;
-  color: gray;
-  text-wrap: nowrap;
 }
-.post-1-last-left>div:nth-child(2){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
+.post-1-last-left input:focus{
+outline:none
 }
-.post-1-last-left>div:nth-child(2)>p{
-  font-size: medium;
-  border-bottom: 2px solid black;
-  color: gray;
-  text-wrap: nowrap;
+.post-1-last-left select{
+  border: none;
 }
-.post-1-last-left>div:nth-child(3){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
+.post-1-last-left select:focus{
+  outline: none;
 }
-.post-1-last-left>div:nth-child(3)>p{
-  font-size: medium;
-  text-wrap: nowrap;
-}
-.post-1-last-left>div:nth-child(4){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
-}
-.post-1-last-left>div:nth-child(4)>p{
-  font-size: medium;
-  text-wrap: nowrap;
-}
-.post-1-last-left>div:nth-child(5){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
-}
-.post-1-last-left>div:nth-child(5)>p{
-  font-size: medium;
-  text-wrap: nowrap;
-}
-.post-1-last-left>div:nth-child(6){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
-}
-.post-1-last-left>div:nth-child(6)>p{
-  font-size: medium;
-  text-wrap: nowrap;
-}
-.post-1-last-left>div:nth-child(7){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
-}
-.post-1-last-left>div:nth-child(7)>p{
-  font-size: medium;
-  text-wrap: nowrap;
-}
-.post-1-last-left>div:nth-child(8){
-  display: flex;
-  gap: 10px;
-  font-size: x-large;
-  align-items: center;
-}
-.post-1-last-left>div:nth-child(8)>p{
-  font-size: medium;
-  text-wrap: nowrap;
-}
-
 .post-1-last-right{
   display: flex;
   width: 30%;
-  flex-wrap: wrap;
   gap: 20px;
   justify-content: right;
 }
-.post-1-last-right>div{
+.post-1-last-right div{
   display: flex;
-  align-items: center;
-  width: 130px;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* post 2 */
@@ -766,14 +713,16 @@ footer>a:hover{
   display: flex;
   gap: 10px;
 }
-.post-2-first>div>a:first-child{
-  border: 2px solid gray;
-  padding: 5px;
-}
-.post-2-first>div>a:nth-child(2){
+
+.post-2-first div>button{
   padding: 7px;
   background-color: black;
   color: white;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+.post-2-first div>button:hover{
+  background-color: dodgerblue;
 }
 
 .post-2-second{
@@ -782,42 +731,49 @@ footer>a:hover{
   width: 300px;
   margin-left: 20%;
   margin-top: 20px;
+  gap: 10px;
+}
+.post-2-second>p{
+  text-wrap: nowrap;
 }
 .post-2-second>div{
   display: flex;
   gap: 10px;
   align-items: center;
 }
-.post-2-second>div>p{
-  background-color: black;
-  color: white;
-  padding: 0 10px;
-  font-size: xx-large;
-}
-
 .post-2-each{
   display: flex;
   justify-content: space-between;
   width: 300px;
   margin-left: 20%;
   margin-top: 20px;
+  gap: 10px;
+  align-items: center;
+}
+.post-2-each p{
+  text-wrap: nowrap;
 }
 .post-2-each>div:nth-child(2){
   display: flex;
   gap: 10px;
-  align-items: center;
-}
-.post-2-each>div:nth-child(2)>p{
-  background-color: black;
-  color: white;
-  padding: 0 10px;
-  font-size: xx-large;
 }
 .post-2-each>div:first-child>p:nth-child(2){
   color: gray;
   font-size: small;
 }
-
+#file-upload1, #file-upload2, #file-upload3, #file-upload4{
+  display: none;
+}
+.custom-file-upload {
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.custom-file-upload.uploaded {
+  background-color: dodgerblue;
+}
 /* Post 3 */
 
 .post-3-progress-box{
@@ -890,14 +846,15 @@ footer>a:hover{
   display: flex;
   gap: 10px;
 }
-.post-3-first>div>a:first-child{
-  border: 2px solid gray;
-  padding: 5px;
-}
-.post-3-first>div>a:nth-child(2){
+.post-3-first>button{
   padding: 7px;
   background-color: black;
   color: white;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+.post-3-first>button:hover{
+  background-color: dodgerblue;
 }
 
 .post-3-second{
@@ -915,23 +872,29 @@ footer>a:hover{
   display: flex;
   align-items: end;
 }
-.post-3-second>div>div:first-child{
+.contactType-box select{
+  border: none;
+  font-size: medium;
+  cursor: pointer;
+}
+.contactType-box select:focus{
+  outline: none;
+}
+.post-3-second>div{
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 30px;
 }
-.post-3-second>div>div>div{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.post-3-second>div>div:nth-child(2){
-  margin-top: 30px;
-}
-.post-3-second>div>div:nth-child(2)>p{
-  margin-top: 40px;
+.post-3-second input{
+  height: 20px;
+  border: none;
   border-bottom: 2px solid black;
-  color: gray;
+  font-size: medium;
 }
+.post-3-second input:focus{
+  outline: none;
+}
+
 
 /* Post 4 page */
 
@@ -979,48 +942,50 @@ footer>a:hover{
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 30px;
 }
-.post-4-second>div{
-  display: flex;
-  justify-content: right;
-  gap: 72px;
-}
-.post-4-second>div>div{
-  display: flex;
-}
-.post-4-second>div>div:first-child{
+.post-4-second>div:first-child{
   display: flex;
   gap: 5px;
 }
-.post-4-second>div>div:nth-child(2)>p:first-child{
-  margin-right: 10px;
-}
-.post-4-second>div>div:nth-child(2)>p:nth-child(2){
+.post-4-second>div:first-child input{
+  height: 20px;
+  border: none;
   border-bottom: 2px solid black;
+  font-size: medium;
+  transition: border-bottom 0.2s ease;
 }
-.post-4-second>div>div:nth-child(2)>p:nth-child(3){
-  border-bottom: 2px solid black;
-  color: gray;
+.post-4-second>div:first-child input:focus{
+  outline: none;
 }
-.post-4-second>p{
+.post-4-second>div:nth-child(2){
   display: flex;
-  justify-content: right;
-  margin-top: 30px;
+  flex-direction: column;
 }
-.post-4-second>span{
+.post-4-second textarea{
   display: flex;
-  border: 1px solid gray;
-  padding: 80px 230px;
+  padding: 20px;
   margin-top: 30px;
+  border: black 2px solid;
+  transition: border 0.2s ease;
 }
-.post-4-second>button:nth-child(4){
+.post-4-second textarea:focus{
+  outline: none;
+}
+
+.post-4-second>button:nth-child(3){
   background-color: black;
   color: white;
   padding: 10px;
   cursor: pointer;
   border: none;
   margin-top: 10px;
+  transition: background-color 0.2s ease;
 }
+.post-4-second>button:nth-child(3):hover{
+  background-color: dodgerblue;
+}
+
 
 /*----(post 4 PUBLICAR)----*/
 
@@ -1663,7 +1628,7 @@ footer>a:hover{
     width: 310px;
   }
 }
-@media(max-width:349px){
+@media(max-width:399px){
   .post-1-last{
     gap: 50px;
   }

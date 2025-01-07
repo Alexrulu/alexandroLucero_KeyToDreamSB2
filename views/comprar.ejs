@@ -46,7 +46,7 @@
             <img class="img-imagendealquiler" src="<%= propiedad.principalImage %>">
           </div>
           <div class="left-article">
-            <p> USD $<%= propiedad.price.toLocaleString('en-US') %> - VENTA</p>
+            <p> USD $<%= propiedad.price ? propiedad.price.toLocaleString('en-US') : '...' %> - VENTA</p>
             <h2><%= propiedad.adress.toUpperCase() %></h2>
             <p><%= propiedad.city %></p>
             <p><%= propiedad.m2tot %> M² TOTALES <%= propiedad.ambiente %> AMBIENTES <%= propiedad.bedroom %> DORMITORIOS <%= propiedad.bathroom %> BAÑOS <%= propiedad.cars %> COCHES</p>
@@ -68,5 +68,6 @@
     
   </main>
   <script src="/js/clickHeader.js"></script>
+  <script src="/js/menuBurger.js"></script>
 </body>
 </html>

@@ -19,8 +19,6 @@ aplicarEventos();
 // Actualizar eventos dinámicamente al redimensionar la ventana
 window.addEventListener("resize", aplicarEventos);
 
-
-
 //para que el z-index se mantenga en 10 en la animacion al hacer click(mapa box)
 const zIndex10click = document.querySelectorAll(".index-main img:nth-child(3)");
 
@@ -33,18 +31,6 @@ zIndex10click.forEach((img) => {
     }, { once: true }); // Ejecutar este evento una sola vez
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 //---------------- (Mapa box, para que se extienda al clickear)
 

@@ -80,7 +80,7 @@ h3{
   font-size: medium;
 }
 .right-header>h3>i:hover, .right-header>h3>a>i:hover{
-  color: gray;
+  color: dodgerblue;
 }
 .right-header>h3>i, .right-header>h3>a>i{
   transition: all 0.2s ease;
@@ -137,7 +137,7 @@ h3{
   transition: all 0.2s ease;
 }
 .header-user>i:hover{
-  color: gray;
+  color: dodgerblue;
 }
 .right-header>h3:nth-child(3)>i.clickHeader ~ .header-user{
   right: 10%;
@@ -165,7 +165,12 @@ h3{
   color: white;
   width: 110px;
   text-align: center;
+  transition: background-color 0.2s ease ;
 }
+.publicar-button:hover{
+  background-color: dodgerblue;
+}
+
 .span-i{
   font-weight: normal;
   margin-left: 10px;
@@ -770,7 +775,7 @@ h3{
   transition: all 0.2s ease;
 }
 .login-button:hover{
-  background-color: gray;
+  background-color: dodgerblue;
 }
 
 /*----------------------(responsive section)----------------------*/

@@ -53,54 +53,61 @@
       <p>PUBLICAR</p>
     </div>
 
-    <div class="post-2-first">
-      <p>PRESENTACIÓN</p>
-      <div>
-        <a href="/">GUARDAR Y SALIR</a>
-        <a href="/post3">CONTINUAR</a>
+    <form action="/save-property-step2" method="POST" enctype="multipart/form-data">
+      <div class="post-2-first">
+        <p>PRESENTACIÓN</p>
+        <div>
+          <button type="submit">CONTINUAR</button>
+        </div>
       </div>
-    </div>
-
-    <div class="post-2-second">
-      <p>FOTO PRINCIPAL</p>
-      <div>
-        <p>+</p>
-        <i class="fa-solid fa-square-check"></i>
+    
+      <!-- Foto principal -->
+      <div class="post-2-second">
+        <p>FOTO PRINCIPAL</p>
+        <label for="file-upload1" class="custom-file-upload">+</label>
+        <input id="file-upload1" type="file" name="mainImage" accept="image/*" required>
       </div>
-    </div>
-    <div class="post-2-each">
-      <div>
-        <p>FOTOS SECUNDARIAS</p>
-        <p>(HASTA 32)</p>
+    
+      <!-- Fotos secundarias -->
+      <div class="post-2-each">
+        <div>
+          <p>FOTOS SECUNDARIAS</p>
+          <p>(HASTA 32)</p>
+        </div>
+        <div>
+          <label for="file-upload2" class="custom-file-upload">+</label>
+          <input id="file-upload2" type="file" name="secondaryImages" accept="image/*" multiple>
+        </div>
       </div>
-      <div>
-        <p>+</p>
-        <i class="fa-solid fa-square-check"></i>
+    
+      <!-- Fotos de planos -->
+      <div class="post-2-each">
+        <div>
+          <p>FOTO DE PLANOS</p>
+        </div>
+        <div>
+          <label for="file-upload3" class="custom-file-upload">+</label>
+          <input id="file-upload3" type="file" name="floorPlanImage" accept="image/*" multiple>
+        </div>
       </div>
-    </div>
-    <div class="post-2-each">
-      <div>
-        <p>FOTO/S DE PLANOS</p>
-        <p>(HASTA 8, OPCIONAL)</p>
+    
+      <!-- Video -->
+      <div class="post-2-each">
+        <div>
+          <p>VIDEO</p>
+          <p>(1 MINUTO MÁXIMO)</p>
+        </div>
+        <div>
+          <label for="file-upload4" class="custom-file-upload">+</label>
+          <input id="file-upload4" type="file" name="video" accept="video/*">
+        </div>
       </div>
-      <div>
-        <p>+</p>
-        <i class="fa-solid fa-square-check"></i>
-      </div>
-    </div>
-    <div class="post-2-each">
-      <div>
-        <p>VIDEO</p>
-        <p>(1 MINUTO MÁXIMO)</p>
-      </div>
-      <div>
-        <p>+</p>
-        <i class="fa-solid fa-square-check"></i>
-      </div>
-    </div>
+    </form>
     
     
   </main>
   <script src="/js/clickHeader.js"></script>
+  <script src="/js/clickPost.js"></script>
+  <script src="/js/menuBurger.js"></script>
 </body>
 </html>

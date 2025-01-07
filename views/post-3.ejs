@@ -52,37 +52,43 @@
       <p>EXTRAS</p>
       <p>PUBLICAR</p>
     </div>
-
-    <div class="post-3-first">
-      <div>
-        <a href="/">GUARDAR Y SALIR</a>
-        <a href="/post4">CONTINUAR</a>
+    <form action="/save-property-step3" method="POST">
+      <div class="post-3-first">
+        <button type="submit">CONTINUAR</button>
+        <p class="formasContactarme">FORMAS DE CONTACTARME</p>
       </div>
-      <p class="formasContactarme">FORMAS DE CONTACTARME</p>
-    </div>
-
-    <div class="post-3-second">
-      <p>COMPLETAR AL MENOS UN CAMPO (TELÉFONO O CELULAR)</p>
-      <div>
+  
+      <div class="post-3-second">
+        <p>COMPLETAR AL MENOS UN CAMPO (TELÉFONO O CELULAR)</p>
+  
         <div>
-          <div>
-            <p>INMOBILIARIA</p>
-            <i class="fa-solid fa-square-check"></i>
+          <!-- Tipo de contacto -->
+          <div class="contactType-box">
+            <label for="contactType">TIPO DE CONTACTO:</label>
+            <select name="contactType" id="contactType">
+              <option value="inmobiliaria">INMOBILIARIA</option>
+              <option value="directOwner">DUEÑO DIRECTO</option>
+            </select>
           </div>
-          <div>
-            <p class="direct-owner">DUEÑO DIRECTO</p>
-            <i class="fa-solid fa-square-check"></i>
-          </div>
-        </div>
-        <div>
-          <p>EMAIL PROFESIONAL O DE CONTACTO</p>
-          <p>NOMBRE COMPLETO O INMOBILIARIA</p>
-          <p>TELÉFONO DE CONTACTO</p>
-          <p>CELULAR DE CONTACTO</p>
+          
+          <!-- Email profesional o de contacto -->
+          <input type="email" name="email" id="email" placeholder="Email Profesional o de Contacto:" required>
+  
+          <!-- Nombre completo o inmobiliaria -->
+          <input type="text" name="fullName" id="fullName" placeholder="Nombre Completo o Inmobiliaria:" required>
+  
+          <!-- Teléfono de contacto -->
+          <input type="tel" name="phone" id="phone" placeholder="Teléfono de Contacto:">
+  
+          <!-- Celular de contacto -->
+          <input type="tel" name="cell" id="cell" placeholder="Celular de Contacto:">
         </div>
       </div>
+    </form>
     </div>
+    
   </main>
   <script src="/js/clickHeader.js"></script>
+  <script src="/js/menuBurger.js"></script>
 </body>
 </html>

@@ -1,13 +1,12 @@
 ## No olvidar ejecutar `npm install`
 
+KEYTODREAM, Una web sobre venta/alquiler de propiedades en Argentina, hecha por Lucero Alexandro.
+
 ### Flujo de login-register 
-- Funcional solo en "/" (index.ejs) temporalmente. 
 - Los usuarios registrados se pierden al reinicar el servidor
 - Se pueden usar datos falsos.
 
-Hay algunas incongruencias:
-- Falta conectar el backend con el frontend para publicar propiedades.
-- Y muchas cosas más por ajustar.
+Hay algunas incongruencias respecto al backend:
+- Falta conectar propiedades en /alquilar /comprar con /articulo, falta /favoritos y api google maps .
 
-Pero quería entregar el sprint 2 para recibir algún feedback. La web debería estar completa para el sprint 3.
-Un saludo.
+La web debería estar completa para el 10/01/25.

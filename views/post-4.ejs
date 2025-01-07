@@ -54,28 +54,25 @@
     </div>
 
     <div class="post-4-first">
-      <a href="/">GUARDAR Y SALIR</a>
       <p>INFORMACIÓN FINAL</p>
     </div>
 
-    <div class="post-4-second">
-      <div>
+    <form action="/publish-property" method="POST" id="publishForm">
+      <div class="post-4-second">
         <div>
-          <p>MENSUAL</p>
-          <i class="fa-solid fa-angle-down"></i>
-        </div>
-        <div>
-          <p>PRECIO EN DOLARES</p>
+          <label for="price">PRECIO EN DOLARES</label>
           <p>$</p>
-          <p>999.999.999</p>
+          <input type="number" name="price" id="price" placeholder="..." required>
         </div>
+        <div>
+          <p>AGREGÁ UNA DESCRIPCIÓN (NO MÁS DE 5 RENGLONES)</p>
+          <textarea name="description" id="description" rows="5" maxlength="500" placeholder="Escribe una breve descripción..." required></textarea>
+        </div>
+        <button id="postingButton" type="submit">PUBLICAR</button>
       </div>
-      <p>AGREGÁ UNA DESCRIPCIÓN (NO MÁS DE 5 RENGLONES)</p>
-      <span></span>
-      <button id="postingButton">PUBLICAR</button>
-    </div>
-
-    <div id="postingPopup" class="ventana-posting">
+    </form>
+    
+    <div id="postingPopup" class="ventana-posting" style="display: none;">
       <div class="mensaje-posting-progress">
         <img src="/images/favicon.png">
         <p>KEY TO DREAM</p>
@@ -86,8 +83,43 @@
       </div>
     </div>
 
+    <!-- Boton que aparece al no haber completado todos los inputs requeridos -->
+    <div id="error-popup" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -20%); background-color: white; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);">
+      <p id="error-message" style="margin: 0; color: black; text-align: center; margin-bottom: 20px; font-weight: bold;"></p>
+      <button id="close-popup" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto; padding: 5px 10px; background-color:crimson; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
+        Cerrar
+      </button>
+    </div>
+    <script>
+      // Obtener los parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const errorMessage = urlParams.get('error'); // Extraer el parámetro "error"
+    
+      // Si hay un mensaje de error, mostrarlo en la ventana emergente
+      if (errorMessage) {
+        const errorPopup = document.getElementById('error-popup');
+        const errorText = document.getElementById('error-message');
+    
+        // Mostrar el mensaje
+        errorText.textContent = errorMessage;
+        errorPopup.style.display = 'block';
+    
+        // Agregar un evento para cerrar la ventana emergente
+        const closeButton = document.getElementById('close-popup');
+        closeButton.addEventListener('click', () => {
+          errorPopup.style.display = 'none';
+        });
+      }
+    </script>
+    
+    
+    
+    
   </main>
+  
+  
   <script src="/js/clickHeader.js"></script>
   <script src="/js/posting.js"></script>
+  <script src="/js/menuBurger.js"></script>
 </body>
 </html>
