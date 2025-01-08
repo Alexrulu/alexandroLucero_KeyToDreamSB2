@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
   const carruselRecomendado = document.getElementById('carruselRecomendado');
   const carruselEmprendimiento = document.getElementById('carruselEmprendimiento');
   const city = document.getElementById('city');
@@ -8,12 +8,11 @@ window.onload = function() {
   const adress2 = document.getElementById('adress2');
   const price2 = document.getElementById('price2');
 
-  // Asegurarnos de que las imágenes están vacías inicialmente
-  carruselRecomendado.src = '';  // Limpiamos la imagen de carruselRecomendado
-  carruselEmprendimiento.src = '';  // Limpiamos la imagen de carruselEmprendimiento
-  city.innerText = '';
-  adress.innerText = '';
-  price.innerText = '';
+  // Crear índices globales
+  window.currentIndices = {
+    recomendado: 0,
+    emprendimiento: 0,
+  };
 
   // Función para obtener un índice aleatorio
   function getRandomIndex(arrayLength) {
@@ -23,39 +22,30 @@ window.onload = function() {
   // Cargar carrusel recomendado con una imagen aleatoria
   if (window.carruseles.recomendado && window.carruseles.recomendado.length > 0) {
     const randomIndexRecomendado = getRandomIndex(window.carruseles.recomendado.length);
-    carruselRecomendado.src = window.carruseles.recomendado[randomIndexRecomendado].principalImage;
-    city.innerText = window.carruseles.recomendado[randomIndexRecomendado].city.toUpperCase();
-    adress.innerText = window.carruseles.recomendado[randomIndexRecomendado].adress.toUpperCase();
+    window.currentIndices.recomendado = randomIndexRecomendado;
+    const propiedad = window.carruseles.recomendado[randomIndexRecomendado];
+    carruselRecomendado.src = propiedad.principalImage;
+    carruselRecomendado.dataset.url = `/articulo/${propiedad.id}`; // Asignar data-url
+    city.innerText = propiedad.city.toUpperCase();
+    adress.innerText = propiedad.adress.toUpperCase();
     price.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-    }).format(window.carruseles.recomendado[randomIndexRecomendado].price);
+    }).format(propiedad.price);
   }
 
   // Cargar carrusel emprendimiento con una imagen aleatoria
   if (window.carruseles.emprendimiento && window.carruseles.emprendimiento.length > 0) {
     const randomIndexEmprendimiento = getRandomIndex(window.carruseles.emprendimiento.length);
-    carruselEmprendimiento.src = window.carruseles.emprendimiento[randomIndexEmprendimiento].principalImage;
-    city2.innerText = window.carruseles.emprendimiento[randomIndexEmprendimiento].city.toUpperCase();
-    adress2.innerText = window.carruseles.emprendimiento[randomIndexEmprendimiento].adress.toUpperCase();
+    window.currentIndices.emprendimiento = randomIndexEmprendimiento;
+    const propiedad = window.carruseles.emprendimiento[randomIndexEmprendimiento];
+    carruselEmprendimiento.src = propiedad.principalImage;
+    carruselEmprendimiento.dataset.url = `/articulo/${propiedad.id}`; // Asignar data-url
+    city2.innerText = propiedad.city.toUpperCase();
+    adress2.innerText = propiedad.adress.toUpperCase();
     price2.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-    }).format(window.carruseles.emprendimiento[randomIndexEmprendimiento].price);
+    }).format(propiedad.price);
   }
-
-  // Ahora, también agregamos las imágenes para el cambio
-  window.carruseles.recomendado.forEach(image => {
-    const imgElement = document.createElement('img');
-    imgElement.src = image.principalImage;
-    imgElement.alt = 'Recomendado';
-    carruselRecomendado.appendChild(imgElement);
-  });
-
-  window.carruseles.emprendimiento.forEach(image => {
-    const imgElement = document.createElement('img');
-    imgElement.src = image.principalImage;
-    imgElement.alt = 'Emprendimiento';
-    carruselEmprendimiento.appendChild(imgElement);
-  });
-}
+};

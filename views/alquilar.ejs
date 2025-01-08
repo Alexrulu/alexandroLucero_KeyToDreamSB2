@@ -42,7 +42,7 @@
 
     <% propiedades.forEach(propiedad => { %>
       <article class="article-box">
-        <a href="/articulo" style="display: flex">
+        <a href="/articulo/<%= propiedad.id %>" style="display: flex">
           <div>
             <img class="img-imagendealquiler" src="<%= propiedad.principalImage %>">
           </div>
@@ -55,7 +55,6 @@
             <div class="left-down-article">
               <i class="fa-solid fa-camera"></i><p>16</p>
               <i class="fa-solid fa-video"></i><p>30s</p>
-              <i class="fa-solid fa-compass-drafting"></i>
             </div>
           </div>
         </a>

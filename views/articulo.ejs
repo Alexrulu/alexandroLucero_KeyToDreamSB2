@@ -40,62 +40,74 @@
 
   <main>
     <div class="article-img-box">
-      <img src="/images/compra.png"></img>
-      <img src="/images/compra.png"></img>
-      <div class="video-box">
-        <img src="/images/compra.png"></img>
-        <i class="fa-solid fa-video"><p>30s</p></i>
-      </div>
-      <img src="/images/compra.png"></img>
-      <div class="drafting-box">
-        <img src="/images/planos.jpg">
-        <i class="fa-solid fa-compass-drafting"></i>
-      </div>
+      <img src="<%= propiedad.principalImage %>" alt="Imagen principal">
+      <!-- Mostrar imágenes secundarias -->
+      <% propiedad.secondaryImages.forEach(image => { %>
+        <img class="article-img2" src="<%= image %>" alt="Imagen secundaria">
+      <% }) %>
     </div>
+  
     <div class="description-box">
       <div class="description-left-box">
-        <p>$40000 - VENTA</p>
-        <h4>MARTIN ALZAGA 2190</h4>
-        <h3>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</h3>
-        <div class="description-left-details-box">
-          <i class="fa-solid fa-ruler"><p>1350 M² TOTALES</p></i>
-          <i class="fa-regular fa-square-full"><p>120 M² CUBIERTOS</p></i>
-          <i class="fa-solid fa-door-open"><p>7 AMBIENTES</p></i>
-          <i class="fa-solid fa-bed"><p>5 DORMITORIOS</p></i>
-          <i class="fa-solid fa-toilet"><p>3 BAÑOS</p></i>
-          <i class="fa-solid fa-car"><p>2 COCHES</p></i>
-          <i class="fa-regular fa-calendar"><p>2 AÑOS</p></i>
+        <p class="articulo-precio-box">USD $<%= propiedad.price.toLocaleString('en-US') %><span class="articulo-propiedad-type-deco"><%=  propiedades_type_invertido[propiedad.type] %></span></p>
+        <h4><%= propiedad.adress.toUpperCase() %></h4>
+        <h3><%= propiedad.city.toUpperCase() %></h3>
+        <p class="articulo-description-box"><%= propiedad.description %></p>
+  
+        <div class="description-details">
+          <p><i class="fa-solid fa-ruler"></i><b>Superficie Total</b> <%= propiedad.m2tot %> m²</p>
+          <p><i class="fa-regular fa-square-full"></i><b>Superficie Cubierta</b> <%= propiedad.m2cov %> m²</p>
+          <p><i class="fa-solid fa-door-open"></i><b>Ambientes</b> <%= propiedad.ambiente %></p>
+          <p><i class="fa-solid fa-bed"></i><b>Baños</b> <%= propiedad.bathroom %></p>
+          <p><i class="fa-solid fa-toilet"></i><b>Dormitorios</b> <%= propiedad.bedroom %></p>
+          <p><i class="fa-solid fa-car"></i><b>Coches</b> <%= propiedad.cars %></p>
+          <% if (propiedad.kitchen === 1) { %>
+            <p><b>Cocina</b></p>
+          <% } %>
+          <% if (propiedad.pool === 1) { %>
+            <p><b>Piscina</b></p>
+          <% } %>
+          <% if (propiedad.balcony === 1) { %>
+            <p><b>Balcón</b></p>
+          <% } %>
+          <% if (propiedad.grill === 1) { %>
+            <p><b>Parrilla</b></p>
+          <% } %>
+          <% if (propiedad.laundry === 1) { %>
+            <p><b>Lavadero</b></p>
+          <% } %>
+          <% if (propiedad.vigilance === 1) { %>
+            <p><b>Vigilancia</b></p>
+          <% } %>
         </div>
-        <p>
-          EXCELENTE DEPARTAMENTO 7 AMBIENTES EN BARRIO GOLF LAS PAMPAS. HALL, LIVING COMEDOR CON COCINA AMERICANA, TOILETTE, DORMITORIO EN SUITE CON VESTIDOR, DORMITORIO EN SUITE CON PLACARD Y TERRAZA (23M2). COCHERA CUBIERTA EN SUBSUELO. TODOS LOS SERVICIOS CUBIERTOS. CONCRETO REAL ESTATE --
-        </p>
       </div>
+  
       <div class="contact-right-box">
-        <div>
-          <h4>AURORA GRUPO INMOBILIARIO</h4>
-          <i class="fa-solid fa-heart"></i>
+        <p class="articulo-personalName"><%= propiedad.personalName %> <i class="fa-solid fa-heart"></i></p>
+        <div class="announcer-box">
+          <h4>CONTACTAR AL ANUNCIANTE</h4>
+          <p><b>Email</b> <%= propiedad.email %></p>
+          <p><b>Teléfono</b> <%= propiedad.phoneBusiness %></p>
+          <% if (propiedad.contact === 2) { %>
+            <p><b>Teléfono personal</b> <%= propiedad.phonePersonal %></p>
+          <% } %>
         </div>
-        <p>CONTACTAR AL ANUNCIANTE</p>
-        <div class="contact-email-box">
-          <p>EMAIL</p>
-        </div>
-        <div class="contact-name-phone-box">
-          <div class="contact-name-box">
-            <p>NOMBRE</p>
+        <div class="myContact-box">
+          <textarea placeholder="Deja tu mensaje (máx 100 caract.)" maxlength="100"></textarea>
+          <div>
+            <button><i class="fa-solid fa-phone"></i>WHATSAPP</button>
+            <button><i class="fa-solid fa-envelope"></i>CORREO</button>
           </div>
-          <div class="contact-phone-box">
-            <p>CELULAR</p>
-          </div>
-        </div>
-        <p>MENSAJE</p>
-        <p>¡Hola! Quiero que se comuniquen conmigo por esta propiedad en alquiler que vi en KEY TO DREAM.</p>
-        <div class="contact-whatsapp-correo-box">
-          <i class="fa-solid fa-phone"> WHATSAPP</i>
-          <i class="fa-solid fa-envelope"> CORREO</i>
         </div>
       </div>
     </div>
   </main>
+
+  <script>
+    const propiedades_type_invertido = Object.fromEntries(
+      Object.entries(propiedades_type).map(([key, value]) => [value, key])
+    );
+  </script>
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>
 </body>

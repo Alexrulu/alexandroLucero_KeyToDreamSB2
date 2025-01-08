@@ -1488,7 +1488,7 @@ outline:none
     padding-bottom: 5px;
   }
   .post-1-progress-word-box {
-    font-size: small;
+    font-size: 12px;
 }
 }
 @media(max-width:550px){

@@ -760,7 +760,7 @@ h3{
   transition: all 0.2s ease;
 }
 .vermapa-button:hover{
-  background-color: gray;
+  background-color: dodgerblue;
 }
 
 /* crearcuenta button (temporal, la idea es que funcione al ser nuevo y darle click en USER)*/
@@ -984,7 +984,7 @@ h3{
   }
   .comprar-h3{
     top: 10%;
-    transform: translateY(41px);
+    transform: translateY(40px);
     background-color: white;
     padding: 10px 63.4px;
     left: 0;

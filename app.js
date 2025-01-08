@@ -82,6 +82,27 @@ app.get('/comprar', (req, res) => {
     const propiedadesVENTA = propiedades.filter(propiedad => propiedad.type === propiedades_type.VENTA);
     res.render('comprar', { propiedades: propiedadesVENTA });
 });
+app.get('/articulo/:id', (req, res) => {
+  // Crear el objeto invertido
+  const propiedades_type_invertido = Object.fromEntries(
+    Object.entries(propiedades_type).map(([key, value]) => [value, key])
+  );
+
+  const propiedadId = parseInt(req.params.id); // Convertir el ID a número
+  const propiedad = propiedades.find(p => p.id === propiedadId); // Buscar la propiedad por ID
+
+  if (propiedad) {
+      res.render('articulo', { 
+          propiedad, 
+          propiedades_type_invertido // Pasar el objeto invertido a la vista
+      });
+  } else {
+      res.status(404).send('Propiedad no encontrada'); // Manejo de errores
+  }
+});
+
+
+
 
 // Ruta de cierre de sesión
 router.get('/logout', (req, res) => {
@@ -156,7 +177,6 @@ app.post('/save-property-step1', (req, res) => {
   app.post('/save-property-step2', upload.fields([
     { name: 'mainImage', maxCount: 1 },
     { name: 'secondaryImages', maxCount: 32 },
-    { name: 'floorPlanImage', maxCount: 1 },
     { name: 'video', maxCount: 1 }
   ]), (req, res) => {
     const propiedad = req.session.propiedad || {};
@@ -171,9 +191,6 @@ app.post('/save-property-step1', (req, res) => {
       secondaryImages: files.secondaryImages 
         ? files.secondaryImages.map(file => `/images/${file.originalname}`) 
         : [], // Imágenes secundarias
-      plan: files.floorPlanImage 
-        ? `/images/${files.floorPlanImage[0].originalname}` 
-        : '', // Imagen de plano
       video: files.video 
         ? `/images/${files.video[0].originalname}` 
         : '' // Video
