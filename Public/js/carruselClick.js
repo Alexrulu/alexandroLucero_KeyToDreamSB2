@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         price.innerText = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
+          minimumFractionDigits: 0, // No mostrar decimales
+          maximumFractionDigits: 0, // No mostrar decimales
         }).format(propiedadActual.price);
       } else {
         city2.innerText = propiedadActual.city.toUpperCase();
@@ -23,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         price2.innerText = new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
+          minimumFractionDigits: 0, // No mostrar decimales
+          maximumFractionDigits: 0, // No mostrar decimales
         }).format(propiedadActual.price);
       }
       // Asociar la URL del detalle de la propiedad al centro de la imagen

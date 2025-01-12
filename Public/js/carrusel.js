@@ -31,6 +31,8 @@ window.onload = function () {
     price.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
+      minimumFractionDigits: 0, // No mostrar decimales
+      maximumFractionDigits: 0, // No mostrar decimales
     }).format(propiedad.price);
   }
 
@@ -46,6 +48,8 @@ window.onload = function () {
     price2.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
+      minimumFractionDigits: 0, // No mostrar decimales
+      maximumFractionDigits: 0, // No mostrar decimales
     }).format(propiedad.price);
   }
 };

@@ -83,7 +83,9 @@
       </div>
   
       <div class="contact-right-box">
-        <p class="articulo-personalName"><%= propiedad.personalName %> <i class="fa-solid fa-heart"></i></p>
+        <p class="articulo-personalName"><%= propiedad.personalName %>
+          <i class="<%= favoritos.includes(propiedad.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" data-id="<%= propiedad.id %>"></i>
+        </p>
         <div class="announcer-box">
           <h4>CONTACTAR AL ANUNCIANTE</h4>
           <p><b>Email</b> <%= propiedad.email %></p>
@@ -108,6 +110,7 @@
       Object.entries(propiedades_type).map(([key, value]) => [value, key])
     );
   </script>
+  <script src="/js/fav.js"></script>
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>
 </body>

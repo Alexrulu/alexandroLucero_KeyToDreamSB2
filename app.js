@@ -108,6 +108,12 @@ router.get('/', (req, res) => {
 
 // Ruta para artículos
 app.get('/articulo/:id', (req, res) => {
+
+  if (!req.session.favoritos) {
+    req.session.favoritos = [];
+  }
+  const favoritos = req.session.favoritos;
+
   const propiedades_type_invertido = Object.fromEntries(
     Object.entries(propiedades_type).map(([key, value]) => [value, key])
   );
@@ -115,7 +121,7 @@ app.get('/articulo/:id', (req, res) => {
   const propiedad = propiedades.find(p => p.id === propiedadId);
 
   if (propiedad) {
-    res.render('articulo', { propiedad, propiedades_type_invertido });
+    res.render('articulo', { propiedad, propiedades_type_invertido, favoritos: favoritos });
   } else {
     res.status(404).send('Propiedad no encontrada');
   }

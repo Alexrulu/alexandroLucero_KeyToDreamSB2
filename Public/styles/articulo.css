@@ -92,6 +92,13 @@
   font-size: large;
   align-items: center;
 }
+.articulo-personalName>i{
+  padding: 5px;
+  background-color: ghostwhite;
+  border: 2px solid gainsboro;
+  font-size: x-large;
+  border-radius: 5px;
+}
 .announcer-box{
   display: flex;
   flex-direction: column;
