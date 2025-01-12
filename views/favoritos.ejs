@@ -29,7 +29,7 @@
       </h3>
       <h3>
         <i class="fa-solid fa-location-dot"></i>
-        <p class="header-ubicacion">Usá tu dirección y enconTrá rapidamente</p>
+        <p class="header-ubicacion">Usá tu dirección y encontrá rapidamente</p>
       </h3>
       <%- include('Templates/userHeader') %>
       <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
@@ -38,152 +38,77 @@
   </header>
 
   <main>
-    <article class="article-box">
-      <a href="/articulo" style="display: flex">
-        <div>
-          <img class="img-imagendefavoritos" src="/images/compra.png">
-        </div>
-        <div class="left-article">
-          <p>$40000</p>
-          <h2>MARTIN ALZAGA 2190</h2>
-          <p>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</p>
-          <p>1350 M² TOTALES 7 AMBIENTES 5 DORMITORIOS 3 BAÑOS 2 COCHES</p>
-          <p>AURORA GRUPO INMOBILIARIO</p>
-          <div class="left-down-article">
-            <i class="fa-solid fa-camera"></i><p>16</p>
-            <i class="fa-solid fa-video"></i><p>30s</p>
-            <i class="fa-solid fa-compass-drafting"></i>
+  <% 
+  function getPropertyType(typeValue) {
+      const propiedades_type = { 1: "VENTA", 2: "ALQUILER", 3: "TEMPORADA" };
+      return propiedades_type[typeValue] || "DESCONOCIDO";
+  }
+  %>
+
+  <div id="no-favoritos" style="<%= propiedadesFavoritas.length === 0 ? '' : 'display: none;' %>">
+    <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
+      No tienes propiedades favoritas en este momento.
+    </p>
+  </div>
+
+  <div id="favoritos-lista">
+    <% propiedadesFavoritas.forEach(propiedad => { %>
+      <article class="article-box">
+        <a href="/articulo/<%= propiedad.id %>" style="display: flex">
+          <div>
+            <img class="img-imagendealquiler" src="<%= propiedad.principalImage %>">
           </div>
-        </div>
-      </a>
-      <div class="right-article">
-        <i class="fa-solid fa-phone"></i>
-        <i class="fa-solid fa-envelope"></i>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-    </article>
-    <article class="article-box">
-      <a href="/articulo" style="display: flex">
-        <div>
-          <img class="img-imagendefavoritos" src="/images/compra.png">
-        </div>
-        <div class="left-article">
-          <p>$40000</p>
-          <h2>MARTIN ALZAGA 2190</h2>
-          <p>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</p>
-          <p>1350 M² TOTALES 7 AMBIENTES 5 DORMITORIOS 3 BAÑOS 2 COCHES</p>
-          <p>AURORA GRUPO INMOBILIARIO</p>
-          <div class="left-down-article">
-            <i class="fa-solid fa-camera"></i><p>16</p>
-            <i class="fa-solid fa-video"></i><p>30s</p>
-            <i class="fa-solid fa-compass-drafting"></i>
+          <div class="left-article">
+            <p> USD $<%= propiedad.price.toLocaleString('en-US') %> - <%= getPropertyType(propiedad.type) %></p>
+            <h2><%= propiedad.adress.toUpperCase() %></h2>
+            <p><%= propiedad.city %></p>
+            <p><%= propiedad.m2tot %> M² TOTALES <%= propiedad.ambiente %> AMBIENTES <%= propiedad.bedroom %> DORMITORIOS <%= propiedad.bathroom %> BAÑOS <%= propiedad.cars %> COCHES</p>
+            <p><%= propiedad.personalName %></p>
+            <div class="left-down-article">
+              <i class="fa-solid fa-camera"></i><p>16</p>
+              <i class="fa-solid fa-video"></i><p>30s</p>
+              <i class="fa-solid fa-compass-drafting"></i>
+            </div>
           </div>
+        </a>
+        <div class="right-article">
+          <i class="fa-solid fa-phone"></i>
+          <i class="fa-solid fa-envelope"></i>
+          <i class="fa-solid fa-heart" data-id="<%= propiedad.id %>" onclick="toggleFavorito(<%= propiedad.id %>)"></i>
         </div>
-      </a>
-      <div class="right-article">
-        <i class="fa-solid fa-phone"></i>
-        <i class="fa-solid fa-envelope"></i>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-    </article>
-    <article class="article-box">
-      <a href="/articulo" style="display: flex">
-        <div>
-          <img class="img-imagendefavoritos" src="/images/compra.png">
-        </div>
-        <div class="left-article">
-          <p>$40000</p>
-          <h2>MARTIN ALZAGA 2190</h2>
-          <p>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</p>
-          <p>1350 M² TOTALES 7 AMBIENTES 5 DORMITORIOS 3 BAÑOS 2 COCHES</p>
-          <p>AURORA GRUPO INMOBILIARIO</p>
-          <div class="left-down-article">
-            <i class="fa-solid fa-camera"></i><p>16</p>
-            <i class="fa-solid fa-video"></i><p>30s</p>
-            <i class="fa-solid fa-compass-drafting"></i>
-          </div>
-        </div>
-      </a>
-      <div class="right-article">
-        <i class="fa-solid fa-phone"></i>
-        <i class="fa-solid fa-envelope"></i>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-    </article>
-    <article class="article-box">
-      <a href="/articulo" style="display: flex">
-        <div>
-          <img class="img-imagendefavoritos" src="/images/compra.png">
-        </div>
-        <div class="left-article">
-          <p>$40000</p>
-          <h2>MARTIN ALZAGA 2190</h2>
-          <p>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</p>
-          <p>1350 M² TOTALES 7 AMBIENTES 5 DORMITORIOS 3 BAÑOS 2 COCHES</p>
-          <p>AURORA GRUPO INMOBILIARIO</p>
-          <div class="left-down-article">
-            <i class="fa-solid fa-camera"></i><p>16</p>
-            <i class="fa-solid fa-video"></i><p>30s</p>
-            <i class="fa-solid fa-compass-drafting"></i>
-          </div>
-        </div>
-      </a>
-      <div class="right-article">
-        <i class="fa-solid fa-phone"></i>
-        <i class="fa-solid fa-envelope"></i>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-    </article>
-    <article class="article-box">
-      <a href="/articulo" style="display: flex">
-        <div>
-          <img class="img-imagendefavoritos" src="/images/compra.png">
-        </div>
-        <div class="left-article">
-          <p>$40000</p>
-          <h2>MARTIN ALZAGA 2190</h2>
-          <p>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</p>
-          <p>1350 M² TOTALES 7 AMBIENTES 5 DORMITORIOS 3 BAÑOS 2 COCHES</p>
-          <p>AURORA GRUPO INMOBILIARIO</p>
-          <div class="left-down-article">
-            <i class="fa-solid fa-camera"></i><p>16</p>
-            <i class="fa-solid fa-video"></i><p>30s</p>
-            <i class="fa-solid fa-compass-drafting"></i>
-          </div>
-        </div>
-      </a>
-      <div class="right-article">
-        <i class="fa-solid fa-phone"></i>
-        <i class="fa-solid fa-envelope"></i>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-    </article>
-    <article class="article-box">
-      <a href="/articulo" style="display: flex">
-        <div>
-          <img class="img-imagendefavoritos" src="/images/compra.png">
-        </div>
-        <div class="left-article">
-          <p>$40000</p>
-          <h2>MARTIN ALZAGA 2190</h2>
-          <p>MAR DE LAS PAMPAS, BUENOS AIRES, COSTA ATLÁNTICA</p>
-          <p>1350 M² TOTALES 7 AMBIENTES 5 DORMITORIOS 3 BAÑOS 2 COCHES</p>
-          <p>AURORA GRUPO INMOBILIARIO</p>
-          <div class="left-down-article">
-            <i class="fa-solid fa-camera"></i><p>16</p>
-            <i class="fa-solid fa-video"></i><p>30s</p>
-            <i class="fa-solid fa-compass-drafting"></i>
-          </div>
-        </div>
-      </a>
-      <div class="right-article">
-        <i class="fa-solid fa-phone"></i>
-        <i class="fa-solid fa-envelope"></i>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-    </article>
-    
-  </main>
+      </article>
+    <% }) %>
+  </div>
+</main>
+
+<script>
+  function toggleFavorito(id) {
+  fetch(`/favoritos/${id}`, {
+    method: 'DELETE',
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Eliminar el artículo del DOM
+        const article = document.querySelector(`[data-id="${id}"]`).closest('.article-box');
+        article.remove();
+
+        // Verificar si ya no hay propiedades favoritas
+        const listaFavoritos = document.querySelectorAll('.article-box');
+        if (listaFavoritos.length === 0) {
+          // Mostrar el mensaje de "No tienes propiedades favoritas"
+          document.getElementById('no-favoritos').style.display = 'block';
+        }
+      } else {
+        console.error('No se pudo desmarcar la propiedad.');
+      }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+</script>
+
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>
 </body>

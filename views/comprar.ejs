@@ -60,12 +60,16 @@
         <div class="right-article">
           <i class="fa-solid fa-phone"></i>
           <i class="fa-solid fa-envelope"></i>
-          <i class="fa-solid fa-heart"></i>
+          <!-- Cambiamos la clase del ícono dependiendo de si está en favoritos -->
+          <i class="<%= favoritos.includes(propiedad.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" 
+            data-id="<%= propiedad.id %>">
+         </i>
         </div>
       </article>
     <% }) %>
-    
   </main>
+
+  <script src="/js/fav.js"></script>
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>
 </body>

@@ -274,6 +274,29 @@ let propiedades = [
     description: 'Hermosa casa con jardín, piscina, parrilla y cochera. Ubicada en zona residencial tranquila y segura. Perfecta para familias que busquen un espacio amplio y cómodo.'
   }
 ]
+
+// Marcar una propiedad como favorita
+function marcarFavorito(req, id) {
+  if (!req.session.favoritos.includes(id)) {
+    req.session.favoritos.push(id);
+    console.log(`Propiedad con ID ${id} marcada como favorita.`);
+  } else {
+    console.log(`La propiedad con ID ${id} ya está en favoritos.`);
+  }
+}
+
+// Desmarcar una propiedad como favorita
+function desmarcarFavorito(req, id) {
+  req.session.favoritos = req.session.favoritos.filter(favId => favId !== id);
+  console.log(`Propiedad con ID ${id} removida de favoritos.`);
+}
+
+function obtenerFavoritos(favoritos) {
+  // Filtra las propiedades favoritas usando los IDs almacenados en favoritos
+  return propiedades.filter(propiedad => favoritos.includes(propiedad.id));
+}
+
+
 // Función para agregar una nueva propiedad
 function agregarPropiedad(nuevaPropiedad) {
   const nuevoId = propiedades[propiedades.length - 1].id + 1; // Genera el ID automáticamente
@@ -281,6 +304,27 @@ function agregarPropiedad(nuevaPropiedad) {
   propiedades.push(propiedadConId);
   console.log(`Propiedad con ID ${nuevoId} agregada exitosamente.`);
 }
+module.exports = {
+  propiedades,
+  propiedades_type,
+  propiedades_model,
+  agregarPropiedad,
+  marcarFavorito,
+  desmarcarFavorito,
+  obtenerFavoritos
+};
 
-// Exportar módulos
-module.exports = { propiedades, propiedades_type, propiedades_model, agregarPropiedad };
+
+// // Función para agregar o quitar una propiedad de los favoritos
+// function toggleFavorito(idPropiedad) {
+//   const index = propiedadesFavoritas.indexOf(idPropiedad);
+//   if (index === -1) {
+//     // Si la propiedad no está en favoritos, agregarla
+//     propiedadesFavoritas.push(idPropiedad);
+//     return { success: true, message: 'Propiedad agregada a favoritos' };
+//   } else {
+//     // Si la propiedad ya está en favoritos, eliminarla
+//     propiedadesFavoritas.splice(index, 1);
+//     return { success: true, message: 'Propiedad eliminada de favoritos' };
+//   }
+// }
