@@ -48,7 +48,15 @@ h3{
   left: 0;
   transform: scaleX(1);
 }
-
+.left-header>h3.active-category::after {
+  width: 100%; /* Línea completa */
+  left: 0;
+  transform: scaleX(1);
+  background-color: black; /* Color de la línea */
+}
+body.touch-screen .lupa-tactil {
+  display: none;
+}
 .header-buscar{
   position: absolute;
   right: 25px;
@@ -847,7 +855,12 @@ h3{
 }
 @media(max-width:930px){
   .header-buscar-alquilarComprar{
+    border-radius: 5px;
+    padding: 5px;
+    width: 110px;
+    bottom: -6px;
     display: none;
+    box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.2);
   }
 }
 @media(max-width:920px){
@@ -1023,7 +1036,7 @@ h3{
     position: absolute;
   }
   .header-buscar{
-    width: 100px;
+    width: 110px;
   }
   .vermapa-button-articulo{
     left: 100px;

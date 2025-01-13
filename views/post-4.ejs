@@ -71,7 +71,7 @@
         <button id="postingButton" type="submit">PUBLICAR</button>
       </div>
     </form>
-    
+
     <div id="postingPopup" class="ventana-posting" style="display: none;">
       <div class="mensaje-posting-progress">
         <img src="/images/favicon.png">
@@ -82,7 +82,6 @@
         <div class="posting-progress"></div>
       </div>
     </div>
-
     <!-- Boton que aparece al no haber completado todos los inputs requeridos -->
     <div id="error-popup" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -20%); background-color: white; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);">
       <p id="error-message" style="margin: 0; color: black; text-align: center; margin-bottom: 20px; font-weight: bold;"></p>
@@ -94,16 +93,13 @@
       // Obtener los parámetros de la URL
       const urlParams = new URLSearchParams(window.location.search);
       const errorMessage = urlParams.get('error'); // Extraer el parámetro "error"
-    
       // Si hay un mensaje de error, mostrarlo en la ventana emergente
       if (errorMessage) {
         const errorPopup = document.getElementById('error-popup');
         const errorText = document.getElementById('error-message');
-    
         // Mostrar el mensaje
         errorText.textContent = errorMessage;
         errorPopup.style.display = 'block';
-    
         // Agregar un evento para cerrar la ventana emergente
         const closeButton = document.getElementById('close-popup');
         closeButton.addEventListener('click', () => {

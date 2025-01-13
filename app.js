@@ -78,10 +78,25 @@ app.get('/alquilar', (req, res) => {
   }
 
   const favoritos = req.session.favoritos;
-  const propiedadesAlquiler = propiedades.filter(prop => prop.type === propiedades_type.ALQUILER);
 
-  res.render('alquilar', { propiedades: propiedadesAlquiler, favoritos: favoritos });
+  // Obtener el parámetro de búsqueda de ciudad
+  const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
+
+  // Filtrar propiedades por tipo ALQUILER
+  let propiedadesAlquiler = propiedades.filter(prop => prop.type === propiedades_type.ALQUILER);
+
+  // Si hay una ciudad especificada, filtrar propiedades por ciudad
+  if (city) {
+    propiedadesAlquiler = propiedadesAlquiler.filter(prop => 
+      prop.city.toLowerCase().includes(city)
+    );
+  }
+
+  // Renderizar la vista y pasar la variable city
+  res.render('alquilar', { propiedades: propiedadesAlquiler, favoritos: favoritos, city: city });
 });
+
+
 app.get('/comprar', (req, res) => {
   // Asegúrate de que los favoritos estén en la sesión
   if (!req.session.favoritos) {
@@ -89,9 +104,23 @@ app.get('/comprar', (req, res) => {
   }
 
   const favoritos = req.session.favoritos;
-  const propiedadesVenta = propiedades.filter(prop => prop.type === propiedades_type.VENTA);
-  res.render('comprar', { propiedades: propiedadesVenta, favoritos: favoritos });
+
+  // Obtener el parámetro de búsqueda de ciudad
+  const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
+
+  // Filtrar propiedades por tipo VENTA
+  let propiedadesVenta = propiedades.filter(prop => prop.type === propiedades_type.VENTA);
+
+  // Si hay una ciudad especificada, filtrar propiedades por ciudad
+  if (city) {
+    propiedadesVenta = propiedadesVenta.filter(prop => 
+      prop.city.toLowerCase().includes(city)
+    );
+  }
+
+  res.render('comprar', { propiedades: propiedadesVenta, favoritos: favoritos, city: city });
 });
+
 
 
 // Acceso a las propiedades desde la base de datos
@@ -126,6 +155,7 @@ app.get('/articulo/:id', (req, res) => {
     res.status(404).send('Propiedad no encontrada');
   }
 });
+
 
 
 // Ruta de cierre de sesión
