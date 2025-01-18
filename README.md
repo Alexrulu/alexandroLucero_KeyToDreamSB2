@@ -12,4 +12,6 @@ KEYTODREAM, Una web sobre venta/alquiler de propiedades en Argentina, hecha por 
 - Vista para editar o eliminar propiedad publicada por el mismo usuario, vista para que el administrador de la web elimine propiedades.
 - Desarrollar el flujo de Emprendimiento.
 
+Wireframe/Boceto: https://miro.com/app/board/uXjVL-TW2O0=/?share_link_id=576269415671
 Tablero de Trabajo: https://alexandro71000.atlassian.net/jira/software/projects/KAN/boards/1
+
