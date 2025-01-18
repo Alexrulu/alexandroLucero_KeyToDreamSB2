@@ -8,7 +8,8 @@ KEYTODREAM, Una web sobre venta/alquiler de propiedades en Argentina, hecha por 
 ### Algunas de las Funcionalidades
 - Flujo de /register /login, publicar propiedades, guardar propiedades, etc.
 
-### Algunss faltantes respecto al backend:
-- Api google maps .
+### Faltantes
+- Vista para editar o eliminar propiedad publicada por el mismo usuario, vista para que el administrador de la web elimine propiedades.
+- Desarrollar el flujo de Emprendimiento.
 
-La web debería estar completa para el 10/01/25.
+Tablero de Trabajo: https://alexandro71000.atlassian.net/jira/software/projects/KAN/boards/1

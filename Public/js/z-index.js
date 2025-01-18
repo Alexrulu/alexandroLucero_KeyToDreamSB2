@@ -20,7 +20,7 @@ aplicarEventos();
 window.addEventListener("resize", aplicarEventos);
 
 //para que el z-index se mantenga en 10 en la animacion al hacer click(mapa box)
-const zIndex10click = document.querySelectorAll(".index-main img:nth-child(3)");
+const zIndex10click = document.querySelectorAll(".index-main div:nth-child(3)");
 
 zIndex10click.forEach((img) => {
   img.addEventListener("click", () => {
@@ -34,8 +34,27 @@ zIndex10click.forEach((img) => {
 
 //---------------- (Mapa box, para que se extienda al clickear)
 
-const mapaExtend = document.querySelector('.index-main>img:nth-child(3)');
-mapaExtend.addEventListener('click', () => {
-  mapaExtend.classList.toggle('expandida'); // al hacer click grega o quita la clase 'expandida' simulando un :hover
-})
+// Seleccionar el contenedor del mapa
+const mapaExtend = document.querySelector('.index-main>div:nth-child(3)');
+
+// Evento para extender el mapa
+mapaExtend.addEventListener('click', (event) => {
+  event.stopPropagation(); // Evitar que el evento se propague al documento
+  mapaExtend.classList.add('expandida'); // Agregar la clase para extender el mapa
+
+  // Esperar a que la transición termine antes de redibujar el mapa
+  setTimeout(() => {
+    map.invalidateSize(); // Redibujar el mapa para adaptarse al nuevo tamaño
+  }, 300);
+});
+
+// Evento global para cerrar el mapa
+document.addEventListener('click', (event) => {
+  if (!mapaExtend.contains(event.target)) {
+    mapaExtend.classList.remove('expandida'); // Remover la clase para contraer el mapa
+  }
+});
+
+
+
 

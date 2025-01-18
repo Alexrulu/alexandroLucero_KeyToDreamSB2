@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/images/favicon.png" type="image/png">
-  <link rel="stylesheet" href="/styles/comprar-alquilar.css">
-  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
   <link rel="stylesheet" href="/styles/header.css">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/comprar-alquilar.css">
   <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
   <title>KEY TO DREAM</title>
 </head>
-
 <body>
   <header>
-    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.png"></a>
+    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.jpg"></a>
     <h2 class="header-logo-top-name">KEY TO DREAM</h2>
-    <div class="left-header left-header-alquilarComprar">
+    <div class="left-header">
       <i class="fa-solid fa-bars"></i>
       <h3><a href="/">INICIO</a></h3>
       <h3 class="alquilar-h3"><a href="/alquilar" style="text-decoration: none; color: inherit;">ALQUILAR</a></h3>
       <h3 class="comprar-h3"><a href="/comprar" style="text-decoration: none; color: inherit;">COMPRAR</a></h3>
-      <h3 class="masfiltros-button"><span class="filtros-button-hidden">MÁS FILTROS</span><i
-          class="fa-solid fa-angle-down"></i></h3>
+      <h3 class="masfiltros-button"><span class="filtros-button-hidden">MÁS FILTROS</span><i class="fa-solid fa-angle-down"></i></h3>
       <a href="/?map=open" class="vermapa-button">VER MAPA</a>
       <%- include('Templates/filtrosHeader') %>
     </div>
@@ -36,29 +33,27 @@
         <input type="text" placeholder="Usá tu dirección y encontrá rapidamente" class="header-ubicacion"></input>
       </h3>
       <%- include('Templates/userHeader') %>
-        <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
-
+      <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
+      
     </div>
   </header>
 
   <main>
-
-    <% propiedades.forEach(propiedad=> { %>
+    <% propiedades.forEach(propiedad => { %>
       <article class="article-box">
         <a href="/articulo/<%= propiedad.id %>" style="display: flex">
-          <div><img class="img-imagendealquiler" src="<%= propiedad.principalImage %>"></div>
+          <div>
+            <img class="img-imagendealquiler" src="<%= propiedad.principalImage %>">
+          </div>
           <div class="left-article">
-            <p> USD $<%= propiedad.price.toLocaleString('en-US') %> - ALQUILER</p>
+            <p> USD $<%= propiedad.price ? propiedad.price.toLocaleString('en-US') : '...' %> - VENTA</p>
             <h2><%= propiedad.adress.toUpperCase() %></h2>
             <p><%= propiedad.city %></p>
-            <p><%= propiedad.m2tot %> M² TOTALES <%= propiedad.ambiente %> AMBIENTES <%= propiedad.bedroom %> DORMITORIOS
-                    <%= propiedad.bathroom %> BAÑOS <%= propiedad.cars %> COCHES</p>
+            <p><%= propiedad.m2tot %> M² TOTALES <%= propiedad.ambiente %> AMBIENTES <%= propiedad.bedroom %> DORMITORIOS <%= propiedad.bathroom %> BAÑOS <%= propiedad.cars %> COCHES</p>
             <p><%= propiedad.personalName %></p>
             <div class="left-down-article">
-              <i class="fa-solid fa-camera"></i>
-              <p>16</p>
-              <i class="fa-solid fa-video"></i>
-              <p>30s</p>
+              <i class="fa-solid fa-camera"></i><p></p>
+              <i class="fa-solid fa-video"></i><p></p>
             </div>
           </div>
         </a>
@@ -68,17 +63,16 @@
           <!-- Cambiamos la clase del ícono dependiendo de si está en favoritos -->
           <i class="<%= favoritos.includes(propiedad.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" 
             data-id="<%= propiedad.id %>">
-         </i>      
+         </i>
         </div>
       </article>
-      <% }) %>
-      <% if (propiedades.length === 0) { %>
-        <p style="margin-top: 20px;">No se encontraron propiedades en la ciudad "<%= city.charAt(0).toUpperCase() + city.slice(1).toLowerCase() %>".</p>
-      <% } %>
-      
-      
+    <% }) %>
+    <% if (propiedades.length === 0) { %>
+      <p>No se encontraron propiedades en la ciudad "<%= city.charAt(0).toUpperCase() + city.slice(1).toLowerCase() %>".</p>
+    <% } %>
+    
+    
   </main>
-  
   
   
   <script src="/js/inCategorySearch.js"></script>
@@ -86,5 +80,4 @@
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>
 </body>
-
 </html>

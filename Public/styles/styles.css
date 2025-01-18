@@ -175,8 +175,7 @@ body{
 .index-main>img:nth-child(2) ~ .mapa-text>p:nth-child(2){
   transition: opacity 0.5s ease;
 }
-
-.index-main>img:nth-child(3){ /* mapa */
+.index-main>div:nth-child(3){ /* mapa */
   position: absolute;
   bottom: 0;
   right: 0;
@@ -187,8 +186,9 @@ body{
   border-top: 10px solid white;
   transition: all 0.2s ease;
   cursor: pointer;
+  z-index: 0;
 }
-.index-main>img:nth-child(3) ~ .mapa-text>p:first-child{
+.index-main>div:nth-child(3) ~ .mapa-text>p:first-child{
   position: absolute;
   top: 67%;
   left: 40.5%;
@@ -198,9 +198,9 @@ body{
   color: white;
   padding: 5px;
   font-weight: bold;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5)
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
-.index-main>img:nth-child(3) ~ .mapa-text>p:nth-child(2){
+.index-main>div:nth-child(3) ~ .mapa-text>p:nth-child(2){
   position: absolute;
   top: 94%;
   left: 40.5%;
@@ -212,44 +212,42 @@ body{
   transition: left 0.2s ease, opacity 0.5s ease, color 0.5s ease, text-shadow 0.5s ease;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 1)
 }
-.index-main>img:nth-child(3).expandida{
+.index-main>div:nth-child(3).expandida{
   height: 80vh;
   width: 80vw;
   z-index: 10;
   transition: all 0.5s ease;
-}
-.index-main>img:nth-child(3).expandida ~ .mapa-text>p:first-child{ /* .expandida actúa como :hover pero al hacer click */
+}  
+.index-main>div:nth-child(3).expandida ~ .mapa-text>p:first-child{ /* .expandida actúa como :hover pero al hacer click */
   top: 5%;
   left: 3%;
   transition: all 0.5s ease;
   color: transparent;
   text-shadow: none;
 }
-.index-main>img:nth-child(3).expandida ~ .mapa-text>p:nth-child(2){
+.index-main>div:nth-child(3).expandida ~ .mapa-text>p:nth-child(2){
   left: 3%;
   transition: all 0.5s ease;
   color: transparent;
   text-shadow: none;
 }
-.index-main>img:nth-child(3).expandida ~ .recomendado-text p{ /* desaparición de texto */
+.index-main>div:nth-child(3).expandida ~ .recomendado-text p{ /* desaparición de texto */
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-.index-main>img:nth-child(3).expandida ~ .recomendado-text>div>p{
+.index-main>div:nth-child(3).expandida ~ .recomendado-text>div>p{
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-.index-main>img:nth-child(3).expandida ~ .emprendimiento-text p{
+.index-main>div:nth-child(3).expandida ~ .emprendimiento-text p{
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-.index-main>img:nth-child(3).expandida ~ .emprendimiento-text>div>p{
+.index-main>div:nth-child(3).expandida ~ .emprendimiento-text>div>p{
   opacity: 0;
   transition: opacity 0.2s ease;
 }
-
 /* botones para cambiar de imagenes (son decorativos) */
-
 .left-button-recomendado{ /* Recomendado box */
   z-index: 10;
   position: absolute;
@@ -285,7 +283,6 @@ body{
   right: 0;
   transition: right 1s ease;
 }
-
 .index-main>img:nth-child(2):hover ~ .left-button-recomendado{ /* Emprendimiento button */ 
   left: 0;
   transition: left 1s ease;
@@ -294,22 +291,11 @@ body{
   right: 0.5vw;
   transition: right 1s ease;
 }
-
-.left-button-mobile{
-  display: none;
-}
-.right-button-mobile{
-  display: none;
-}
-.left-button-mobile2{
-  display: none;
-}
-.right-button-mobile2{
+.left-button-mobile, .right-button-mobile, .left-button-mobile2, .right-button-mobile2{
   display: none;
 }
 /*--------- Botones del mapa ------------*/
-
-.index-main>img:nth-child(3) ~ .lupa-mapa-hover{
+.index-main>div:nth-child(3) ~ .lupa-mapa-hover{
   color: white;
   font-size: x-large;
   position: absolute;
@@ -320,138 +306,27 @@ body{
   transition: all 0.2s ease;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5)
 }
-.index-main>img:nth-child(3):hover ~ .lupa-mapa-hover{
+.index-main>div:nth-child(3):hover ~ .lupa-mapa-hover{
   right: 30%;
   transition: all 0.2s ease;
 }
-.index-main>img:nth-child(3).expandida ~ .lupa-mapa-hover{
+.index-main>div:nth-child(3).expandida ~ .lupa-mapa-hover{
   bottom: 90%;
   opacity: 0;
   transition: bottom 0.5s ease, opacity 0.5s ease;
 }
-
-.index-main>img:nth-child(3).expandida ~ .interfaz-buscar-mapa{
-  top: 4.5%;
-  z-index: 10;
-  color: white;
-  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.5);
-  opacity: 1;
-  transition: all 0.5s ease, background-color 0.2s ease;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
-.interfaz-buscar-mapa{
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 15px 10px 10px;
-  background-color: rgba(255,255,255,0.2);
-  z-index: 9;
-  display: flex;
-  gap: 10px;
-  color: white;
-  backdrop-filter: blur(10px);
-  border-radius: 5px;
-  transition: all 0.2s ease;
-  opacity: 0;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-.interfaz-buscar-mapa:hover{
-  background-color: rgba(255,255,255, 0.5);
-}
-.interfaz-buscar-mapa>p:first-child>i{
-  margin-left: 50px;
-}
-.interfaz-buscar-mapa>p:nth-child(2){
-  padding: 0 100px 0 0;
-  border-bottom: 2px solid;
-}
-
-.interfaz-verlistado-mapa{
-  position: absolute;
-  right: -15%;
-  top: 4.5%;
-  z-index: 10;
-  padding: 10px;
-  backdrop-filter: blur(5px);
-  color: white;
-  border-radius: 5px;
-  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.5);
-  background-color: rgba(255,255,255,0.2);
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  opacity: 0;
-  transition: all 0.2s ease
-}
-.interfaz-verlistado-mapa:hover{
-  background-color: rgba(255,255,255, 0.5);
-}
-.index-main>img:nth-child(3).expandida ~ .interfaz-verlistado-mapa{
-  right: 2%;
-  pointer-events: all;
-  opacity: 1;
-  transition: all 0.5s ease, background-color 0.2s ease;
-}
-
-.interfaz-draw-mapa{
-  display: flex;
-  position: absolute;
-  z-index: 10;
-  bottom: -15%;
-  left: 50%; /* en conjunto con translate x para centrar un objeto absolute */
-  transform: translateX(-50%); /* en conjunto con left 50% para centrar un objeto absolute */
-  color: white;
-  gap: 10px;
+/* Controles inicialmente ocultos */
+#mapa .leaflet-control-container {
+  position: relative;
+  top: -100px;
+  pointer-events: none; /* Evita clics cuando están ocultos */
   transition: all 0.2s ease;
 }
-.interfaz-draw-mapa>p:first-child>i{
-  margin-left: 10px;
-}
-.interfaz-draw-mapa>p, .interfaz-draw-mapa>a{
-  padding: 10px;
-  backdrop-filter: blur(5px);
-  border-radius: 5px;
-  background-color: rgba(255,255,255,0.2);
-  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.5);
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.2s ease;
-}
-.interfaz-draw-mapa>p:hover, .interfaz-draw-mapa>a:hover{
-  background-color: rgba(255,255,255, 0.5);
-}
-.index-main>img:nth-child(3).expandida ~ .interfaz-draw-mapa{
-  bottom: 2.5%;
-  transition: all 0.5s ease;
-}
-
-.interfaz-zoom-mapa{
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  z-index: 10;
-  right: -15%;
-  bottom: 2.5%;
-  color: white;
-  gap: 5px;
-  transition: all 0.2s ease;
-}
-.interfaz-zoom-mapa>i{
-  padding: 5px 6px;
-  font-size: x-large;
-  background-color: rgba(255,255,255,0.2);
-  backdrop-filter: blur(5px);
-  border-radius: 5px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.5);
-  transition: all 0.2s ease;
-}
-.interfaz-zoom-mapa>i:hover{
-  background-color: rgba(255,255,255, 0.5);
-}
-.index-main>img:nth-child(3).expandida ~ .interfaz-zoom-mapa{
-  right: 2%;
-  transition: all 0.5s ease;
+/* Mostrar controles cuando el mapa está expandido */
+#mapa.expandida .leaflet-control-container {
+  top: 0px;
+  pointer-events: auto;
+  transition: all 0.8s ease;
 }
 
 footer{
@@ -1099,16 +974,16 @@ outline:none
   .index-main>img:nth-child(2):hover{
     width: 90vw;
   }
-  .index-main>img:nth-child(3){
+  .index-main>div:nth-child(3){
     width: 55vw;
   }
-  .index-main>img:nth-child(3).expandida{
+  .index-main>div:nth-child(3).expandida{
     width: 90vw;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:first-child{
+  .index-main>div:nth-child(3) ~ .mapa-text>p:first-child{
     left: 41.5%;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:nth-child(2){
+  .index-main>div:nth-child(3) ~ .mapa-text>p:nth-child(2){
     left: 41.5%;
   }
 }
@@ -1151,16 +1026,16 @@ outline:none
   .index-main>img:nth-child(2):hover{
     width: 96vw;
   }
-  .index-main>img:nth-child(3){
+  .index-main>div:nth-child(3){
     width: 58vw;
   }
-  .index-main>img:nth-child(3).expandida{
+  .index-main>div:nth-child(3).expandida{
     width: 96vw;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:first-child{
+  .index-main>div:nth-child(3) ~ .mapa-text>p:first-child{
     left: 42.5%;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:nth-child(2){
+  .index-main>div:nth-child(3) ~ .mapa-text>p:nth-child(2){
     left: 42.5%;
   }
 
@@ -1208,11 +1083,11 @@ outline:none
     opacity: 0;
     transition: opacity 0.2s ease;
   }
-  .index-main>img:nth-child(3).expandida ~ .left-button-mobile{
+  .index-main>div:nth-child(3).expandida ~ .left-button-mobile{
     opacity: 0;
     transition: all 0.2s ease;
   }
-  .index-main>img:nth-child(3).expandida ~ .right-button-mobile{
+  .index-main>div:nth-child(3).expandida ~ .right-button-mobile{
     opacity: 0;
     transition: all 0.2s ease;
   }
@@ -1349,7 +1224,7 @@ outline:none
     opacity: 1;
   }
 
-  .index-main>img:nth-child(3){
+  .index-main>div:nth-child(3){
     width: 96vw;
     height: 26.6vh;
     position: absolute;
@@ -1357,23 +1232,23 @@ outline:none
     border-bottom: 5px solid white;
     border-left: none;
   }
-  .index-main>img:nth-child(3).expandida{
+  .index-main>div:nth-child(3).expandida{
     height: 80vh;
     z-index: 10;
   }
-  .index-main>img:nth-child(3).expandida ~ .left-button-mobile{
+  .index-main>div:nth-child(3).expandida ~ .left-button-mobile{
     opacity: 0;
     transition: all 0.2s ease;
   }
-  .index-main>img:nth-child(3).expandida ~ .right-button-mobile{
+  .index-main>div:nth-child(3).expandida ~ .right-button-mobile{
     opacity: 0;
     transition: all 0.2s ease;
   }
-  .index-main>img:nth-child(3).expandida ~ .left-button-mobile2{
+  .index-main>div:nth-child(3).expandida ~ .left-button-mobile2{
     opacity: 0;
     transition: all 0.2s ease;
   }
-  .index-main>img:nth-child(3).expandida ~ .right-button-mobile2{
+  .index-main>div:nth-child(3).expandida ~ .right-button-mobile2{
     opacity: 0;
     transition: all 0.2s ease;
   }
@@ -1381,10 +1256,10 @@ outline:none
     opacity: 0;
   }
 
-  .index-main>img:nth-child(3) ~ .mapa-text>p:first-child{
+  .index-main>div:nth-child(3) ~ .mapa-text>p:first-child{
     left: 42.5%;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:nth-child(2){
+  .index-main>div:nth-child(3) ~ .mapa-text>p:nth-child(2){
     left: 42.5%;
   }
 
@@ -1398,11 +1273,11 @@ outline:none
     left: 1.5%;
     font-size: 10px;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:first-child{
+  .index-main>div:nth-child(3) ~ .mapa-text>p:first-child{
     top: 69%;
     left: 1%;
   }
-  .index-main>img:nth-child(3) ~ .mapa-text>p:nth-child(2){
+  .index-main>div:nth-child(3) ~ .mapa-text>p:nth-child(2){
     top: 94%;
     left: 1.5%;
   }

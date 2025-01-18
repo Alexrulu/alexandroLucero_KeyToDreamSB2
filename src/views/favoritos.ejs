@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
   <link rel="stylesheet" href="/styles/styles.css">
   <link rel="stylesheet" href="/styles/comprar-alquilar.css">
   <link rel="stylesheet" href="/styles/header.css">
@@ -12,7 +12,7 @@
 </head>
 <body>
   <header>
-    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.png"></a>
+    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.jpg"></a>
     <h2 class="header-logo-top-name">KEY TO DREAM</h2>
     <div class="left-header">
       <i class="fa-solid fa-bars"></i>
@@ -64,8 +64,8 @@
             <p><%= propiedad.m2tot %> M² TOTALES <%= propiedad.ambiente %> AMBIENTES <%= propiedad.bedroom %> DORMITORIOS <%= propiedad.bathroom %> BAÑOS <%= propiedad.cars %> COCHES</p>
             <p><%= propiedad.personalName %></p>
             <div class="left-down-article">
-              <i class="fa-solid fa-camera"></i><p>16</p>
-              <i class="fa-solid fa-video"></i><p>30s</p>
+              <i class="fa-solid fa-camera"></i><p></p>
+              <i class="fa-solid fa-video"></i><p></p>
               <i class="fa-solid fa-compass-drafting"></i>
             </div>
           </div>
@@ -104,10 +104,7 @@
     })
     .catch(error => console.error('Error:', error));
 }
-
-
 </script>
-
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>
 </body>

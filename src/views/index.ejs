@@ -6,16 +6,19 @@
   <script>
     window.carruseles = <%- JSON.stringify(carruseles) %>;
   </script>
-  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
   <link rel="stylesheet" href="/styles/header.css">
   <link rel="stylesheet" href="/styles/styles.css">
   <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
-  
+  <link rel="stylesheet" href="/styles/leaflet-modificado.css"/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="/styles/control-geocoder.css"/>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <title>KEY TO DREAM</title>
 </head>
 <body class="index-html">
   <header>
-    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.png"></a>
+    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.jpg"></a>
     <h2 class="header-logo-top-name">KEY TO DREAM</h2>
     <div class="left-header">
       <i class="fa-solid fa-bars"></i>
@@ -44,7 +47,8 @@
   <main class="index-main">
     <img id="carruselRecomendado">
     <img id="carruselEmprendimiento">
-    <img src="/images/usaelmapa.jpg">
+    <div id="mapa"></div>
+
 
     <div class="recomendado-text">
       <p>RECOMENDADO</p>
@@ -75,30 +79,11 @@
     <button class="left-button-mobile2"><i class="fa-solid fa-chevron-left"></i></button>
     <button class="right-button-mobile2"><i class="fa-solid fa-chevron-right"></i></button>
 
-    <!--botones del mapa-->
     <i class="fa-solid fa-magnifying-glass lupa-mapa-hover lupa-mapa-hover-delete"></i>
     
-    <div class="interfaz-buscar-mapa">
-      <p>Casa<i class="fa-solid fa-angle-down"></i></p>
-      <p>Ciudad</p>
-      <i class="fa-solid fa-magnifying-glass lupa-mapa-hover lupa-mapa-hover-nav"></i>
-    </div>
-
-    <a href="/alquilar" class="interfaz-verlistado-mapa">VER LISTADO</a>
-
-    <div class="interfaz-draw-mapa">
-      <p>DIBUJAR<i class="fa-regular fa-circle"></i></p>
-      <a href="/alquilar">BUSCAR EN ESTA ZONA</a>
-    </div>
-
-    <div class="interfaz-zoom-mapa">
-      <i class="fa-solid fa-plus"></i>
-      <i class="fa-solid fa-minus"></i>
-    </div>
-
     <script>//js detecta map=open en la url entonces abre el mapa
       if (window.location.search.includes('map=open')) {
-          document.querySelector('.index-main > img:nth-child(3)').classList.add('expandida');
+          document.querySelector('.index-main > div:nth-child(3)').classList.add('expandida');
       }
     </script>
   </main>
@@ -119,6 +104,23 @@
       <button id="closePopup">Cerrar</button>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Selecciona el contenedor del formulario
+      const geocoderForm = document.querySelector('.leaflet-control-geocoder-form');
+  
+      // Busca el input dentro del contenedor
+      if (geocoderForm) {
+        const searchInput = geocoderForm.querySelector('input[type="search"]');
+        
+        // Cambia el texto del placeholder si el input existe
+        if (searchInput) {
+            searchInput.placeholder = "Ciudad...";
+        }
+      }
+    });
+  </script>
+
   <script src="/js/tactil.js"></script>
   <script src="/js/z-index.js"></script>
   <script src="/js/clickHeader.js"></script>
@@ -127,5 +129,6 @@
   <script src="/js/carruselClick.js"></script>
   <script src="/js/carrusel.js"></script>
   <script src="/js/menuBurger.js"></script>
+  <script src="/js/leaflet.js"></script>
 </body>
 </html>
