@@ -11,7 +11,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 // Inicialización de la aplicación
 const app = express();
-const PORT = 3000;
+const PORT = 3000 || process.env.PORT;
 // Configuración de Multer para la carga de archivos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '../Public/images')),
@@ -232,6 +232,27 @@ app.post('/publish-property', (req, res) => {
     res.redirect(`/post4?error=Faltan datos para finalizar la publicación.`);
   }
 });
+
+//-------------------REINICIO DEL SERVIDOR A LAS 5 AM--------(producción)---------
+const now = new Date();
+const fiveAM = new Date(now);
+fiveAM.setHours(5, 0, 0, 0); // Establecer las 5:00 AM del día siguiente
+// Si la hora actual ya pasó las 5 AM, ajustamos al día siguiente
+if (now.getHours() >= 5) {
+  fiveAM.setDate(fiveAM.getDate() + 1);
+}
+// Calcula el tiempo restante hasta las 5 AM
+const timeUntilFiveAM = fiveAM.getTime() - now.getTime();
+// Reiniciar el servidor a las 5 AM
+setTimeout(() => {
+  console.log('Reiniciando servidor a las 5 AM...');
+  process.exit(0);  // Esto cerrará el proceso y lo reiniciará automáticamente
+}, timeUntilFiveAM);
+// Luego de la primera ejecución, reinicia cada 24 horas a las 5 AM
+setInterval(() => {
+  console.log('Reiniciando servidor...');
+  process.exit(0);  // Reiniciar cada 24 horas
+}, 24 * 60 * 60 * 1000);
 
 // Iniciar el servidor
 app.listen(PORT, () => {
