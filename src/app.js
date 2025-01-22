@@ -235,24 +235,21 @@ app.post('/publish-property', (req, res) => {
 
 //-------------------REINICIO DEL SERVIDOR A LAS 5 AM--------(producción)---------
 const now = new Date();
-const fiveAM = new Date(now);
-fiveAM.setHours(5, 0, 0, 0); // Establecer las 5:00 AM del día siguiente
-// Si la hora actual ya pasó las 5 AM, ajustamos al día siguiente
+const nextFiveAM = new Date(now);
+
+// Configura la hora de reinicio para las 5 AM del día siguiente si ya pasó la hora
 if (now.getHours() >= 5) {
-  fiveAM.setDate(fiveAM.getDate() + 1);
+  nextFiveAM.setDate(now.getDate() + 1);
 }
-// Calcula el tiempo restante hasta las 5 AM
-const timeUntilFiveAM = fiveAM.getTime() - now.getTime();
-// Reiniciar el servidor a las 5 AM
+nextFiveAM.setHours(5, 0, 0, 0);
+
+const timeUntilFiveAM = nextFiveAM.getTime() - now.getTime();
+
+// Reinicia el servidor a las 5 AM
 setTimeout(() => {
   console.log('Reiniciando servidor a las 5 AM...');
-  process.exit(0);  // Esto cerrará el proceso y lo reiniciará automáticamente
+  process.exit(0); // Railway reiniciará automáticamente la aplicación
 }, timeUntilFiveAM);
-// Luego de la primera ejecución, reinicia cada 24 horas a las 5 AM
-setInterval(() => {
-  console.log('Reiniciando servidor...');
-  process.exit(0);  // Reiniciar cada 24 horas
-}, 24 * 60 * 60 * 1000);
 
 // Iniciar el servidor
 app.listen(PORT, () => {
