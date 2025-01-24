@@ -268,6 +268,15 @@
   .myContact-box div{
     margin-left: 0;
   }
+  .nav-button {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+  }
+  .nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
 }
 @media(max-width:560px){
   .article-img-box{
@@ -275,6 +284,23 @@
   grid-template-areas: 
   "a a a a"
   "b d c e";
+  }
+  #prevImage {
+    left: 20px;
+    transform: translateY(200px);
+  }
+  
+  #nextImage {
+    right: 20px;
+    transform: translateY(200px);
+  }
+  .nav-button {
+    background: ghostwhite;
+    color: black;
+  }
+  .nav-button:hover {
+    background-color: ghostwhite;
+    color: black;
   }
 }
 @media(max-width:400px){
