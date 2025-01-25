@@ -12,7 +12,7 @@
       <i class="micuenta-button fa-regular fa-address-card"><span class="span-i">MI CUENTA</span></i>
       <a class="publicar-button" href="/post1">PUBLICAR</a>
       <i class="ayuda-button fa-solid fa-user-tie"><span class="span-i">NECESITO AYUDA</span></i>
-      <i id="logoutButton" class="fa-solid fa-power-off" onclick="window.location.href='/logout'">
+      <i id="logoutButton" class="fa-solid fa-power-off" onclick="logout()">
         <span class="span-i">CERRAR SESIÓN</span>
       </i>
     </div>
@@ -26,6 +26,31 @@
       if (!isUserLoggedIn) {
         window.location.href = '/login';
       }
+    }
+  </script>
+  <script>
+    function logout() {
+      // Mostrar la animación
+      const logoutPopup = document.getElementById('logoutPopup');
+      logoutPopup.style.display = 'block';
+  
+      // Realizar la solicitud para cerrar sesión
+      fetch('/auth/logout')
+        .then(response => response.json())
+        .then(result => {
+          if (result.success) {
+            // Esperar 1.5 segundos para redirigir
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1500);
+          } else {
+            alert('Error al cerrar sesión');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Ocurrió un error al cerrar sesión.');
+        });
     }
   </script>
   <div class="mismensajes-click">

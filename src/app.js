@@ -3,10 +3,11 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const multer = require('multer');
-const routes = require('./routes/authRoutes'); // Rutas de autenticación
+const authRoutes = require('./routes/authRoutes'); // Rutas de autenticación
 const db = require('./controllers/db'); // Base de datos y propiedades
 const { agregarPropiedad, marcarFavorito, desmarcarFavorito } = require('./controllers/db');
 const favoritosRoutes = require('./routes/favoritos');
+const propertyRoutes = require('./routes/propertyRoutes');
 const dotenv = require('dotenv');
 dotenv.config();
 // Inicialización de la aplicación
@@ -122,15 +123,10 @@ app.get('/articulo/:id', (req, res) => {
     res.status(404).send('Propiedad no encontrada');
   }
 });
-// Ruta de cierre de sesión
-router.get('/logout', (req, res) => {
-  req.session.destroy();
-  console.log("Sesión destruida");
-});
 // Usar el enrutador en la aplicación
 app.use('/', router);
 // Rutas de autenticación
-app.use('/auth', routes);
+app.use('/auth', authRoutes);
 // Rutas para archivos estáticos
 const staticRoutes = {
   '/': 'index',
@@ -149,91 +145,7 @@ const staticRoutes = {
 Object.keys(staticRoutes).forEach(route => {
   app.get(route, (req, res) => res.render(staticRoutes[route]));
 });
-// Rutas para publicar propiedades (pasos)
-app.post('/save-property-step1', (req, res) => {
-  const data = req.body;
-  const user = req.session.user; // Suponiendo que el usuario está almacenado en la sesión
-  const nuevaPropiedad = {
-    ownerId: user.id, // Agregar el ID del usuario como propietario
-    type: propiedades_type[data.type.toUpperCase()],
-    model: propiedades_model[data.model.toUpperCase()],
-    adress: data.address,
-    city: data.city,
-    m2tot: Number(data.total_area),
-    m2cov: Number(data.covered_area),
-    ambiente: Number(data.rooms),
-    bathroom: Number(data.bathrooms),
-    cars: Number(data.parking),
-    bedroom: Number(data.bedrooms),
-    kitchen: data.features?.includes('cocina') ? 1 : 0,
-    pool: data.features?.includes('piscina') ? 1 : 0,
-    balcony: data.features?.includes('balcon') ? 1 : 0,
-    grill: data.features?.includes('parrilla') ? 1 : 0,
-    laundry: data.features?.includes('lavadero') ? 1 : 0,
-    vigilance: data.features?.includes('vigilancia') ? 1 : 0,
-  };
-  req.session.propiedad = req.session.propiedad || {};
-  req.session.propiedad.step1 = nuevaPropiedad;
-  console.log(nuevaPropiedad);
-  res.redirect('/post2');
-});
-
-app.post('/save-property-step2', upload.fields([
-  { name: 'mainImage', maxCount: 1 },
-  { name: 'secondaryImages', maxCount: 32 },
-  { name: 'video', maxCount: 1 }
-]), (req, res) => {
-  const propiedad = req.session.propiedad || {};
-  const files = req.files;
-  propiedad.step2 = {
-    principalImage: files.mainImage ? `/images/${files.mainImage[0].originalname}` : undefined,
-    secondaryImages: files.secondaryImages 
-      ? files.secondaryImages.map(file => `/images/${file.originalname}`) : [],
-    video: files.video ? `/images/${files.video[0].originalname}` : ''
-  };
-  req.session.propiedad = req.session.propiedad || {};
-  req.session.propiedad.step2 = propiedad.step2;
-  console.log('Propiedad después del paso 2:', propiedad);
-  res.redirect('/post3');
-});
-
-app.post('/save-property-step3', (req, res) => {
-  const data = req.body;
-  const propiedad = req.session.propiedad || {};
-  propiedad.step3 = {
-    contactType: data.contactType === 'inmobiliaria' ? 1 : 2,
-    email: data.email,
-    personalName: data.fullName,
-    phoneBusiness: data.phone || null,
-    phonePersonal: data.cell || null
-  };
-  req.session.propiedad = propiedad;
-  console.log('Propiedad después del paso 3:', propiedad);
-  res.redirect('/post4');
-});
-
-app.post('/publish-property', (req, res) => {
-  const propiedad = req.session.propiedad || {};
-  if (propiedad.step1 && propiedad.step2 && propiedad.step3 && req.body.price && req.body.description) {
-    propiedad.step4 = {
-      price: Number(req.body.price),
-      description: req.body.description
-    };
-    const propiedadNueva = {
-      ...propiedad.step1,
-      ...propiedad.step2,
-      ...propiedad.step3,
-      ...propiedad.step4
-    };
-    db.agregarPropiedad(propiedadNueva);
-    delete req.session.propiedad;
-    res.redirect('/');
-  } else {
-    res.redirect(`/post4?error=Faltan datos para finalizar la publicación.`);
-  }
-});
-
-
+app.use('/property', propertyRoutes(upload)); // Pasar "upload" como argumento
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
