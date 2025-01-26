@@ -28,7 +28,6 @@
   margin-top: 10px;
   gap: 10px;
 }
-
 .description-left-box{
   width: 60%;
   display: flex;
@@ -39,6 +38,24 @@
   display: flex;
   gap: 10px;
   align-items: center;
+}
+.eliminar-propiedad{
+  display: flex;
+  justify-content: left;
+}
+.eliminar-propiedad button{
+  background-color: crimson;
+  border: none;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+.eliminar-propiedad button:hover{
+  background-color: red;
+  transform: scale(1.1);
 }
 .articulo-propiedad-type-deco{
   background-color: black;
@@ -276,6 +293,10 @@
   .nav-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+  }
+  .eliminar-propiedad{
+    display: flex;
+    justify-content: center;
   }
 }
 @media(max-width:560px){

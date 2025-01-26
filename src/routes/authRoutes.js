@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 // Simulamos una base de datos en memoria
 let usersDatabase = []; 
 // Al cerrar la aplicación, los datos desaparecen
@@ -24,6 +25,7 @@ router.post('/process-register', (req, res) => {
   }
   // Crear el nuevo usuario (esto depende de tu base de datos, por ahora solo imprimimos los datos)
   const newUser = {
+    id: uuidv4(), // Generar un ID único
     userType,
     email,
     password,  // Guardamos la contraseña tal cual (sin hashing)
@@ -56,6 +58,9 @@ router.post('/process-login', (req, res) => {
   }
   // Si todo es correcto, guardamos los datos del usuario en la sesión
   req.session.user = user;
+
+  console.log('Usuario logueado:', user);
+  
   // Redirigir a la página de inicio
   res.json({ success: true, redirectTo: '/' });
 });

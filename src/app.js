@@ -19,6 +19,16 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => cb(null, file.originalname),
 });
 const upload = multer({ storage });
+// Acceso a las propiedades desde la base de datos
+const propiedades = db.propiedades;
+const propiedades_type = db.propiedades_type;
+const propiedades_model = db.propiedades_model;
+// Enrutador principal
+const router = express.Router();
+router.get('/', (req, res) => {
+  const carruseles = { recomendado: propiedades, emprendimiento: propiedades };
+  res.render('index', { carruseles });
+});
 // Configuración de vistas
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -45,7 +55,7 @@ app.use((req, res, next) => {
   if (!req.session.favoritos) req.session.favoritos = [];
   next();
 });
-// Rutas para manejar favoritos
+//-----------------------------------------------------(Rutas para manejar /alquilar, /comprar, /favoritos)
 app.post('/favoritos/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   marcarFavorito(req, id); // Usar la función modificada
@@ -96,16 +106,6 @@ app.get('/comprar', (req, res) => {
   }
   res.render('comprar', { propiedades: propiedadesVenta, favoritos: favoritos, city: city});
 });
-// Acceso a las propiedades desde la base de datos
-const propiedades = db.propiedades;
-const propiedades_type = db.propiedades_type;
-const propiedades_model = db.propiedades_model;
-// Enrutador principal
-const router = express.Router();
-router.get('/', (req, res) => {
-  const carruseles = { recomendado: propiedades, emprendimiento: propiedades };
-  res.render('index', { carruseles });
-});
 // Ruta para artículos
 app.get('/articulo/:id', (req, res) => {
   if (!req.session.favoritos) {
@@ -123,6 +123,7 @@ app.get('/articulo/:id', (req, res) => {
     res.status(404).send('Propiedad no encontrada');
   }
 });
+//-----------------------------------------------------(Fin de las rutas para manejar /alquilar /comprar /favoritos)
 // Usar el enrutador en la aplicación
 app.use('/', router);
 // Rutas de autenticación

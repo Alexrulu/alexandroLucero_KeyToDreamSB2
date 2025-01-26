@@ -51,10 +51,12 @@
 
     <div class="description-box">
       <div class="description-left-box">
-        <p class="articulo-precio-box">USD $<%= propiedad.price.toLocaleString('en-US') %><span
-              class="articulo-propiedad-type-deco">
-              <%= propiedades_type_invertido[propiedad.type] %>
-            </span></p>
+        <p class="articulo-precio-box">USD $<%= propiedad.price.toLocaleString('en-US') %>
+          <span class="articulo-propiedad-type-deco">
+            <%= propiedades_type_invertido[propiedad.type] %>
+          </span>
+        </p>
+        
         <h4>
           <%= propiedad.adress.toUpperCase() %>
         </h4>
@@ -103,6 +105,11 @@
                                 <p><b>Vigilancia</b></p>
                                 <% } %>
         </div>
+        <% if (propiedad.ownerId === user?.id) { %>
+          <form class="eliminar-propiedad"  action="/property/delete-property/<%= propiedad.id %>" method="POST">
+            <button type="submit">Eliminar propiedad</button>
+          </form>
+        <% } %>
       </div>
 
       <div class="contact-right-box">

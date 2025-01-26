@@ -3,6 +3,7 @@ const propiedades_model = { CASA: 1, DEPARTAMENTO: 2, PH: 3, CONDOMINIO: 4 };
 let propiedades = [
   {
     id: 1,
+    ownerId:1,
     type: propiedades_type.VENTA,
     model: propiedades_model.CASA,
     adress: 'La alameda 22', // También será el titular de la publicación
@@ -37,6 +38,7 @@ let propiedades = [
   },
   {
     id: 2,
+    ownerId:1,
     type: propiedades_type.ALQUILER,
     model: propiedades_model.DEPARTAMENTO,
     adress: 'Islas del Canal 03', // También será el titular de la publicación
@@ -71,6 +73,7 @@ let propiedades = [
   },
   {
     id: 3,
+    ownerId:1,
     type: propiedades_type.VENTA,
     model: propiedades_model.CASA,
     adress: 'Santa Barbara 234', // También será el titular de la publicación
@@ -105,6 +108,7 @@ let propiedades = [
   },
   {
     id: 4,
+    ownerId:1,
     type: propiedades_type.VENTA,
     model: propiedades_model.CASA,
     adress: 'Rivadavia 321',
@@ -139,6 +143,7 @@ let propiedades = [
   },
   {
     id: 5,
+    ownerId:1,
     type: propiedades_type.ALQUILER,
     model: propiedades_model.DEPARTAMENTO,
     adress: 'Av. Libertador 1000',
@@ -173,6 +178,7 @@ let propiedades = [
   },
   {
     id: 6,
+    ownerId:1,
     type: propiedades_type.VENTA,
     model: propiedades_model.CASA,
     adress: 'Av. Santa Fe 2050',
@@ -207,6 +213,7 @@ let propiedades = [
   },
   {
     id: 7,
+    ownerId:1,
     type: propiedades_type.ALQUILER,
     model: propiedades_model.DEPARTAMENTO,
     adress: 'Av. Cabildo 1500',
@@ -241,6 +248,7 @@ let propiedades = [
   },
   {
     id: 8,
+    ownerId:1,
     type: propiedades_type.ALQUILER,
     model: propiedades_model.CASA,
     adress: 'Av. Del Libertador 8000',
@@ -274,7 +282,6 @@ let propiedades = [
     description: 'Hermosa casa con jardín, piscina, parrilla y cochera. Ubicada en zona residencial tranquila y segura. Perfecta para familias que busquen un espacio amplio y cómodo.'
   }
 ]
-
 // Marcar una propiedad como favorita
 function marcarFavorito(req, id) {
   if (!req.session.favoritos.includes(id)) {
@@ -284,25 +291,39 @@ function marcarFavorito(req, id) {
     console.log(`La propiedad con ID ${id} ya está en favoritos.`);
   }
 }
-
 // Desmarcar una propiedad como favorita
 function desmarcarFavorito(req, id) {
   req.session.favoritos = req.session.favoritos.filter(favId => favId !== id);
   console.log(`Propiedad con ID ${id} removida de favoritos.`);
 }
-
 function obtenerFavoritos(favoritos) {
   // Filtra las propiedades favoritas usando los IDs almacenados en favoritos
   return propiedades.filter(propiedad => favoritos.includes(propiedad.id));
 }
-
-
 // Función para agregar una nueva propiedad
 function agregarPropiedad(nuevaPropiedad) {
   const nuevoId = propiedades[propiedades.length - 1].id + 1; // Genera el ID automáticamente
   const propiedadConId = { id: nuevoId, ...nuevaPropiedad };
   propiedades.push(propiedadConId);
   console.log(`Propiedad con ID ${nuevoId} agregada exitosamente.`);
+}
+// Función para eliminar una propiedad por ID, asegurando que solo el propietario pueda hacerlo
+function eliminarPropiedad(propiedadId, userId) {
+  // Buscar el índice de la propiedad
+  const propiedadIndex = propiedades.findIndex(prop => prop.id === propiedadId);
+
+  if (propiedadIndex === -1) {
+    return { success: false, error: 'Propiedad no encontrada.' };
+  }
+
+  // Verificar si el usuario es el dueño de la propiedad
+  if (propiedades[propiedadIndex].ownerId !== userId) {
+    return { success: false, error: 'No tienes permiso para eliminar esta propiedad.' };
+  }
+
+  // Eliminar la propiedad
+  propiedades.splice(propiedadIndex, 1);
+  return { success: true, message: `Propiedad con ID ${propiedadId} eliminada correctamente.` };
 }
 module.exports = {
   propiedades,
@@ -311,7 +332,8 @@ module.exports = {
   agregarPropiedad,
   marcarFavorito,
   desmarcarFavorito,
-  obtenerFavoritos
+  obtenerFavoritos,
+  eliminarPropiedad,
 };
 
 
