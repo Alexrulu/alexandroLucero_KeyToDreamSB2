@@ -39,7 +39,7 @@ module.exports = (upload) => {
   // Paso 2: Guardar imágenes y videos
   router.post('/save-property-step2', upload.fields([
     { name: 'mainImage', maxCount: 1 },
-    { name: 'secondaryImages', maxCount: 32 },
+    { name: 'secondaryImages', maxCount: 4 },
     { name: 'video', maxCount: 1 }
   ]), (req, res) => {
     const propiedad = req.session.propiedad || {};
