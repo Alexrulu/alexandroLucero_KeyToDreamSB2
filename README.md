@@ -8,9 +8,7 @@ KEYTODREAM, Una web sobre venta/alquiler de propiedades en Argentina, hecha por 
 ### Algunas de las Funcionalidades
 - Flujo de /register /login, publicar propiedades, guardar propiedades, etc.
 
-### Faltantes
-- Vista para editar o eliminar propiedad publicada por el mismo usuario, vista para que el administrador de la web elimine propiedades.
-- Desarrollar el flujo de Emprendimiento.
+- Flujo de emprendimientos no se desarrollará.
 
 -------------------------------------
 
