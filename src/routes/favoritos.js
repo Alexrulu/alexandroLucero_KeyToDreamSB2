@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
   const favoritos = req.session.favoritos || []; // Asegúrate de que la sesión tenga favoritos
   // Usar obtenerFavoritos con favoritos de la sesión
   const propiedadesFavoritas = obtenerFavoritos(favoritos); // Cambié esto para pasar los favoritos de la sesión
-  res.render('favoritos', { propiedadesFavoritas });
+  res.render('favoritos', { propiedadesFavoritas, todasPropiedades: propiedades, });
 });
 
 

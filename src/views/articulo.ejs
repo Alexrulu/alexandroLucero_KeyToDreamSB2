@@ -34,8 +34,8 @@
         <i class="fa-solid fa-location-dot"></i>
         <input type="text" placeholder="Usá tu dirección y encontrá rapidamente" class="header-ubicacion"></input>
       </h3>
-      <%- include('Templates/userHeader') %>
-        <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
+      <%- include('Templates/userHeader', { user: user, propiedades: todasPropiedades }) %>
+      <h3><i class="fa-solid fa-heart" onclick="handleUserIconClickFav()"></i></h3>
 
     </div>
   </header>
@@ -52,11 +52,11 @@
     <div class="description-box">
       <div class="description-left-box">
         <p class="articulo-precio-box">USD $<%= propiedad.price.toLocaleString('en-US') %>
-          <span class="articulo-propiedad-type-deco">
-            <%= propiedades_type_invertido[propiedad.type] %>
-          </span>
+            <span class="articulo-propiedad-type-deco">
+              <%= propiedades_type_invertido[propiedad.type] %>
+            </span>
         </p>
-        
+
         <h4>
           <%= propiedad.adress.toUpperCase() %>
         </h4>
@@ -104,12 +104,44 @@
                               <% if (propiedad.vigilance===1) { %>
                                 <p><b>Vigilancia</b></p>
                                 <% } %>
+
+
         </div>
-        <% if (propiedad.ownerId === user?.id) { %>
-          <form class="eliminar-propiedad"  action="/property/delete-property/<%= propiedad.id %>" method="POST">
-            <button type="submit">Eliminar propiedad</button>
-          </form>
-        <% } %>
+        <div class="modificar-eliminar-btn-box">
+          <% if (propiedad.ownerId === user?.id || user?.id === "1") { %>
+            <button type="button" id="btnModificar">Modificar propiedad</button>
+            <form id="formEditar" class="hiddenFormEditArticle formEditArticle" action="/property/edit-property/<%= propiedad.id %>" method="POST">
+              <div class="editArticle">
+                <label>Precio:</label>
+                <input type="number" name="price" value="<%= propiedad.price %>" required>
+              </div>
+              <div class="editArticle">
+                <label>Dirección:</label>
+                <input type="text" name="adress" value="<%= propiedad.adress %>" required>
+              </div>
+              <div class="editArticle">
+                <label>Ciudad:</label>
+                <input type="text" name="city" value="<%= propiedad.city %>" required>
+              </div>
+              <div class="editArticle">
+                <label>Descripción:</label>
+                <textarea name="description"><%= propiedad.description %></textarea>
+              </div>
+              <div class="editArticle">
+                <label>Superficie Total:</label>
+                <input type="number" name="m2tot" value="<%= propiedad.m2tot %>" required>
+              </div>
+              <div class="editArticle">
+                <label>Superficie Cubierta:</label>
+                <input type="number" name="m2cov" value="<%= propiedad.m2cov %>" required>
+              </div>
+              <button class="saveChangesBtnArticle" type="submit">Guardar cambios</button>
+              <button id="cancelBtnArticle">Cancelar</button>
+            </form>
+            <button id="btnEliminar" class="eliminar-propiedad-btn"
+              onclick="eliminarPropiedadCliente('<%= propiedad.id %>')">Eliminar</button>
+          <% } %>
+        </div>
       </div>
 
       <div class="contact-right-box">
@@ -164,6 +196,81 @@
       Object.entries(propiedades_type).map(([key, value]) => [value, key])
     );
   </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btnModificar = document.getElementById("btnModificar");
+      const formEditar = document.getElementById("formEditar");
+      const btnEliminar = document.getElementById("btnEliminar");
+      const cancelBtn = document.getElementById("cancelBtnArticle");
+      if (btnModificar && formEditar && cancelBtn) {
+        btnModificar.addEventListener("click", () => {
+          formEditar.classList.toggle("hiddenFormEditArticle"); // Mostrar/ocultar formulario
+          btnModificar.classList.toggle("hiddenFormEditArticle");
+          btnEliminar.classList.toggle("hiddenFormEditArticle");
+        });
+        cancelBtn.addEventListener("click", (event) => {
+          event.preventDefault(); // Prevenir la acción por defecto del botón
+          formEditar.classList.add("hiddenFormEditArticle"); // Ocultar formulario
+          btnModificar.classList.remove("hiddenFormEditArticle"); // Mostrar botón Modificar
+          btnEliminar.classList.remove("hiddenFormEditArticle"); // Mostrar botón Eliminar
+        });
+        formEditar.addEventListener("submit", (event) => {
+          event.preventDefault(); // Evita recargar la página
+          const formData = new FormData(formEditar);
+          const propiedadId = "<%= propiedad.id %>"; // ID de la propiedad
+          // Convertir FormData a un objeto JSON
+          const data = {};
+          formData.forEach((value, key) => {
+            data[key] = value;
+          });
+          // Enviar datos al servidor
+          fetch(`/propiedades/${propiedadId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`Error HTTP ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              alert(`✅ ${data.message}`);
+              window.location.reload(); // Recargar para ver los cambios
+            })
+            .catch(error => console.error("❌ Error:", error));
+        });
+      }
+    });
+
+  </script>
+  <style>
+    .hiddenFormEditArticle {
+      display: none;
+    }
+  </style>
+  <script>
+    function eliminarPropiedadCliente(id) {
+      fetch(`/propiedades/${id}`, { // Aquí cambia "articulo" por "propiedades"
+        method: 'DELETE',
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error HTTP ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          alert(`✅ ${data.message}`);
+          window.location.href = "/"; // Recargar la página para actualizar la vista
+        })
+        .catch(error => console.error('❌ Error:', error));
+    }
+  </script>
+
   <script src="/js/fav.js"></script>
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>

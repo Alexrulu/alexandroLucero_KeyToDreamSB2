@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -9,6 +10,8 @@ const { agregarPropiedad, marcarFavorito, desmarcarFavorito } = require('./contr
 const favoritosRoutes = require('./routes/favoritos');
 const propertyRoutes = require('./routes/propertyRoutes');
 const dotenv = require('dotenv');
+const { eliminarPropiedad } = require('./controllers/db');
+const { modificarPropiedad } = require('./controllers/db');
 dotenv.config();
 // Inicialización de la aplicación
 const app = express();
@@ -20,14 +23,19 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 // Acceso a las propiedades desde la base de datos
-const propiedades = db.propiedades;
+function cargarPropiedades() {
+  const filePath = path.join(__dirname, './controllers/propiedades.json'); // Ajusta la ruta si es necesario
+  const data = fs.readFileSync(filePath, 'utf8');
+  return JSON.parse(data);
+}
 const propiedades_type = db.propiedades_type;
 const propiedades_model = db.propiedades_model;
 // Enrutador principal
 const router = express.Router();
 router.get('/', (req, res) => {
+  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
   const carruseles = { recomendado: propiedades, emprendimiento: propiedades };
-  res.render('index', { carruseles });
+  res.render('index', { carruseles, propiedades });
 });
 // Configuración de vistas
 app.set('views', path.join(__dirname, 'views'));
@@ -55,6 +63,7 @@ app.use((req, res, next) => {
   if (!req.session.favoritos) req.session.favoritos = [];
   next();
 });
+
 //-----------------------------------------------------(Rutas para manejar /alquilar, /comprar, /favoritos)
 app.post('/favoritos/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
@@ -71,6 +80,8 @@ app.use('/favoritos', favoritosRoutes);
 // Rutas para alquilar y comprar
 app.get('/alquilar', (req, res) => {
   // Asegúrate de que los favoritos estén en la sesión
+  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+
   if (!req.session.favoritos) {
     req.session.favoritos = [];
   }
@@ -86,9 +97,11 @@ app.get('/alquilar', (req, res) => {
     );
   }
   // Renderizar la vista y pasar la variable city
-  res.render('alquilar', { propiedades: propiedadesAlquiler, favoritos: favoritos, city: city});
+  res.render('alquilar', { propiedades: propiedadesAlquiler, todasPropiedades: propiedades, favoritos: favoritos, city: city});
 });
 app.get('/comprar', (req, res) => {
+  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+
   // Asegúrate de que los favoritos estén en la sesión
   if (!req.session.favoritos) {
     req.session.favoritos = [];
@@ -104,10 +117,22 @@ app.get('/comprar', (req, res) => {
       prop.city.toLowerCase().includes(city)
     );
   }
-  res.render('comprar', { propiedades: propiedadesVenta, favoritos: favoritos, city: city});
+  res.render('comprar', { propiedades: propiedadesVenta, todasPropiedades: propiedades, favoritos: favoritos, city: city});
 });
+
+//---------ADMINISTRADOR--------
+app.get('/propiedadesAdmin', (req, res) => {
+  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+  // Obtener el parámetro de búsqueda de ciudad
+  const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
+  // Filtrar propiedades por tipo VENTA
+  res.render('propiedadesAdmin', { propiedades: propiedades, city: city});
+});
+
 // Ruta para artículos
 app.get('/articulo/:id', (req, res) => {
+  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+
   if (!req.session.favoritos) {
     req.session.favoritos = [];
   }
@@ -118,11 +143,60 @@ app.get('/articulo/:id', (req, res) => {
   const propiedadId = parseInt(req.params.id);
   const propiedad = propiedades.find(p => p.id === propiedadId);
   if (propiedad) {
-    res.render('articulo', { propiedad, propiedades_type_invertido, favoritos: favoritos });
+    res.render('articulo', { propiedad, propiedades_type_invertido,todasPropiedades: propiedades, favoritos: favoritos });
   } else {
     res.status(404).send('Propiedad no encontrada');
   }
 });
+app.delete('/propiedades/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  if (!id) {
+    return res.status(400).json({ success: false, message: 'ID inválido' });
+  }
+
+  const eliminado = eliminarPropiedad(id);
+
+  if (eliminado) {
+    res.json({ success: true, message: `Propiedad con ID ${id} eliminada.` });
+  } else {
+    res.status(404).json({ success: false, message: `No se encontró la propiedad con ID ${id}.` });
+  }
+});
+app.put('/propiedades/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const nuevaData = req.body; // Datos actualizados enviados desde el cliente
+
+  if (!id || !nuevaData) {
+    return res.status(400).json({ success: false, message: 'ID inválido o datos incorrectos' });
+  }
+
+  const actualizado = modificarPropiedad(id, nuevaData);
+
+  if (actualizado) {
+    res.json({ success: true, message: `Propiedad con ID ${id} modificada con éxito.` });
+  } else {
+    res.status(404).json({ success: false, message: `No se encontró la propiedad con ID ${id}.` });
+  }
+});
+
+app.get('/post1', (req, res) => {
+  const propiedades = cargarPropiedades();
+  res.render('post-1', { propiedades });
+})
+app.get('/post2', (req, res) => {
+  const propiedades = cargarPropiedades();
+  res.render('post-2', { propiedades });
+})
+app.get('/post3', (req, res) => {
+  const propiedades = cargarPropiedades();
+  res.render('post-3', { propiedades });
+})
+app.get('/post4', (req, res) => {
+  const propiedades = cargarPropiedades();
+  res.render('post-4', { propiedades });
+})
+
 //-----------------------------------------------------(Fin de las rutas para manejar /alquilar /comprar /favoritos)
 // Usar el enrutador en la aplicación
 app.use('/', router);
@@ -142,10 +216,115 @@ const staticRoutes = {
   '/post3': 'post-3',
   '/post4': 'post-4',
   '/articulo': 'articulo',
+  '/propiedadesAdmin': 'propiedadesAdmin'
 };
 Object.keys(staticRoutes).forEach(route => {
   app.get(route, (req, res) => res.render(staticRoutes[route]));
 });
+
+
+
+const filePath = path.join(__dirname, 'controllers', 'users.json');
+
+// Ruta para actualizar el perfil
+// Función para leer el archivo
+function readUsersFile() {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        return reject('Error al leer el archivo');
+      }
+      resolve(JSON.parse(data));
+    });
+  });
+}
+
+// Función para escribir en el archivo
+function writeUsersFile(data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
+      if (err) {
+        return reject('Error al escribir en el archivo');
+      }
+      console.log('Archivo actualizado correctamente:', data);  // Verifica los datos
+      resolve();
+    });
+  });
+}
+
+
+// Ruta para actualizar el perfil
+app.post('/update-profile', async (req, res) => {
+  const { id, name, phone, cellphone } = req.body;
+
+  try {
+    const users = await readUsersFile(); // Lee los datos
+    
+    const userIndex = users.findIndex(user => user.id === id);
+    if (userIndex === -1) {
+      return res.json({ success: false, message: 'Usuario no encontrado' });
+    }
+
+    // Actualiza los datos del usuario
+    users[userIndex].name = name;
+    users[userIndex].phone = phone;
+    users[userIndex].cellphone = cellphone;
+
+    await writeUsersFile(users); // Guarda los datos actualizados
+
+    // Aquí actualizamos la sesión con los nuevos datos
+    req.session.user = { 
+      ...req.session.user, 
+      name: name, 
+      phone: phone, 
+      cellphone: cellphone 
+    };
+    
+    res.json({ success: true, message: 'Datos actualizados con éxito' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.json({ success: false, message: error });
+  }
+});
+
+app.post('/delete-user', async (req, res) => {
+  const { id } = req.body; // Obtener el ID del usuario a eliminar
+
+  try {
+    let users = await readUsersFile(); // Leer los datos actuales
+
+    // Buscar el usuario en la lista
+    const userIndex = users.findIndex(user => user.id === id);
+    if (userIndex === -1) {
+      return res.json({ success: false, message: 'Usuario no encontrado' });
+    }
+
+    // Eliminar el usuario de la lista
+    users.splice(userIndex, 1);
+
+    // Guardar los cambios en el archivo
+    await writeUsersFile(users);
+
+    // Si el usuario eliminado es el usuario autenticado, cerrar la sesión
+    if (req.session.user && req.session.user.id === id) {
+      req.session.destroy(err => {
+        if (err) {
+          console.error('Error al cerrar sesión:', err);
+          return res.json({ success: false, message: 'Error al cerrar sesión' });
+        }
+        res.json({ success: true, message: 'Usuario eliminado y sesión cerrada' });
+      });
+    } else {
+      res.json({ success: true, message: 'Usuario eliminado' });
+    }
+
+  } catch (error) {
+    console.error('Error al eliminar usuario:', error);
+    res.json({ success: false, message: 'Error al eliminar usuario' });
+  }
+});
+
+
 app.use('/property', propertyRoutes(upload)); // Pasar "upload" como argumento
 // Iniciar el servidor
 app.listen(PORT, () => {

@@ -345,7 +345,21 @@ footer>a{
 footer>a:hover{
   color: black;
 }
+.alexandrolucero-btn{
+  color: #56dac7;
+  background-color: #122b39;
+  padding: 4px 8px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+}
+.alexandrolucero-btn:hover{
+  color: #047d7d;
+  background-color: #b7d4d4;
+  box-shadow: 2px 2px 5px #b7d4d4;
 
+}
 
 
 /* Post1 page */

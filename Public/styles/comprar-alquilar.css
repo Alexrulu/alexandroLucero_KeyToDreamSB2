@@ -2,6 +2,7 @@
 /* 1280 */
 
 /* Main */
+
 .article-box{
   display: flex;
   background-color: rgb(233, 233, 233);
@@ -10,6 +11,7 @@
   margin-bottom: 15px;
   position: relative;
   z-index: 10;
+  transition: all 0.2s ease;
 }
 .article-box:hover{
   background-color: gainsboro;
@@ -19,7 +21,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: hue-rotate(50deg);
 }
 .img-imagendealquiler{
   width: 25vw;
@@ -32,7 +33,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: hue-rotate(300deg);
 }
 .left-article{
   margin: 10px 0px 10px 20px;
@@ -73,6 +73,65 @@
   margin: 10px 10px 0 0;
 }
 
+/* ADMIN SECTION */
+
+.main-propiedades-admin {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  position: relative;
+  z-index: 10;
+}
+.img-imagendepropiedades-admin{
+  width: 10vw;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.article-box-admin{
+  display: flex;
+  background-color: rgb(233, 233, 233);
+  height: 120px;
+  position: relative;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+.article-box-admin:hover{
+  background-color: gainsboro;
+}
+.left-article-admin{
+  margin: 10px 0px 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+.left-article-admin>p:first-child{
+  font-size:medium;
+  height: 30px;
+}
+.left-article-admin>h2,.left-article-admin>p:nth-child(3),.left-article-admin>p:nth-child(4){
+  font-size: small;
+}
+
+.todas-propiedades {
+  opacity: 1; /* Por defecto, visibles */
+  position: relative;
+  pointer-events: all;
+}
+
+.alquiler-propiedades, .venta-propiedades {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+}
+
+
+
+
+
+
 @media(max-width: 1010px){
   .left-article{
     margin-right: 10px;
@@ -82,10 +141,29 @@
   flex-direction: column;
   width: 50px;
   }
+  .img-imagendepropiedades-admin{
+    width: 15vw;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 @media(max-width:800px){
   .img-imagendealquiler, .img-imagendecompra, .img-imagendefavoritos{
     width: 30vw;
+  }
+  .main-propiedades-admin {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    position: relative;
+    z-index: 10;
+  }
+  .img-imagendepropiedades-admin{
+    width: 20vw;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 }
 @media(max-width:675px){

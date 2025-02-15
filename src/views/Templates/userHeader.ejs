@@ -2,14 +2,20 @@
   <i class="fa-solid fa-user" onclick="handleUserIconClick()"></i>
   <% if (user) { %>
     <div class="header-user">
-      <p><%= user.name.toUpperCase() %></p>
+      <p id="nameDisplay"><%= user.name %></p>
       <p><%= user.email %></p>
       <span class="span-rule"></span>
-      <i class="mismensajes-button fa-regular fa-message"><span class="span-i">MIS MENSAJES</span></i>
-      <i class="alertas-button fa-regular fa-bell"><span class="span-i">ALERTAS</span></i>
-      <i class="historial-button fa-regular fa-eye"><span class="span-i">HISTORIAL</span></i>
+      <i class="mismensajes-button fa-solid fa-message"><span class="span-i">MIS MENSAJES</span></i>
+
+      <% if (user?.id === "1") { %>
+        <a href="/propiedadesAdmin" id="mispropiedades-admin-button" class="mispropiedades-button fa-solid fa-house"><span class="span-i">PROPIEDADES</span></a>
+        <% } else { %>
+        <i class="mispropiedades-button fa-solid fa-house"><span class="span-i">MIS PROPIEDADES</span></i>
+      <% } %>
+
+      <i class="historial-button fa-solid fa-eye"><span class="span-i">HISTORIAL</span></i>
       <span class="span-rule"></span>
-      <i class="micuenta-button fa-regular fa-address-card"><span class="span-i">MI CUENTA</span></i>
+      <i class="micuenta-button fa-solid fa-address-card"><span class="span-i">MI CUENTA</span></i>
       <a class="publicar-button" href="/post1">PUBLICAR</a>
       <i class="ayuda-button fa-solid fa-user-tie"><span class="span-i">NECESITO AYUDA</span></i>
       <i id="logoutButton" class="fa-solid fa-power-off" onclick="logout()">
@@ -20,11 +26,19 @@
   <script>
     // Pasa el estado del usuario desde el servidor al cliente
     const isUserLoggedIn = '<%= user ? "true" : "false" %>' === 'true';
-  
     // Si el usuario no está logueado, redirige al login al hacer clic en el ícono
     function handleUserIconClick() {
       if (!isUserLoggedIn) {
         window.location.href = '/login';
+      }
+    }
+  </script>
+  <script>
+    function handleUserIconClickFav(){
+      if (!isUserLoggedIn) {
+        window.location.href = '/login';
+      } else if (isUserLoggedIn) {
+        window.location.href = '/favoritos';
       }
     }
   </script>
@@ -112,65 +126,30 @@
       </div>
     </div>
   </div>
-  <div class="alertas-click">
-    <p>ATRÁS<span>ALERTAS</span></p>
-    <div class="alertas-scrollbox">
-      <div>
-        <img class="img-alertas" src="/images/compraOptimizada.jpg">
-        <div>
-          <p>MARTIN ALZAGA 2190</p>
-          <p>VENTA $32000</p>
-          <p>SAN MIGUEL, BUENOS AIRES</p>
-        </div>
-        <p class="fecha-alertas">5/12/24</p>
-      </div>
-      <div>
-        <img class="img-alertas" src="/images/compraOptimizada.jpg">
-        <div>
-          <p>MARTIN ALZAGA 2190</p>
-          <p>VENTA $32000</p>
-          <p>SAN MIGUEL, BUENOS AIRES</p>
-        </div>
-        <p class="fecha-alertas">5/12/24</p>
-      </div>
-      <div>
-        <img class="img-alertas" src="/images/compraOptimizada.jpg">
-        <div>
-          <p>MARTIN ALZAGA 2190</p>
-          <p>VENTA $32000</p>
-          <p>SAN MIGUEL, BUENOS AIRES</p>
-        </div>
-        <p class="fecha-alertas">5/12/24</p>
-      </div>
-      <div>
-        <img class="img-alertas" src="/images/compraOptimizada.jpg">
-        <div>
-          <p>MARTIN ALZAGA 2190</p>
-          <p>VENTA $32000</p>
-          <p>SAN MIGUEL, BUENOS AIRES</p>
-        </div>
-        <p class="fecha-alertas">5/12/24</p>
-      </div>
-      <div>
-        <img class="img-alertas" src="/images/compraOptimizada.jpg">
-        <div>
-          <p>MARTIN ALZAGA 2190</p>
-          <p>VENTA $32000</p>
-          <p>SAN MIGUEL, BUENOS AIRES</p>
-        </div>
-        <p class="fecha-alertas">5/12/24</p>
-      </div>
-      <div>
-        <img class="img-alertas" src="/images/compraOptimizada.jpg">
-        <div>
-          <p>MARTIN ALZAGA 2190</p>
-          <p>VENTA $32000</p>
-          <p>SAN MIGUEL, BUENOS AIRES</p>
-        </div>
-        <p class="fecha-alertas">5/12/24</p>
-      </div>
+
+  <div class="mispropiedades-click">
+    <p>ATRÁS<span>MIS PROPIEDADES</span></p>
+    <div class="mispropiedades-scrollbox">
+        <% propiedades.forEach(propiedad => { %>
+            <% if (propiedad.ownerId === user?.id) { %> 
+                <a href="/articulo/<%= propiedad.id %>">
+                    <img class="img-mispropiedades" src="<%= propiedad.principalImage %>">
+                    <div>
+                        <p><%= propiedad.adress %></p>
+                        <p>USD $<%= propiedad.price ? propiedad.price.toLocaleString('en-US') : '...' %></p>
+                        <p><%= propiedad.city %></p>
+                    </div>
+                  </a>
+            <% } %>
+        <% }) %>
+        
+        <% if (!propiedades.some(propiedad => propiedad.ownerId === user?.id)) { %>
+            <p style="font-size: medium">No tienes propiedades publicadas.</p>
+        <% } %>
     </div>
   </div>
+
+  
   <div class="historial-click">
     <p>ATRÁS<span>HISTORIAL</span></p>
     <div class="historial-scrollbox">
@@ -235,24 +214,182 @@
       <p>ATRÁS<span>MI CUENTA</span></p>
       <p>PERSONALES</p>
       <div>
-        <input placeholder="Nombre" value="<%= user.name %>"></input>
-        <input placeholder="DNI" value="<%= user.dni || '' %>"></input>
+        <p id="nameDisplay1" style="display: block;"><%= user.name %></p>
+        <input type="text" id="nameInput" name="name" value="<%= user.name %>" style="display: none;">
+        <p id="dniDisplay" style="display: block;"><%= user.dni || '' %></p>
       </div>
       <p>CONTACTO</p>
-      <p>Datos para que podamos enviarte información, ofertas y si publicaste un aviso, para que te contacten.</p>
+      <p id="contactDisplay" style="display: block;">Datos para que podamos enviarte información, ofertas y si publicaste un aviso, para que te contacten.</p>
       <p><%= user.email %></p>
       <div>
         <div>
           <p>TELEFONO</p>
-          <input placeholder="+5444551234" value="<%= user.phone || '' %>"></input>
+          <p id="phoneDisplay"><%= user.phone || '' %></p>
+          <input type="text" id="phoneInput" name="phone" value="<%= user.phone || '' %>" style="display: none;">
         </div>
         <div>
           <p>CELULAR</p>
-          <input placeholder="+541141705252" value="<%= user.cellphone || '' %>"></input>
+          <p id="cellphoneDisplay"><%= user.cellphone || '' %></p>
+          <input type="text" id="cellphoneInput" name="cellphone" value="<%= user.cellphone || '' %>" style="display: none;">
         </div>
       </div>
+
+      <!-- Agregar un input oculto con el ID del usuario -->
+      <input type="hidden" id="userId" value="<%= user.id %>">
+
+      <!-- Botones para modificar y guardar -->
+      <div class="button-container-myaccount-edit1">
+        <button id="editButton">Modificar</button>
+        <button id="deleteButton">Eliminar Cuenta</button>
+      </div>
+      <div class="button-container-myaccount-edit2">
+        <button id="saveButton" style="display: none;">Guardar cambios</button>
+        <button id="cancelButton" style="display: none;">Cancelar</button>
+      </div>
     </div>
-  <% } %>
+<% } %>
+
+<script>
+  document.getElementById('editButton').addEventListener('click', () => {
+    // Ocultar los <p> actuales y mostrar los <input>
+    document.getElementById('nameDisplay1').style.display = 'none';
+    document.getElementById('nameInput').style.display = 'block';
+
+    document.getElementById('dniDisplay').style.display = 'none';
+    document.getElementById('contactDisplay').style.display = 'none';
+    document.getElementById('deleteButton').style.display = 'none';
+
+    document.getElementById('phoneDisplay').style.display = 'none';
+    document.getElementById('phoneInput').style.display = 'block';
+
+    document.getElementById('cellphoneDisplay').style.display = 'none';
+    document.getElementById('cellphoneInput').style.display = 'block';
+
+    // Mostrar botones de "Guardar" y "Cancelar", ocultar "Modificar"
+    document.getElementById('editButton').style.display = 'none';
+    document.getElementById('saveButton').style.display = 'inline-block';
+    document.getElementById('cancelButton').style.display = 'inline-block';
+  });
+
+  document.getElementById('cancelButton').addEventListener('click', () => {
+    // Restaurar los valores originales
+    document.getElementById('nameInput').value = document.getElementById('nameDisplay').textContent;
+    document.getElementById('phoneInput').value = document.getElementById('phoneDisplay').textContent;
+    document.getElementById('cellphoneInput').value = document.getElementById('cellphoneDisplay').textContent;
+
+    // Restaurar la vista original
+    document.getElementById('nameDisplay1').style.display = 'block';
+    document.getElementById('nameInput').style.display = 'none';
+
+    document.getElementById('deleteButton').style.display = 'block';
+
+    document.getElementById('dniDisplay').style.display = 'block';
+    document.getElementById('contactDisplay').style.display = 'block';
+
+    document.getElementById('phoneDisplay').style.display = 'block';
+    document.getElementById('phoneInput').style.display = 'none';
+
+    document.getElementById('cellphoneDisplay').style.display = 'block';
+    document.getElementById('cellphoneInput').style.display = 'none';
+
+    // Ocultar botones de "Guardar" y "Cancelar", mostrar "Modificar"
+    document.getElementById('editButton').style.display = 'inline-block';
+    document.getElementById('saveButton').style.display = 'none';
+    document.getElementById('cancelButton').style.display = 'none';
+  });
+
+  document.getElementById('saveButton').addEventListener('click', async () => {
+    const userId = document.getElementById('userId').value;
+    const newName = document.getElementById('nameInput').value;
+    const newPhone = document.getElementById('phoneInput').value;
+    const newCellphone = document.getElementById('cellphoneInput').value;
+
+    const datosActualizados = {
+      id: userId,
+      name: newName,
+      phone: newPhone,
+      cellphone: newCellphone
+    };
+
+    try {
+      const response = await fetch('/update-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datosActualizados)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Datos actualizados con éxito');
+
+        // Actualizar la vista con los nuevos valores
+        document.getElementById('nameDisplay1').textContent = newName;
+        document.getElementById('phoneDisplay').textContent = newPhone;
+        document.getElementById('cellphoneDisplay').textContent = newCellphone;
+
+        // Restaurar la vista original
+        document.getElementById('nameDisplay1').style.display = 'block';
+        document.getElementById('nameInput').style.display = 'none';
+
+        document.getElementById('deleteButton').style.display = 'block';
+
+        document.getElementById('dniDisplay').style.display = 'block';
+        document.getElementById('contactDisplay').style.display = 'block';
+
+        document.getElementById('phoneDisplay').style.display = 'block';
+        document.getElementById('phoneInput').style.display = 'none';
+
+        document.getElementById('cellphoneDisplay').style.display = 'block';
+        document.getElementById('cellphoneInput').style.display = 'none';
+
+        // Ocultar botones de "Guardar" y "Cancelar", mostrar "Modificar"
+        document.getElementById('editButton').style.display = 'inline-block';
+        document.getElementById('saveButton').style.display = 'none';
+        document.getElementById('cancelButton').style.display = 'none';
+      } else {
+        alert('Error al actualizar: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error en la petición:', error);
+    }
+  });
+
+  document.getElementById('deleteButton').addEventListener('click', async () => {
+  if (!confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.')) {
+    return;
+  }
+
+  const userId = document.getElementById('userId').value;
+
+  try {
+    const response = await fetch('/delete-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: userId })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert(result.message);
+      window.location.href = '/'; // Redirigir a la página de inicio o login
+    } else {
+      alert('Error: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Error en la petición:', error);
+  }
+});
+
+</script>
+
+  
+
   <div class="ayuda-click">
     <p>ATRÁS<span>NECESITO AYUDA</span></p>
     <p>CONTÁCTANOS</p>

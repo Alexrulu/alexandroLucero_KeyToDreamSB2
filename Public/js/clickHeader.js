@@ -34,33 +34,45 @@ backMensajesButton.addEventListener('click', () => {
   }
 });
 
-//-----------------------(click unico - ALERTAS)
-const alertasButton = document.querySelector('.alertas-button');
-const alertasClick = document.querySelector('.alertas-click');
-const backAlertasButton = document.querySelector('.alertas-click > p');
+//-----------------------(click unico - MISPROPIEDADES)
+document.addEventListener("DOMContentLoaded", () => {
+  const mispropiedadesButton = document.querySelector('.mispropiedades-button');
+  const mispropiedadesClick = document.querySelector('.mispropiedades-click');
+  const backMispropiedadesButton = document.querySelector('.mispropiedades-click > p');
+  const adminButton = document.getElementById("mispropiedades-admin-button"); // Botón del admin
+  
+  let isOpen2 = false; // Para rastrear si .mispropiedades-click está abierto
 
-let isOpen2 = false; // Para rastrear si .mismensajes-click está abierto
-
-// Función para abrir/cerrar mismensajes-click
-alertasButton.addEventListener('click', () => {
-  if (isOpen2) {
-    alertasClick.classList.remove('open2'); // Quitar clase para cerrar
-    alertasButton.classList.remove('clickHeaderAlternate');
-  } else {
-    alertasClick.classList.add('open2'); // Añadir clase para abrir
-    alertasButton.classList.add('clickHeaderAlternate');
+  // Evitar que el admin active el toggle de apertura
+  if (adminButton) {
+    adminButton.addEventListener("click", (event) => {
+      event.stopPropagation(); // Evita que active el evento de apertura
+    });
+    return; // Sale de la función para que el código siguiente no se ejecute para el admin
   }
-  isOpen2 = !isOpen2; // Alternar el estado
+
+  // Función para abrir/cerrar mispropiedadesClick (solo para usuarios normales)
+  mispropiedadesButton.addEventListener('click', () => {
+    if (isOpen2) {
+      mispropiedadesClick.classList.remove('open2'); // Quitar clase para cerrar
+      mispropiedadesButton.classList.remove('clickHeaderAlternate');
+    } else {
+      mispropiedadesClick.classList.add('open2'); // Añadir clase para abrir
+      mispropiedadesButton.classList.add('clickHeaderAlternate');
+    }
+    isOpen2 = !isOpen2; // Alternar el estado
+  });
+
+  // Función para cerrar mispropiedadesClick al hacer clic en "ATRÁS"
+  backMispropiedadesButton.addEventListener('click', () => {
+    if (isOpen2) {
+      mispropiedadesClick.classList.remove('open2'); // Quitar clase para cerrar
+      mispropiedadesButton.classList.remove('clickHeaderAlternate');
+      isOpen2 = false;
+    }
+  });
 });
 
-// Función para cerrar mismensajes-click al hacer clic en "ATRÁS"
-backAlertasButton.addEventListener('click', () => {
-  if (isOpen2) {
-    alertasClick.classList.remove('open2'); // Quitar clase para cerrar
-    alertasButton.classList.remove('clickHeaderAlternate');
-    isOpen2 = false;
-  }
-});
 
 //-----------------------(click unico - HISTORIAL)
 const historialButton = document.querySelector('.historial-button');

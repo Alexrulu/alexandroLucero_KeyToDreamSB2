@@ -24,13 +24,14 @@
     </div>
     <div class="right-header">
       <h3>
+        <i class="fa-solid fa-magnifying-glass lupa-tactil-inCategory"></i>
         <input type="search" placeholder="Ciudad" class="header-buscar"></input>
       </h3>
       <h3>
         <i class="fa-solid fa-location-dot"></i>
         <p class="header-ubicacion">Usá tu dirección y encontrá rapidamente</p>
       </h3>
-      <%- include('Templates/userHeader') %>
+      <%- include('Templates/userHeader', { user: user, propiedades: todasPropiedades }) %>
       <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
       
     </div>

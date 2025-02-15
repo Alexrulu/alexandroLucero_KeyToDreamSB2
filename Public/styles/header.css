@@ -31,6 +31,7 @@ h3{
 .left-header>h3{
   margin: 0 10px;
   position: relative;
+  cursor: pointer;
 }
 .left-header>h3::after { /* linea debajo de categorias */
   content: '';
@@ -147,6 +148,14 @@ body.touch-screen .lupa-tactil {
 .header-user>i:hover{
   color: dodgerblue;
 }
+#mispropiedades-admin-button{
+  color: black;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+#mispropiedades-admin-button:hover{
+  color: dodgerblue;
+}
 .right-header>h3:nth-child(3)>i.clickHeader ~ .header-user{
   right: 10%;
   opacity: 1;
@@ -174,6 +183,8 @@ body.touch-screen .lupa-tactil {
   width: 110px;
   text-align: center;
   transition: background-color 0.2s ease ;
+  box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
 }
 .publicar-button:hover{
   background-color: dodgerblue;
@@ -268,9 +279,9 @@ body.touch-screen .lupa-tactil {
   background-color: gray;
 }
 
-/* alertas click*/
+/* mispropiedades click*/
 
-.alertas-click{
+.mispropiedades-click{
   position: fixed;
   right: 10%;
   top: 10vh;
@@ -283,68 +294,64 @@ body.touch-screen .lupa-tactil {
   flex-direction: column;
   gap: 10px;
   z-index: 20;
-}
-.alertas-click {
   opacity: 0;
   visibility: hidden;
   transform: translateX(30px); /* Posición inicial fuera de vista */
   transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
-.alertas-click.open2 {
+.mispropiedades-click.open2 {
   opacity: 1;
   visibility: visible;
   transform: translateX(0); /* Vuelve a su posición original */
 }
 
-.alertas-click>p>span{
-  margin-left: 120px;
+.mispropiedades-click>p>span{
+  margin-left: 40px;
 }
-.alertas-scrollbox>div{
+.mispropiedades-scrollbox>a{
   display: flex;
   gap: 5px;
   background-color: rgba(0, 0, 0, 0.10);
   font-size: small;
-  justify-content: space-between;
   width: 275px;
 }
-.alertas-scrollbox>div>div{
+.mispropiedades-scrollbox>a>div{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 4px 0;
 }
-.alertas-scrollbox>div>div>p:nth-child(3){
+.mispropiedades-scrollbox>a>div>p:nth-child(3){
   text-align: center;
   font-size: x-small;
 }
-.fecha-alertas{
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  margin: 5px;
-  color: gray;
-}
-.img-alertas{
+.img-mispropiedades{
   width: 60px;
   height: 60px;
   object-fit: cover;
-  filter: hue-rotate(180deg);
 }
-.alertas-scrollbox{
+.mispropiedades-scrollbox{
   display: flex;
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
 }
-.alertas-scrollbox::-webkit-scrollbar{
+.mispropiedades-scrollbox>a{
+  transition: all 0.2s ease;
+}
+.mispropiedades-scrollbox>a:hover{
+  background-color:black;
+  color: white;
+}
+.mispropiedades-scrollbox::-webkit-scrollbar{
   width: 8px;
 }
-.alertas-scrollbox::-webkit-scrollbar-track{
+.mispropiedades-scrollbox::-webkit-scrollbar-track{
   background-color: gainsboro;
 }
-.alertas-scrollbox::-webkit-scrollbar-thumb{
+.mispropiedades-scrollbox::-webkit-scrollbar-thumb{
   background-color: gray;
 }
 
@@ -453,12 +460,15 @@ body.touch-screen .lupa-tactil {
   gap: 15px;
   margin-bottom: 10px;
 }
-.micuenta-click>div:nth-child(3)>input{
+.micuenta-click>div:nth-child(3)>p{
   border: none;
-  color: black;
+  border-radius: 3px;
+  color: gray;
+  background-color: rgba(0, 0, 0, 0.10);
+  padding: 2px;
   width: 130px;
   outline: none;
-  font-size: medium;
+  font-size: small;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -473,6 +483,7 @@ body.touch-screen .lupa-tactil {
   text-align: center;
   width: 95%;
   padding: 3px;
+  border-radius: 3px;
 }
 .micuenta-click>div:nth-child(7){
   display: flex;
@@ -483,8 +494,11 @@ body.touch-screen .lupa-tactil {
   flex-direction: column;
   gap: 10px;
 }
-.micuenta-click>div:nth-child(7)>div>input{
-  color: black;
+.micuenta-click>div:nth-child(7)>div>p:nth-child(2){
+  border-radius: 3px;
+  color: gray;
+  background-color: rgba(0, 0, 0, 0.10);
+  padding: 2px;
   border: none;
   width: 130px;
   outline: none;
@@ -502,9 +516,77 @@ body.touch-screen .lupa-tactil {
   visibility: visible;
   transform: translateX(0); /* Vuelve a su posición original */
 }
+.micuenta-input-style{
+  font-size: small;
+}
+#editButton{
+  width: 45%;
+  padding: 5px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.5);
+}
+#editButton:hover{
+  background-color: dodgerblue;
+}
+#nameInput, #phoneInput, #cellphoneInput{
+  padding: 3px;
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  width: 130px;
+}
+#saveButton, #cancelButton{
+  margin: auto;
+  width: 50%;
+  padding: 5px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.5);
+}
+#saveButton:hover{
+  background-color: green;
+}
+#cancelButton:hover{
+  background-color: crimson;
+}
+.button-container-myaccount-edit2{
+  display: flex;
+  flex-direction: column;
+  padding-top: 0px;
+  padding-right: 15px;
+  gap: 10px;
+}
+#deleteButton{
+  width: 45%;
+  padding: 5px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.5);
+}
+#deleteButton:hover{
+  background-color: crimson;
+}
+.button-container-myaccount-edit1{
+  display: flex;
+  padding-right: 15px;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 5px;
+}
+
+
 
 /* ayuda click*/
-
 .ayuda-click{
   position: fixed;
   right: 10%;
@@ -786,6 +868,53 @@ body.touch-screen .lupa-tactil {
   background-color: dodgerblue;
 }
 
+/*-------------------ADMINISTRADOR SECTION------------------*/
+
+.administrador-h3{
+  color: crimson;
+  background-color:rgba(255, 0, 0, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  pointer-events: none;
+}
+.left-header-admin{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto;
+  margin-left: 10px;
+}
+.left-header-admin>.fa-bars{
+  display: none;
+}
+.left-header-admin>a{
+  margin: 0 10px;
+  position: relative;
+  cursor: pointer;
+}
+.left-header-admin>a::after { /* linea debajo de categorias */
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transform-origin: center;
+  transition: all 0.3s ease;
+}
+.left-header-admin>a:hover::after {
+  width: 100%;
+  left: 0;
+  transform: scaleX(1);
+}
+.left-header-admin>a.active-category::after {
+  width: 100%; /* Línea completa */
+  left: 0;
+  transform: scaleX(1);
+  background-color: black; /* Color de la línea */
+}
 /*----------------------(responsive section)----------------------*/
 
 @media(max-width: 1279px){
@@ -798,7 +927,7 @@ body.touch-screen .lupa-tactil {
   .mismensajes-click{
     right: 5%;
   }
-  .alertas-click{
+  .mispropiedades-click{
     right: 5%;
   }
   .historial-click{
@@ -947,7 +1076,7 @@ body.touch-screen .lupa-tactil {
   .mismensajes-click{
     right: 2%;
   }
-  .alertas-click{
+  .mispropiedades-click{
     right: 2%;
   }
   .historial-click{

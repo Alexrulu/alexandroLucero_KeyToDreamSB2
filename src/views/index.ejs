@@ -39,8 +39,10 @@
         <i class="fa-solid fa-location-dot"></i>
         <input type="text" placeholder="Usá tu dirección y encontrá rapidamente" class="header-ubicacion"></input>
       </h3>
-      <%- include('Templates/userHeader') %>
-      <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
+      <%- include('Templates/userHeader', { user: user, propiedades: propiedades }) %>
+
+      <h3><i class="fa-solid fa-heart" onclick="handleUserIconClickFav()"></i></h3>
+      
     </div>
   </header>
   
@@ -91,7 +93,7 @@
   <footer>
     <a href="/terms">TÉRMINOS Y CONDICIONES</a>
     <p>HECHO POR:</p>
-    <a href="https://alexandrolucero.vercel.app/" target="_blank">LUCERO ALEXANDRO</a>
+    <a class="alexandrolucero-btn" href="https://alexandrolucero.vercel.app/" target="_blank">LUCERO ALEXANDRO</a>
   </footer>
 
   <!-- Ventana emergente al publicar -->

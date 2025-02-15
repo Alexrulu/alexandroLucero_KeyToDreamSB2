@@ -1,2 +1,4 @@
 node_modules/
 .env
+src/controllers/users.json
+src/controllers/propiedades.json

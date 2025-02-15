@@ -32,8 +32,8 @@
         <i class="fa-solid fa-location-dot"></i>
         <input type="text" placeholder="Usá tu dirección y encontrá rapidamente" class="header-ubicacion"></input>
       </h3>
-      <%- include('Templates/userHeader') %>
-      <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
+      <%- include('Templates/userHeader', { user: user, propiedades: todasPropiedades }) %>
+      <h3><i class="fa-solid fa-heart" onclick="handleUserIconClickFav()"></i></h3>
       
     </div>
   </header>

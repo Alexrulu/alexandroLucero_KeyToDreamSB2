@@ -39,24 +39,99 @@
   gap: 10px;
   align-items: center;
 }
-.eliminar-propiedad{
+/*-------FORMULARIO-------*/
+.modificar-eliminar-btn-box{
   display: flex;
-  justify-content: left;
+  padding: 20px 20px 20px 0;
+  gap: 15px;
 }
-.eliminar-propiedad button{
+.eliminar-propiedad-btn{
   background-color: crimson;
   border: none;
   color: white;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 20px;
   transition: all 0.2s ease;
+  width: 100px;
 }
-.eliminar-propiedad button:hover{
+.eliminar-propiedad-btn:hover{
   background-color: red;
   transform: scale(1.1);
 }
+#btnModificar{
+  background-color: dodgerblue;
+  border: none;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 200px;
+}
+#btnModificar:hover{
+  background-color: black;
+  color: white;
+  transform: scale(1.1);
+}
+.formEditArticle{
+  padding: 10px;
+  background-color: gainsboro;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  border-radius: 5px;
+}
+.editArticle{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  background-color: ghostwhite;
+  border-radius: 5px;
+  padding: 5px;
+  width: 200px;
+}
+.editArticle>input, .editArticle>textarea{
+  border: none;
+  outline: none;
+  background-color: ghostwhite;
+  width: 100px;
+}
+.saveChangesBtnArticle{
+  padding: 5px;
+  background-color: green;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  width: 200px;
+}
+.saveChangesBtnArticle:hover{
+  background-color: black;
+  transform: scale(1.1);
+}
+#cancelBtnArticle{
+  padding: 5px;
+  background-color: crimson;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 7px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  width: 200px;
+}
+#cancelBtnArticle:hover{
+  background-color: black;
+  transform: scale(1.1);
+}
+
+/*----FIN DEL FORM----*/
+
+
+
 .articulo-propiedad-type-deco{
   background-color: black;
   font-size: small;

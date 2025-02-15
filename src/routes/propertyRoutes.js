@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../controllers/db'); // Controlador de la base de datos
 const propiedades_type = db.propiedades_type;
 const propiedades_model = db.propiedades_model;
+
 module.exports = (upload) => {
   // Paso 1: Guardar datos básicos de la propiedad
   router.post('/save-property-step1', (req, res) => {
@@ -78,37 +79,26 @@ module.exports = (upload) => {
         price: Number(req.body.price),
         description: req.body.description
       };
+      // Crear el objeto de la nueva propiedad
       const propiedadNueva = {
         ...propiedad.step1,
         ...propiedad.step2,
         ...propiedad.step3,
         ...propiedad.step4
       };
-      db.agregarPropiedad(propiedadNueva);
+      // Agregar la propiedad y obtener el ID
+      const nuevaPropiedadId = db.agregarPropiedad(propiedadNueva);
+      if (!nuevaPropiedadId) {
+        console.error("❌ Error: agregarPropiedad devolvió un ID inválido.");
+        return res.redirect(`/post4?error=Error al publicar la propiedad.`);
+      }
+      // Limpiar la sesión
       delete req.session.propiedad;
-      res.redirect('/');
+      // Redirigir a la página de la propiedad recién publicada
+      res.redirect("/");
     } else {
       res.redirect(`/post4?error=Faltan datos para finalizar la publicación.`);
     }
   });
-  /*----Eliminar propiedad------*/
-  router.post('/delete-property/:id', (req, res) => {
-    const userId = req.session.user?.id; // Obtener el ID del usuario logueado
-    const propertyId = parseInt(req.params.id, 10); // Asegurarse de que sea un número entero
-  
-    if (!userId) {
-      return res.status(401).send('Debes iniciar sesión para realizar esta acción.');
-    }
-  
-    const result = db.eliminarPropiedad(propertyId, userId);
-  
-    if (!result.success) {
-      return res.status(403).send(result.error);
-    }
-  
-    console.log(result.message);
-    res.redirect('/');
-  });
-  
   return router;
 };

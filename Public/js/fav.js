@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Obtener todos los iconos de favorito (fa-heart)
   document.querySelectorAll('.fa-heart').forEach(icon => {
     icon.addEventListener('click', async (event) => {
+      // Verifica si el usuario está logueado
+      if (!isUserLoggedIn) {
+        window.location.href = '/login';
+        return; // Detiene la ejecución si no está logueado
+      }
+
       const propiedadId = icon.dataset.id; // Obtener el ID de la propiedad desde el 'data-id'
       console.log(`Propiedad ID: ${propiedadId} - Click detectado`);
 
