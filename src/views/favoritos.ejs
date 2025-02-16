@@ -33,10 +33,8 @@
       </h3>
       <%- include('Templates/userHeader', { user: user, propiedades: todasPropiedades }) %>
       <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
-      
     </div>
   </header>
-
   <main>
   <% 
   function getPropertyType(typeValue) {
@@ -44,13 +42,11 @@
       return propiedades_type[typeValue] || "DESCONOCIDO";
   }
   %>
-
   <div id="no-favoritos" style="<%= propiedadesFavoritas.length === 0 ? '' : 'display: none;' %>">
     <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
       No tienes propiedades favoritas en este momento.
     </p>
   </div>
-
   <div id="favoritos-lista">
     <% propiedadesFavoritas.forEach(propiedad => { %>
       <article class="article-box">
@@ -80,7 +76,6 @@
     <% }) %>
   </div>
 </main>
-
 <script>
   function toggleFavorito(id) {
   fetch(`/favoritos/${id}`, {

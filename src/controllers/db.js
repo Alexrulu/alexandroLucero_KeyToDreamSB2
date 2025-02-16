@@ -4,24 +4,66 @@ const propiedades_type = { VENTA: 1, ALQUILER: 2, TEMPORADA: 3 };
 const propiedades_model = { CASA: 1, DEPARTAMENTO: 2, PH: 3, CONDOMINIO: 4 };
 const propiedades = require("./propiedades.json");
 const propiedadesFilePath = path.join(__dirname, 'propiedades.json');
+const usersFilePath = path.join(__dirname, 'users.json');
 // Marcar una propiedad como favorita
 function marcarFavorito(req, id) {
-  if (!req.session.favoritos.includes(id)) {
-    req.session.favoritos.push(id);
+  const userId = req.session.userId;
+  if (!userId) {
+    console.log('Usuario no autenticado');
+    return;
+  }
+
+  const users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
+  const user = users.find(u => u.id === userId);
+  if (!user) {
+    console.log('Usuario no encontrado');
+    return;
+  }
+
+  id = Number(id); // Convertimos a número para que coincida con los guardados en favoritos
+
+  if (!user.favoritos.includes(id)) {
+    user.favoritos.push(id);
+    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
     console.log(`Propiedad con ID ${id} marcada como favorita.`);
   } else {
     console.log(`La propiedad con ID ${id} ya está en favoritos.`);
   }
 }
-// Desmarcar una propiedad como favorita
+
 function desmarcarFavorito(req, id) {
-  req.session.favoritos = req.session.favoritos.filter(favId => favId !== id);
+  const userId = req.session.userId;
+  if (!userId) {
+    console.log('Usuario no autenticado');
+    return;
+  }
+
+  const users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
+  const user = users.find(u => u.id === userId);
+  if (!user) {
+    console.log('Usuario no encontrado');
+    return;
+  }
+
+  id = Number(id); // Convertimos a número para asegurar que coincide
+
+  user.favoritos = user.favoritos.filter(favId => favId !== id);
+  fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
   console.log(`Propiedad con ID ${id} removida de favoritos.`);
 }
-function obtenerFavoritos(favoritos) {
-  // Filtra las propiedades favoritas usando los IDs almacenados en favoritos
-  return propiedades.filter(propiedad => favoritos.includes(propiedad.id));
+function obtenerFavoritos(userId) {
+  const users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
+  const user = users.find(u => u.id === userId);
+  if (!user) {
+    console.log('Usuario no encontrado');
+    return [];
+  }
+
+  // Convertimos los IDs de las propiedades en números para asegurar coincidencias
+  return propiedades.filter(propiedad => user.favoritos.includes(Number(propiedad.id)));
 }
+
+
 // Agregar una nueva propiedad y devolver su ID
 function agregarPropiedad(nuevaPropiedad) {
   try {

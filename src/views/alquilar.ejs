@@ -66,9 +66,9 @@
           <i class="fa-solid fa-phone"></i>
           <i class="fa-solid fa-envelope"></i>
           <!-- Cambiamos la clase del ícono dependiendo de si está en favoritos -->
-          <i class="<%= favoritos.includes(propiedad.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" 
+          <i class="<%= favoritos.includes(Number(propiedad.id)) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" 
             data-id="<%= propiedad.id %>">
-         </i>      
+         </i>
         </div>
       </article>
       <% }) %>

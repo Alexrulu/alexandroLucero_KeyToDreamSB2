@@ -13,7 +13,11 @@
         <i class="mispropiedades-button fa-solid fa-house"><span class="span-i">MIS PROPIEDADES</span></i>
       <% } %>
 
-      <i class="historial-button fa-solid fa-eye"><span class="span-i">HISTORIAL</span></i>
+      <%if (user?.id === "1") { %>
+        <a href="/usuariosAdmin" id="usuarios-admin-button" class="historial-button fa-solid fa-user"><span class="span-i">USUARIOS</span></a>
+        <% } else { %>
+        <i class="historial-button fa-solid fa-eye"><span class="span-i">HISTORIAL</span></i>
+      <% } %>
       <span class="span-rule"></span>
       <i class="micuenta-button fa-solid fa-address-card"><span class="span-i">MI CUENTA</span></i>
       <a class="publicar-button" href="/post1">PUBLICAR</a>

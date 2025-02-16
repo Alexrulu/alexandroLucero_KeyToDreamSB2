@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const app = express();
 const multer = require('multer');
 const authRoutes = require('./routes/authRoutes'); // Rutas de autenticación
 const db = require('./controllers/db'); // Base de datos y propiedades
@@ -12,9 +14,13 @@ const propertyRoutes = require('./routes/propertyRoutes');
 const dotenv = require('dotenv');
 const { eliminarPropiedad } = require('./controllers/db');
 const { modificarPropiedad } = require('./controllers/db');
+
+const usersFilePath = path.join(__dirname, './controllers/users.json');
+const propiedadesFilePath = path.join(__dirname, './controllers/propiedades.json');
+
+app.use(cookieParser());
 dotenv.config();
 // Inicialización de la aplicación
-const app = express();
 const PORT = 3000 || process.env.PORT;
 // Configuración de Multer para la carga de archivos
 const storage = multer.diskStorage({
@@ -23,10 +29,24 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 // Acceso a las propiedades desde la base de datos
+function obtenerFavoritos(userId) {
+  const users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
+  const user = users.find(u => u.id === userId);
+  return user ? user.favoritos.map(id => Number(id)) : [];
+}
 function cargarPropiedades() {
   const filePath = path.join(__dirname, './controllers/propiedades.json'); // Ajusta la ruta si es necesario
   const data = fs.readFileSync(filePath, 'utf8');
   return JSON.parse(data);
+}
+function leerUsuarios() {
+  try {
+    const data = fs.readFileSync(usersFilePath, 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error al leer users.json:', error);
+    return [];
+  }
 }
 const propiedades_type = db.propiedades_type;
 const propiedades_model = db.propiedades_model;
@@ -50,8 +70,12 @@ app.use(bodyParser.json());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días de sesión persistente
+    httpOnly: true, // Protege contra ataques XSS
+    secure: false  // Ponlo en true si usas HTTPS
+  }
 }));
 // Middleware global para pasar el usuario a las vistas
 app.use((req, res, next) => {
@@ -63,6 +87,18 @@ app.use((req, res, next) => {
   if (!req.session.favoritos) req.session.favoritos = [];
   next();
 });
+app.use((req, res, next) => {
+  if (!req.session.user && req.cookies.userId) {
+    const usersDatabase = leerUsuarios();
+    const user = usersDatabase.find(u => u.id === req.cookies.userId);
+    if (user) {
+      req.session.user = user;
+      req.session.userId = user.id;
+    }
+  }
+  next();
+});
+
 
 //-----------------------------------------------------(Rutas para manejar /alquilar, /comprar, /favoritos)
 app.post('/favoritos/:id', (req, res) => {
@@ -79,13 +115,13 @@ app.delete('/favoritos/:id', (req, res) => {
 app.use('/favoritos', favoritosRoutes);
 // Rutas para alquilar y comprar
 app.get('/alquilar', (req, res) => {
-  // Asegúrate de que los favoritos estén en la sesión
-  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
 
-  if (!req.session.favoritos) {
-    req.session.favoritos = [];
+  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+  
+  let favoritos = [];
+  if (req.session.userId) {
+    favoritos = obtenerFavoritos(req.session.userId);
   }
-  const favoritos = req.session.favoritos;
   // Obtener el parámetro de búsqueda de ciudad
   const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
   // Filtrar propiedades por tipo ALQUILER
@@ -97,17 +133,15 @@ app.get('/alquilar', (req, res) => {
     );
   }
   // Renderizar la vista y pasar la variable city
-  res.render('alquilar', { propiedades: propiedadesAlquiler, todasPropiedades: propiedades, favoritos: favoritos, city: city});
+  res.render('alquilar', { propiedades: propiedadesAlquiler, todasPropiedades: propiedades, favoritos, city: city});
 });
 app.get('/comprar', (req, res) => {
   const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
 
-  // Asegúrate de que los favoritos estén en la sesión
-  if (!req.session.favoritos) {
-    req.session.favoritos = [];
+  let favoritos = [];
+  if (req.session.userId) {
+    favoritos = obtenerFavoritos(req.session.userId);
   }
-  const favoritos = req.session.favoritos;
-  // Obtener el parámetro de búsqueda de ciudad
   const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
   // Filtrar propiedades por tipo VENTA
   let propiedadesVenta = propiedades.filter(prop => prop.type === propiedades_type.VENTA);
@@ -117,33 +151,57 @@ app.get('/comprar', (req, res) => {
       prop.city.toLowerCase().includes(city)
     );
   }
-  res.render('comprar', { propiedades: propiedadesVenta, todasPropiedades: propiedades, favoritos: favoritos, city: city});
+  res.render('comprar', { propiedades: propiedadesVenta, todasPropiedades: propiedades, favoritos, city: city});
 });
 
 //---------ADMINISTRADOR--------
 app.get('/propiedadesAdmin', (req, res) => {
+  if (!req.session.user || req.session.user.userType !== 'admin') {
+    return res.status(403).send('Acceso denegado'); // Bloquea si no es admin
+  }
   const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
   // Obtener el parámetro de búsqueda de ciudad
   const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
   // Filtrar propiedades por tipo VENTA
   res.render('propiedadesAdmin', { propiedades: propiedades, city: city});
 });
+router.get('/usuariosAdmin', (req, res) => {
+  // Verifica si el usuario es un administrador
+  if (!req.session.user || req.session.user.userType !== 'admin') {
+    return res.status(403).send('Acceso denegado'); // Bloquea si no es admin
+  }
+
+  const searchQuery = req.query.search?.toLowerCase() || ''; // Si no hay búsqueda, se pasa un valor vacío
+  const users = leerUsuarios(); // Obtener usuarios del JSON
+
+  // Filtra los usuarios según la búsqueda (si hay)
+  const filteredUsers = searchQuery
+    ? users.filter(user => user.name.toLowerCase().includes(searchQuery))
+    : users;
+
+  // Pasamos los usuarios filtrados y la variable searchQuery a la vista
+  res.render('usuariosAdmin', { users: filteredUsers, searchQuery: searchQuery });
+});
+
+
+
+
 
 // Ruta para artículos
 app.get('/articulo/:id', (req, res) => {
   const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
 
-  if (!req.session.favoritos) {
-    req.session.favoritos = [];
+  let favoritos = [];
+  if (req.session.userId) {
+    favoritos = obtenerFavoritos(req.session.userId);
   }
-  const favoritos = req.session.favoritos;
   const propiedades_type_invertido = Object.fromEntries(
     Object.entries(propiedades_type).map(([key, value]) => [value, key])
   );
   const propiedadId = parseInt(req.params.id);
   const propiedad = propiedades.find(p => p.id === propiedadId);
   if (propiedad) {
-    res.render('articulo', { propiedad, propiedades_type_invertido,todasPropiedades: propiedades, favoritos: favoritos });
+    res.render('articulo', { propiedad, propiedades_type_invertido,todasPropiedades: propiedades, favoritos });
   } else {
     res.status(404).send('Propiedad no encontrada');
   }
@@ -216,7 +274,8 @@ const staticRoutes = {
   '/post3': 'post-3',
   '/post4': 'post-4',
   '/articulo': 'articulo',
-  '/propiedadesAdmin': 'propiedadesAdmin'
+  '/propiedadesAdmin': 'propiedadesAdmin',
+  '/usuariosAdmin': 'usuariosAdmin',
 };
 Object.keys(staticRoutes).forEach(route => {
   app.get(route, (req, res) => res.render(staticRoutes[route]));
@@ -224,13 +283,13 @@ Object.keys(staticRoutes).forEach(route => {
 
 
 
-const filePath = path.join(__dirname, 'controllers', 'users.json');
+
 
 // Ruta para actualizar el perfil
 // Función para leer el archivo
 function readUsersFile() {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
       if (err) {
         return reject('Error al leer el archivo');
       }
@@ -242,7 +301,7 @@ function readUsersFile() {
 // Función para escribir en el archivo
 function writeUsersFile(data) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
+    fs.writeFile(usersFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
       if (err) {
         return reject('Error al escribir en el archivo');
       }

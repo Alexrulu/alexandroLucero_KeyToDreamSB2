@@ -212,4 +212,7 @@ h2{
   body{
     margin: 0;
   }
+  .terms-box{
+    margin: 0 5%;
+  }
 }

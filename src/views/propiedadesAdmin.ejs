@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
+
   <link rel="stylesheet" href="/styles/header.css">
   <link rel="stylesheet" href="/styles/styles.css">
   <link rel="stylesheet" href="/styles/comprar-alquilar.css">
   <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
-  <title>Document</title>
+  <title>Propiedades ADMINISTRADOR</title>
 </head>
 <body>
   <header>
@@ -22,8 +24,8 @@
     </div>
     <div class="right-header">
       <h3>
-        <i class="fa-solid fa-magnifying-glass lupa-tactil-inCategory"></i>
-        <input type="search" placeholder="Ciudad" class="header-buscar"></input>
+        <i class="fa-solid fa-magnifying-glass lupa-tactil-inCategory admin-lupa"></i>
+        <input type="search" placeholder="Ciudad" class="header-buscar admin-buscar"></input>
       </h3>
       <h3 class="administrador-h3">ADMINISTRADOR</h3>
     </div>
@@ -49,7 +51,6 @@
         </article>
       </a>
     <% }) %>
-    
     <!-- Bloque: Solo Alquiler -->
     <% propiedades.filter(p => p.type == 2).forEach(propiedad => { %>
       <a class="alquiler-propiedades" style="opacity: 0; pointer-events: none;" href="/articulo/<%= propiedad.id %>">
@@ -66,7 +67,6 @@
         </article>
       </a>
     <% }) %>
-    
     <!-- Bloque: Solo Venta -->
     <% propiedades.filter(p => p.type == 1).forEach(propiedad => { %>
       <a class="venta-propiedades" style="opacity: 0; pointer-events: none;" href="/articulo/<%= propiedad.id %>">
@@ -83,62 +83,10 @@
         </article>
       </a>
     <% }) %>
-    
       <% if (propiedades.length === 0) { %>
         <p style="margin-top: 20px;">No se encontraron propiedades.</p>
       <% } %>
   </main>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-  const btnAlquileres = document.getElementById("filtrar-alquileres");
-  const btnVentas = document.getElementById("filtrar-ventas");
-  const btnMostrarTodo = document.getElementById("mostrar-todo");
-
-  const todasPropiedades = document.querySelectorAll(".todas-propiedades");
-  const alquilerPropiedades = document.querySelectorAll(".alquiler-propiedades");
-  const ventaPropiedades = document.querySelectorAll(".venta-propiedades");
-
-  function ocultarInstantaneamente(elementos) {
-    elementos.forEach(el => {
-      el.style.transition = "none";  // Quitamos la transición
-      el.style.opacity = "0";
-      el.style.pointerEvents = "none";
-      el.style.position = "absolute";
-    });
-  }
-
-  function mostrarConTransicion(elementos) {
-    elementos.forEach(el => {
-      el.style.transition = "opacity 0.5s ease"; // Aplicamos transición solo al mostrar
-      el.style.opacity = "1";
-      el.style.pointerEvents = "all";
-      el.style.position = "relative";
-    });
-  }
-
-  function mostrar(tipo) {
-    if (tipo === "todas") {
-      ocultarInstantaneamente([...alquilerPropiedades, ...ventaPropiedades]);
-      setTimeout(() => mostrarConTransicion(todasPropiedades), 50);
-    } else if (tipo === "alquiler") {
-      ocultarInstantaneamente([...todasPropiedades, ...ventaPropiedades]);
-      setTimeout(() => mostrarConTransicion(alquilerPropiedades), 50);
-    } else if (tipo === "venta") {
-      ocultarInstantaneamente([...todasPropiedades, ...alquilerPropiedades]);
-      setTimeout(() => mostrarConTransicion(ventaPropiedades), 50);
-    }
-  }
-
-  // Al cargar la página, aseguramos que "mostrar todas" esté visible
-  mostrar("todas");
-
-  btnAlquileres.addEventListener("click", () => mostrar("alquiler"));
-  btnVentas.addEventListener("click", () => mostrar("venta"));
-  btnMostrarTodo.addEventListener("click", () => mostrar("todas"));
-});
-
-  </script>
-  
-  
+  <script src="/js/adminPropertySearch.js"></script>
 </body>
 </html>

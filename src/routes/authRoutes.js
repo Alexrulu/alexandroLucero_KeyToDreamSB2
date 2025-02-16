@@ -60,26 +60,38 @@ router.post('/process-register', async (req, res) => {
 });
 //-----------------------------------------------------------LOGIN-----------------
 router.post('/process-login', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, rememberMe } = req.body; // Captura rememberMe
+
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Por favor, complete todos los campos.' });
   }
+
   const usersDatabase = leerUsuarios();
   const user = usersDatabase.find(u => u.email === email);
   if (!user) {
     return res.status(400).json({ success: false, message: 'Email o contraseña incorrectos.' });
   }
-  // Comparar la contraseña ingresada con la almacenada encriptada
+
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) {
     return res.status(400).json({ success: false, message: 'Email o contraseña incorrectos.' });
   }
+
   req.session.user = user;
+  req.session.userId = user.id;
+
+  // Si el usuario eligió "Recordarme", guardamos una cookie persistente
+  if (rememberMe) {
+    res.cookie('userId', user.id, { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true });
+  }
+
   console.log('Usuario logueado:', user);
   res.json({ success: true, redirectTo: '/' });
 });
+
 //---------------------------------------------------LOGOUT------------------------
 router.get('/logout', (req, res) => {
+  res.clearCookie('userId'); // Eliminar cookie
   req.session.destroy(err => {
     if (err) {
       console.error('Error al destruir la sesión:', err);
