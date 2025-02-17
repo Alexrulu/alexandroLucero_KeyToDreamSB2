@@ -14,9 +14,12 @@ const propertyRoutes = require('./routes/propertyRoutes');
 const dotenv = require('dotenv');
 const { eliminarPropiedad } = require('./controllers/db');
 const { modificarPropiedad } = require('./controllers/db');
-
 const usersFilePath = path.join(__dirname, './controllers/users.json');
 const propiedadesFilePath = path.join(__dirname, './controllers/propiedades.json');
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 
 app.use(cookieParser());
 dotenv.config();
