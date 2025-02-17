@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "userType": "admin",
+    "email": "alexandro@gmail.com",
+    "password": "$2b$10$I3Mu3.aAOucoIQJCZQYbKe4hL9IO3Q58m6evvXQVDVzOO2u2q7J.a",
+    "name": "Administrador",
+    "razonSocial": "Administrador",
+    "fiscalCondition": "Exento",
+    "dni": "00000000",
+    "phone": "123456789",
+    "cellphone": "987654321",
+    "favoritos": [
+      null
+    ]
+  },
+  {
+    "id": "69dd363f-4355-4839-8320-0591aa007165",
+    "userType": "1",
+    "email": "alexandro1@gmail.com",
+    "password": "$2b$10$4ssg2TbKic.95B.va.RygefI.l90xMGyQSglmOVGe7WAniP0oOIOy",
+    "name": "Alexandro Lucero",
+    "razonSocial": "123123123",
+    "fiscalCondition": "1",
+    "dni": "123123",
+    "phone": "11323231",
+    "cellphone": "123123123",
+    "favoritos": [
+      9
+    ]
+  }
+]
