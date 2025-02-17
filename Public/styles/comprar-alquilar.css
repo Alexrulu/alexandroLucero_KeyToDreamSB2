@@ -183,6 +183,9 @@
   .img-imagendealquiler, .img-imagendecompra, .img-imagendefavoritos{
     width: 35vw;
   }
+  .img-imagendepropiedades-admin{
+    width: 25vw;
+  }
 }
 @media(max-width:530px){
   .img-imagendealquiler, .img-imagendecompra, .img-imagendefavoritos{
@@ -237,6 +240,9 @@
   }
   .article-box{
     height: 180px;
+  }
+  .img-imagendepropiedades-admin{
+    width: 30vw;
   }
 }
 @media(max-width:420px){

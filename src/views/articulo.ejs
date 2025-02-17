@@ -187,9 +187,11 @@
       </button>
     </div>
 
-
-
   </main>
+  <div id="guardar-popupPropiedad" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -20%); background-color: white; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2); z-index: 1000;">
+    <p id="guardar-messagePropiedad" style="margin: 0; color: black; text-align: center; margin-bottom: 20px; font-weight: bold;"></p>
+    <button id="close-popupPropiedad" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto; padding: 5px 10px; background-color: dodgerblue; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
+  </div>
 
   <script>
     const propiedades_type_invertido = Object.fromEntries(
@@ -197,54 +199,78 @@
     );
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const btnModificar = document.getElementById("btnModificar");
-      const formEditar = document.getElementById("formEditar");
-      const btnEliminar = document.getElementById("btnEliminar");
-      const cancelBtn = document.getElementById("cancelBtnArticle");
-      if (btnModificar && formEditar && cancelBtn) {
-        btnModificar.addEventListener("click", () => {
-          formEditar.classList.toggle("hiddenFormEditArticle"); // Mostrar/ocultar formulario
-          btnModificar.classList.toggle("hiddenFormEditArticle");
-          btnEliminar.classList.toggle("hiddenFormEditArticle");
-        });
-        cancelBtn.addEventListener("click", (event) => {
-          event.preventDefault(); // Prevenir la acción por defecto del botón
-          formEditar.classList.add("hiddenFormEditArticle"); // Ocultar formulario
-          btnModificar.classList.remove("hiddenFormEditArticle"); // Mostrar botón Modificar
-          btnEliminar.classList.remove("hiddenFormEditArticle"); // Mostrar botón Eliminar
-        });
-        formEditar.addEventListener("submit", (event) => {
-          event.preventDefault(); // Evita recargar la página
-          const formData = new FormData(formEditar);
-          const propiedadId = "<%= propiedad.id %>"; // ID de la propiedad
-          // Convertir FormData a un objeto JSON
-          const data = {};
-          formData.forEach((value, key) => {
-            data[key] = value;
-          });
-          // Enviar datos al servidor
-          fetch(`/propiedades/${propiedadId}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(`Error HTTP ${response.status}`);
-              }
-              return response.json();
-            })
-            .then(data => {
-              alert(`✅ ${data.message}`);
-              window.location.reload(); // Recargar para ver los cambios
-            })
-            .catch(error => console.error("❌ Error:", error));
-        });
-      }
+  document.addEventListener("DOMContentLoaded", () => {
+  const btnModificar = document.getElementById("btnModificar");
+  const formEditar = document.getElementById("formEditar");
+  const btnEliminar = document.getElementById("btnEliminar");
+  const cancelBtn = document.getElementById("cancelBtnArticle");
+
+  function showGuardarPopup(message) {
+    const popup = document.getElementById("guardar-popupPropiedad");
+    const messageElement = document.getElementById("guardar-messagePropiedad");
+    messageElement.textContent = message;
+    popup.style.display = "block";
+  }
+
+  // Verificar si hay un mensaje almacenado en localStorage al cargar la página
+  const savedMessage = localStorage.getItem("guardarPopupMessage");
+  if (savedMessage) {
+    showGuardarPopup(savedMessage);
+    localStorage.removeItem("guardarPopupMessage"); // Eliminar para futuras recargas
+  }
+
+  document.getElementById("close-popupPropiedad").addEventListener("click", () => {
+    document.getElementById("guardar-popupPropiedad").style.display = "none";
+  });
+
+  if (btnModificar && formEditar && cancelBtn) {
+    btnModificar.addEventListener("click", () => {
+      formEditar.classList.toggle("hiddenFormEditArticle"); 
+      btnModificar.classList.toggle("hiddenFormEditArticle");
+      btnEliminar.classList.toggle("hiddenFormEditArticle");
     });
+
+    cancelBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      formEditar.classList.add("hiddenFormEditArticle");
+      btnModificar.classList.remove("hiddenFormEditArticle");
+      btnEliminar.classList.remove("hiddenFormEditArticle");
+    });
+
+    formEditar.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(formEditar);
+      const propiedadId = "<%= propiedad.id %>";
+
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      fetch(`/propiedades/${propiedadId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error HTTP ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(() => {
+          // Guardar un mensaje personalizado sin incluir el ID de la propiedad
+          localStorage.setItem("guardarPopupMessage", "✅ Propiedad actualizada con éxito");
+          window.location.reload(); // Recargar la página
+        })
+        .catch(error => console.error("❌ Error:", error));
+    });
+  }
+});
+
+
 
   </script>
   <style>

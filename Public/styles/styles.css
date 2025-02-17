@@ -14,6 +14,7 @@ a{
 
 body{
   margin: 0 10%;
+  padding-top: 10vh;
 }
 
 /* ------------------Main section------------------------------- */
@@ -358,7 +359,6 @@ footer>a:hover{
   color: #047d7d;
   background-color: #b7d4d4;
   box-shadow: 2px 2px 5px #b7d4d4;
-
 }
 
 

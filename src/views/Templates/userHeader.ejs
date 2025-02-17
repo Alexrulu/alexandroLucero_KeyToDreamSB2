@@ -8,7 +8,7 @@
       <i class="mismensajes-button fa-solid fa-message"><span class="span-i">MIS MENSAJES</span></i>
 
       <% if (user?.id === "1") { %>
-        <a href="/propiedadesAdmin" id="mispropiedades-admin-button" class="mispropiedades-button fa-solid fa-house"><span class="span-i">PROPIEDADES</span></a>
+        <a href="/propiedadesAdmin" id="mispropiedades-admin-button" class="mispropiedades-button fa-solid fa-house-user"><span class="span-i">PROPIEDADES</span></a>
         <% } else { %>
         <i class="mispropiedades-button fa-solid fa-house"><span class="span-i">MIS PROPIEDADES</span></i>
       <% } %>
@@ -252,6 +252,10 @@
       </div>
     </div>
 <% } %>
+  <div id="actualizar-popupUsuario" style="display: none; position: fixed; top: 40%; left: 50%;   transform: translate(-50%, -20%); background-color: white; padding: 20px; border-radius: 10px;   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2); z-index: 1000;">
+    <p id="actualizar-messageUsuario" style="margin: 0; color: black; text-align: center; margin-bottom:   20px; font-weight: bold;"></p>
+    <button id="close-popupUsuario" style="margin-top: 10px; display: block; margin-left: auto;   margin-right: auto; padding: 5px 10px; background-color: dodgerblue; color: #fff; border: none;   border-radius: 5px; cursor: pointer;">Cerrar</button>
+  </div>
 
 <script>
   document.getElementById('editButton').addEventListener('click', () => {
@@ -308,6 +312,24 @@
     const newPhone = document.getElementById('phoneInput').value;
     const newCellphone = document.getElementById('cellphoneInput').value;
 
+    function showActualizarPopup(message) {
+    const popup = document.getElementById("actualizar-popupUsuario");
+    const messageElement = document.getElementById("actualizar-messageUsuario");
+    messageElement.textContent = message;
+    popup.style.display = "block";
+    }
+
+    // Verificar si hay un mensaje almacenado en localStorage al cargar la página
+    const savedMessage = localStorage.getItem("actualizarPopupMessage");
+    if (savedMessage) {
+      showGuardarPopup(savedMessage);
+      localStorage.removeItem("actualizarPopupMessage"); // Eliminar para futuras recargas
+    }
+  
+    document.getElementById("close-popupUsuario").addEventListener("click", () => {
+      document.getElementById("actualizar-popupUsuario").style.display = "none";
+    });
+
     const datosActualizados = {
       id: userId,
       name: newName,
@@ -327,7 +349,7 @@
       const result = await response.json();
 
       if (result.success) {
-        alert('Datos actualizados con éxito');
+        showActualizarPopup('Datos actualizados con éxito');
 
         // Actualizar la vista con los nuevos valores
         document.getElementById('nameDisplay1').textContent = newName;
@@ -354,20 +376,17 @@
         document.getElementById('saveButton').style.display = 'none';
         document.getElementById('cancelButton').style.display = 'none';
       } else {
-        alert('Error al actualizar: ' + result.message);
+        showActualizarPopup('Error al actualizar: ' + result.message);
       }
     } catch (error) {
       console.error('Error en la petición:', error);
     }
   });
-
   document.getElementById('deleteButton').addEventListener('click', async () => {
   if (!confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.')) {
     return;
   }
-
   const userId = document.getElementById('userId').value;
-
   try {
     const response = await fetch('/delete-user', {
       method: 'POST',
@@ -376,9 +395,7 @@
       },
       body: JSON.stringify({ id: userId })
     });
-
     const result = await response.json();
-
     if (result.success) {
       alert(result.message);
       window.location.href = '/'; // Redirigir a la página de inicio o login

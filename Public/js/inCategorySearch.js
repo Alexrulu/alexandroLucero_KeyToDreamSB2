@@ -5,82 +5,84 @@ document.addEventListener("DOMContentLoaded", () => {
   const comprarLink = document.querySelector(".comprar-h3 a");
   const activeClass = "active-category";
   const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  let inputVisible = false; // Bandera para rastrear si el input está visible
+  let inputVisible = false;
   const isAlquilarPage = window.location.pathname === '/alquilar';
   const isComprarPage = window.location.pathname === '/comprar';
+
+  function showErrorPopup(message) {
+    const popup = document.getElementById("error-popupSearch");
+    const messageElement = document.getElementById("error-messageSearch");
+    messageElement.textContent = message;
+    popup.style.display = "block";
+  }
+
+  document.getElementById("close-popupSearch").addEventListener("click", () => {
+    document.getElementById("error-popupSearch").style.display = "none";
+  });
+
+  function performSearch() {
+    const city = cityInput.value.trim();
+    if (!city) {
+      if (!isTouchScreen) showErrorPopup("Por favor, ingresa el nombre de una ciudad.");
+      return;
+    }
+
+    if (isAlquilarPage || isComprarPage) {
+      const basePath = isAlquilarPage ? "/alquilar" : "/comprar";
+      window.location.href = `${basePath}?city=${encodeURIComponent(city)}`;
+    } else {
+      const isAlquilarSelected = alquilarLink?.parentElement.classList.contains(activeClass);
+      const isComprarSelected = comprarLink?.parentElement.classList.contains(activeClass);
+      if (!isAlquilarSelected && !isComprarSelected) {
+        if (!isTouchScreen) showErrorPopup("Por favor, selecciona ALQUILAR o COMPRAR.");
+        return;
+      }
+      const basePath = isAlquilarSelected ? "/alquilar" : "/comprar";
+      window.location.href = `${basePath}?city=${encodeURIComponent(city)}`;
+    }
+  }
 
   if (searchIcon && cityInput) {
     searchIcon.addEventListener("click", (event) => {
       const isSmallScreen = window.innerWidth < 931;
-
-      if (isTouchScreen) {
-        // Modo táctil: Mostrar el input si está oculto
+      if (isTouchScreen || isSmallScreen) {
         if (!inputVisible) {
-          cityInput.style.display = "block"; // Mostrar el input
-          cityInput.focus();
-          inputVisible = true;
-          event.stopPropagation();
-          return;
-        }
-      } else if (isSmallScreen) {
-        // Modo no táctil en pantallas pequeñas
-        if (!inputVisible) {
-          cityInput.style.display = "block"; // Mostrar el input
+          cityInput.style.display = "block";
           cityInput.focus();
           inputVisible = true;
           event.stopPropagation();
           return;
         }
       }
+      performSearch();
+    });
 
-      // Obtener el valor de la ciudad
-      const city = cityInput.value.trim();
-
-      if (!city) {
-        if (!isTouchScreen) alert("Por favor, ingresa el nombre de una ciudad.");
-        return;
-      }
-
-      if (isAlquilarPage || isComprarPage) {
-        const basePath = isAlquilarPage ? "/alquilar" : "/comprar";
-        window.location.href = `${basePath}?city=${encodeURIComponent(city)}`;
-      } else {
-        const isAlquilarSelected = alquilarLink?.parentElement.classList.contains(activeClass);
-        const isComprarSelected = comprarLink?.parentElement.classList.contains(activeClass);
-
-        if (!isAlquilarSelected && !isComprarSelected) {
-          if (!isTouchScreen) alert("Por favor, selecciona ALQUILAR o COMPRAR.");
-          return;
-        }
-
-        const basePath = isAlquilarSelected ? "/alquilar" : "/comprar";
-        window.location.href = `${basePath}?city=${encodeURIComponent(city)}`;
+    cityInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Evitar el comportamiento predeterminado
+        performSearch();
       }
     });
 
-    // Ocultar el input al hacer clic fuera (solo en pantallas táctiles)
     if (isTouchScreen) {
       document.addEventListener("click", (event) => {
         if (!cityInput.contains(event.target) && event.target !== searchIcon) {
           cityInput.style.display = "none";
-          inputVisible = false; // Restablecer la bandera
+          inputVisible = false;
         }
       });
-
       cityInput.addEventListener("click", (event) => {
         event.stopPropagation();
       });
     }
 
-    // Modo no táctil: Ocultar el input al hacer clic fuera en pantallas menores a 930px
     if (!isTouchScreen && window.innerWidth < 931) {
       document.addEventListener("click", (event) => {
         if (!cityInput.contains(event.target) && event.target !== searchIcon) {
           cityInput.style.display = "none";
-          inputVisible = false; // Restablecer la bandera
+          inputVisible = false;
         }
       });
     }
-
   }
 });

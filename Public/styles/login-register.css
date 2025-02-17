@@ -135,6 +135,9 @@ h2{
   transform: translateX(-50%);
   width: 90px;
 }
+.recordarme-button{
+  margin: 20px 0 0 0;
+}
 .ingresarButton:hover{
   color: white;
   background-color: gray;

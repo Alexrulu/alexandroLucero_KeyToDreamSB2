@@ -75,32 +75,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //-----------------------(click unico - HISTORIAL)
-const historialButton = document.querySelector('.historial-button');
-const historialClick = document.querySelector('.historial-click');
-const backHistorialButton = document.querySelector('.historial-click > p');
+document.addEventListener("DOMContentLoaded", () => {
+  const historialButtons = document.querySelectorAll(".historial-button");
+  const historialClick = document.querySelector(".historial-click");
+  const backHistorialButton = document.querySelector(".historial-click > p");
 
-let isOpen3 = false; // Para rastrear si .mismensajes-click está abierto
+  let isOpen3 = false; // Para rastrear si el modal está abierto
 
-// Función para abrir/cerrar mismensajes-click
-historialButton.addEventListener('click', () => {
-  if (isOpen3) {
-    historialClick.classList.remove('open3'); // Quitar clase para cerrar
-    historialButton.classList.remove('clickHeaderAlternate');
-  } else {
-    historialClick.classList.add('open3'); // Añadir clase para abrir
-    historialButton.classList.add('clickHeaderAlternate');
+  historialButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+      if (button.id === "usuarios-admin-button") {
+        event.stopPropagation(); // Evita que el modal se abra
+        window.location.href = button.href; // Redirige manualmente
+        return;
+      }
+
+      // Alternar apertura del modal para usuarios normales
+      if (isOpen3) {
+        historialClick.classList.remove("open3");
+        button.classList.remove("clickHeaderAlternate");
+      } else {
+        historialClick.classList.add("open3");
+        button.classList.add("clickHeaderAlternate");
+      }
+      isOpen3 = !isOpen3;
+    });
+  });
+
+  // Función para cerrar el modal al hacer clic en "ATRÁS"
+  if (backHistorialButton) {
+    backHistorialButton.addEventListener("click", () => {
+      if (isOpen3) {
+        historialClick.classList.remove("open3");
+        historialButtons.forEach(button => button.classList.remove("clickHeaderAlternate"));
+        isOpen3 = false;
+      }
+    });
   }
-  isOpen3 = !isOpen3; // Alternar el estado
 });
 
-// Función para cerrar mismensajes-click al hacer clic en "ATRÁS"
-backHistorialButton.addEventListener('click', () => {
-  if (isOpen3) {
-    historialClick.classList.remove('open3'); // Quitar clase para cerrar
-    historialButton.classList.remove('clickHeaderAlternate');
-    isOpen3 = false;
-  }
-});
 
 //-----------------(click unico - MICUENTA)
 const micuentaButton = document.querySelector('.micuenta-button');
