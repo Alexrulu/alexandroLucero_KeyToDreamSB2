@@ -74,7 +74,7 @@ app.use(session({
   cookie: {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días de sesión persistente
     httpOnly: true, // Protege contra ataques XSS
-    secure: false  // Ponlo en true si usas HTTPS
+    secure: true  // Ponlo en true si usas HTTPS
   }
 }));
 // Middleware global para pasar el usuario a las vistas
