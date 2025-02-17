@@ -75,7 +75,7 @@ app.use(session({
   cookie: {
     maxAge: null, // 7 días de sesión persistente
     httpOnly: true, // Protege contra ataques XSS
-    secure: process.env.NODE_ENV === 'production'  // Ponlo en true si usas HTTPS
+    secure: true  // Ponlo en true si usas HTTPS
   }
 }));
 
