@@ -19,7 +19,7 @@ const usersFilePath = path.join(__dirname, './controllers/users.json');
 const propiedadesFilePath = path.join(__dirname, './controllers/propiedades.json');
 
 app.use(cookieParser());
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config();
 // Inicialización de la aplicación
 const PORT = 3000 || process.env.PORT;
 // Configuración de Multer para la carga de archivos
@@ -74,7 +74,7 @@ app.use(session({
   cookie: {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días de sesión persistente
     httpOnly: true, // Protege contra ataques XSS
-    secure: true  // Ponlo en true si usas HTTPS
+    secure: false  // Ponlo en true si usas HTTPS
   }
 }));
 // Middleware global para pasar el usuario a las vistas
