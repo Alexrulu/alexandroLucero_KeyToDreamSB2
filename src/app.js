@@ -20,9 +20,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-
 app.use(cookieParser());
-dotenv.config();
 // Inicialización de la aplicación
 const PORT = 3000 || process.env.PORT;
 // Configuración de Multer para la carga de archivos
