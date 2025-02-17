@@ -28,7 +28,7 @@ function guardarUsuarios(users) {
 router.post('/process-register', async (req, res) => {
   const { userType, email, password, name, razonSocial, fiscalCondition, dni, phone, cellphone, terms, privacyPolicy } = req.body;
   if (!userType || !email || !password || !name || !dni || !cellphone || !terms || !privacyPolicy) {
-    return res.status(400).send('Por favor, complete todos los campos requeridos.');
+    return res.status(400).send('Por favor, complete todos los campos requeridos.')
   }
   const usersDatabase = leerUsuarios();
   // Verificar si el usuario ya existe
