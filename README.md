@@ -11,8 +11,11 @@ KEYTODREAM, Una web sobre venta/alquiler de propiedades en Argentina, hecha por 
 - Contraseñas seguras con bycript.
 
 ### Faltantes
-- Vista para editar o eliminar propiedad publicada por el mismo usuario, vista para que el administrador de la web elimine propiedades o usuarios.
 - Desarrollar el flujo de Emprendimiento.
+
+### Para ver la interfaz del administrador:
+- Correo: alexandro@gmail.com
+- Contraseña: superAdmin123
 
 -------------------------------------
 
