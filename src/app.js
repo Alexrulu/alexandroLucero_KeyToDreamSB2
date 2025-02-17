@@ -19,7 +19,7 @@ const usersFilePath = path.join(__dirname, './controllers/users.json');
 const propiedadesFilePath = path.join(__dirname, './controllers/propiedades.json');
 
 app.use(cookieParser());
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 // Inicialización de la aplicación
 const PORT = 3000 || process.env.PORT;
 // Configuración de Multer para la carga de archivos
