@@ -1,5 +1,6 @@
 const fs = require('fs');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -19,7 +20,6 @@ const propiedadesFilePath = path.join(__dirname, './controllers/propiedades.json
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
 app.use(cookieParser());
 // Inicialización de la aplicación
 const PORT = 3000 || process.env.PORT;
@@ -73,11 +73,32 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días de sesión persistente
+    maxAge: null, // 7 días de sesión persistente
     httpOnly: true, // Protege contra ataques XSS
-    secure: false  // Ponlo en true si usas HTTPS
+    secure: process.env.NODE_ENV === 'production'  // Ponlo en true si usas HTTPS
   }
 }));
+
+// Verificación del remember_token y restauración de sesión si es necesario
+app.use((req, res, next) => {
+  if (!req.session.user && req.cookies.remember_token) {
+    try {
+      const decoded = jwt.verify(req.cookies.remember_token, process.env.JWT_SECRET);
+      const usersDatabase = leerUsuarios();
+      const user = usersDatabase.find(u => u.id === decoded.userId);
+
+      if (user) {
+        req.session.user = user;
+        req.session.userId = user.id;
+      } else {
+        res.clearCookie('remember_token'); // Si el usuario no existe, limpiamos la cookie
+      }
+    } catch (err) {
+      res.clearCookie('remember_token'); // Si el token es inválido, lo eliminamos
+    }
+  }
+  next(); // Siempre llama a next() para continuar con la siguiente middleware o ruta
+});
 // Middleware global para pasar el usuario a las vistas
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
@@ -88,19 +109,6 @@ app.use((req, res, next) => {
   if (!req.session.favoritos) req.session.favoritos = [];
   next();
 });
-app.use((req, res, next) => {
-  if (!req.session.user && req.cookies.userId) {
-    const usersDatabase = leerUsuarios();
-    const user = usersDatabase.find(u => u.id === req.cookies.userId);
-    if (user) {
-      req.session.user = user;
-      req.session.userId = user.id;
-    }
-  }
-  next();
-});
-
-
 //-----------------------------------------------------(Rutas para manejar /alquilar, /comprar, /favoritos)
 app.post('/favoritos/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);

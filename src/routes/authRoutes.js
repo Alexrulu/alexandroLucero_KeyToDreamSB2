@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
@@ -60,7 +61,7 @@ router.post('/process-register', async (req, res) => {
 });
 //-----------------------------------------------------------LOGIN-----------------
 router.post('/process-login', async (req, res) => {
-  const { email, password, rememberMe } = req.body; // Captura rememberMe
+  const { email, password, rememberMe } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Por favor, complete todos los campos.' });
@@ -80,9 +81,17 @@ router.post('/process-login', async (req, res) => {
   req.session.user = user;
   req.session.userId = user.id;
 
-  // Si el usuario eligió "Recordarme", guardamos una cookie persistente
+  // Si el usuario elige "Recordarme", generamos un token JWT en la cookie
   if (rememberMe) {
-    res.cookie('userId', user.id, { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true });
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+    res.cookie('remember_token', token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      httpOnly: true, // Protege contra ataques XSS
+      secure: process.env.NODE_ENV === 'production', // Solo en HTTPS en producción
+      path: '/', // Asegúrate de que la cookie esté disponible en todo el sitio
+      sameSite: 'Lax' // Si usas cookies entre diferentes sitios o subdominios
+    });
   }
 
   console.log('Usuario logueado:', user);
@@ -91,7 +100,10 @@ router.post('/process-login', async (req, res) => {
 
 //---------------------------------------------------LOGOUT------------------------
 router.get('/logout', (req, res) => {
-  res.clearCookie('userId'); // Eliminar cookie
+  // Eliminar las cookies
+  res.clearCookie('userId');
+  res.clearCookie('remember_token'); // Eliminar cookie de remember_token
+
   req.session.destroy(err => {
     if (err) {
       console.error('Error al destruir la sesión:', err);
@@ -101,4 +113,5 @@ router.get('/logout', (req, res) => {
     res.json({ success: true });
   });
 });
+
 module.exports = router;
