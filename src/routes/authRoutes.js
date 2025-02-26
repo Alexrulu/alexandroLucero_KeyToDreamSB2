@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
-const usersFilePath = path.join(__dirname, '../controllers/users.json');
+const usersFilePath = path.join(__dirname, '../data/users.json');
 // Función para leer los usuarios desde el archivo JSON
 function leerUsuarios() {
   try {

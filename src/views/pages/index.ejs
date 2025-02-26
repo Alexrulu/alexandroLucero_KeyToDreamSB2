@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    window.carruseles = <%- JSON.stringify(carruseles) %>;
+  </script>
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
+  <link rel="stylesheet" href="/styles/header.css">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/styles/leaflet-modificado.css"/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="/styles/control-geocoder.css"/>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <title>KEY TO DREAM</title>
+</head>
+<body class="index-html">
+  <header>
+    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.jpg"></a>
+    <h2 class="header-logo-top-name">KEY TO DREAM</h2>
+    <div class="left-header">
+      <i class="fa-solid fa-bars"></i>
+      <h3><a href="/">INICIO</a></h3>
+      <h3 class="alquilar-h3"><a href="/alquilar" style="text-decoration: none; color: inherit;">ALQUILAR</a></h3>
+      <h3 class="comprar-h3"><a href="/comprar" style="text-decoration: none; color: inherit;">COMPRAR</a></h3>
+      <h3 class="masfiltros-button masfiltros-button-index">MÁS FILTROS<i class="fa-solid fa-angle-down"></i></h3>
+      <% if (!user) { %> <!-- Solo mostrar si no hay usuario logueado -->
+        <a class="login-button" href="/login">INICIAR SESIÓN</a>
+      <% } %>
+    </div>
+    <div class="right-header">
+      <h3>
+        <i class="fa-solid fa-magnifying-glass lupa-tactil"></i>
+        <input type="search" placeholder="Ciudad" class="header-buscar lupa-tactil"></input>
+      </h3>
+      <h3>
+        <i class="fa-solid fa-location-dot"></i>
+        <input type="text" placeholder="Usá tu dirección y encontrá rapidamente" class="header-ubicacion"></input>
+      </h3>
+      <%- include('../layouts/userHeader', { user: user, propiedades: propiedades }) %>
+
+      <h3><i class="fa-solid fa-heart" onclick="handleUserIconClickFav()"></i></h3>
+      
+    </div>
+  </header>
+  
+  <main class="index-main">
+    <img id="carruselRecomendado">
+    <img id="carruselEmprendimiento">
+    <div id="mapa"></div>
+
+
+    <div class="recomendado-text">
+      <p>RECOMENDADO</p>
+      <div>
+        <p id="city"></p>
+        <p id="adress"></p>
+        <p id="price"></p>
+      </div>
+    </div>
+    <div class="emprendimiento-text">
+      <p>EMPRENDIMIENTO</p>
+      <div>
+        <p id="city2"></p>
+        <p id="adress2"></p>
+        <p id="price2"></p>
+      </div>
+    </div>
+    <div class="mapa-text">
+       <p>USÁ EL MAPA</p>
+       <p>EXPLORÁ LAS PROPIEDADES EN ARGENTINA</p>
+    </div>
+
+    <!--botones a los costados para cambiar de imagen-->
+    <button class="left-button-recomendado"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="right-button-recomendado"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="left-button-mobile"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="right-button-mobile"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="left-button-mobile2"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="right-button-mobile2"><i class="fa-solid fa-chevron-right"></i></button>
+
+    <i class="fa-solid fa-magnifying-glass lupa-mapa-hover lupa-mapa-hover-delete"></i>
+    
+    <script>//js detecta map=open en la url entonces abre el mapa
+      if (window.location.search.includes('map=open')) {
+          document.querySelector('.index-main > div:nth-child(3)').classList.add('expandida');
+      }
+    </script>
+  </main>
+
+  <footer>
+    <a href="/terms">TÉRMINOS Y CONDICIONES</a>
+    <p>HECHO POR:</p>
+    <a class="alexandrolucero-btn" href="https://alexandrolucero.vercel.app/" target="_blank">LUCERO ALEXANDRO</a>
+  </footer>
+
+  <!-- Ventana emergente al publicar -->
+  <div id="successPopup" class="popup hidden">
+    <div class="popup-content">
+      <div>
+        <p>KEY TO DREAM</p>
+      </div>
+      <p>¡Publicado correctamente!</p>
+      <button id="closePopup">Cerrar</button>
+    </div>
+  </div>
+  <div id="error-popupSearch" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -20%); background-color: white; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2); z-index: 1000;">
+    <p id="error-messageSearch" style="margin: 0; color: black; text-align: center; margin-bottom: 20px; font-weight: bold;"></p>
+    <button id="close-popupSearch" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto; padding: 5px 10px; background-color: crimson; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Selecciona el contenedor del formulario
+      const geocoderForm = document.querySelector('.leaflet-control-geocoder-form');
+  
+      // Busca el input dentro del contenedor
+      if (geocoderForm) {
+        const searchInput = geocoderForm.querySelector('input[type="search"]');
+        
+        // Cambia el texto del placeholder si el input existe
+        if (searchInput) {
+            searchInput.placeholder = "Ciudad...";
+        }
+      }
+    });
+  </script>
+
+  <script src="/js/tactil.js"></script>
+  <script src="/js/z-index.js"></script>
+  <script src="/js/clickHeader.js"></script>
+  <script src="/js/categorySearch.js"></script>
+  <script src="/js/posting-index.js"></script>
+  <script src="/js/carruselClick.js"></script>
+  <script src="/js/carrusel.js"></script>
+  <script src="/js/menuBurger.js"></script>
+  <script src="/js/leaflet.js"></script>
+</body>
+</html>

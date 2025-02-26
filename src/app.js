@@ -8,15 +8,13 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const multer = require('multer');
 const authRoutes = require('./routes/authRoutes'); // Rutas de autenticación
-const db = require('./controllers/db'); // Base de datos y propiedades
-const { agregarPropiedad, marcarFavorito, desmarcarFavorito } = require('./controllers/db');
-const favoritosRoutes = require('./routes/favoritos');
-const propertyRoutes = require('./routes/propertyRoutes');
-const dotenv = require('dotenv');
-const { eliminarPropiedad } = require('./controllers/db');
-const { modificarPropiedad } = require('./controllers/db');
-const usersFilePath = path.join(__dirname, './controllers/users.json');
-const propiedadesFilePath = path.join(__dirname, './controllers/propiedades.json');
+const db = require('./config/db'); // Base de datos y propiedades
+const { marcarFavorito, desmarcarFavorito } = require('./config/db');
+const favoritosRoutes = require('./routes/favRoutes');
+const postPropertyRoutes = require('./routes/postPropertyRoutes');
+const { eliminarPropiedad } = require('./config/db');
+const { modificarPropiedad } = require('./config/db');
+const usersFilePath = path.join(__dirname, './data/users.json');
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -25,18 +23,20 @@ app.use(cookieParser());
 const PORT = 3000 || process.env.PORT;
 // Configuración de Multer para la carga de archivos
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../Public/images')),
+  destination: (req, file, cb) => cb(null, path.join(__dirname, '../public/images')),
   filename: (req, file, cb) => cb(null, file.originalname),
 });
 const upload = multer({ storage });
 // Acceso a las propiedades desde la base de datos
+
+
 function obtenerFavoritos(userId) {
   const users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
   const user = users.find(u => u.id === userId);
   return user ? user.favoritos.map(id => Number(id)) : [];
 }
 function cargarPropiedades() {
-  const filePath = path.join(__dirname, './controllers/propiedades.json'); // Ajusta la ruta si es necesario
+  const filePath = path.join(__dirname, './data/propiedades.json'); // Ajusta la ruta si es necesario
   const data = fs.readFileSync(filePath, 'utf8');
   return JSON.parse(data);
 }
@@ -49,8 +49,9 @@ function leerUsuarios() {
     return [];
   }
 }
+
+
 const propiedades_type = db.propiedades_type;
-const propiedades_model = db.propiedades_model;
 // Enrutador principal
 const router = express.Router();
 router.get('/', (req, res) => {
@@ -59,11 +60,11 @@ router.get('/', (req, res) => {
   res.render('index', { carruseles, propiedades });
 });
 // Configuración de vistas
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/pages'));
 app.set('view engine', 'ejs');
 // Middleware para archivos estáticos
-app.use(express.static(path.join(__dirname, '../Public')));
-app.use('/images', express.static(path.join(__dirname, '../Public/images')));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 // Middleware para procesar los datos del formulario
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -393,7 +394,7 @@ app.post('/delete-user', async (req, res) => {
 });
 
 
-app.use('/property', propertyRoutes(upload)); // Pasar "upload" como argumento
+app.use('/property', postPropertyRoutes(upload)); // Pasar "upload" como argumento
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

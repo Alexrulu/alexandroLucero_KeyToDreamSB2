@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
+  <link rel="stylesheet" href="/styles/header.css">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/comprar-alquilar.css">
+  <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
+  <title>Usuarios ADMINISTRADOR</title>
+</head>
+<body>
+  <header>
+    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.jpg"></a>
+    <h2 class="header-logo-top-name">KEY TO DREAM</h2>
+    <div class="left-header">
+      <a href="/" class="home-users-admin"><i class="fa-solid fa-house"></i></a>
+      <h3><a href="/">INICIO</a></h3>
+    </div>
+    <div class="right-header">
+      <h3>
+        <i class="fa-solid fa-magnifying-glass lupa-tactil-inCategory admin-lupa"></i>
+        <form action="/usuariosAdmin" method="GET">
+          <input type="search" name="search" placeholder="Nombre" class="header-buscar admin-buscar" value="<%= searchQuery %>">
+        </form>
+      </h3>
+      <h4 class="administrador-h4">ADMINISTRADOR</h4>
+    </div>
+  </header>
+  
+  <main class="main-propiedades-admin">
+    <% if (users.length === 0) { %>
+      <p>No se encontraron usuarios que coincidan con tu búsqueda.</p>
+    <% } else { %>
+      <% users.forEach(user => { %>
+        <article class="article-box-admin">
+          <div style="display: flex">
+            <div class="left-article-admin">
+              <h2><%= user.name.toUpperCase() %></h2>
+              <p>Email: <%= user.email %></p>
+              <p>DNI: <%= user.dni %></p>
+              <p>Teléfono: <%= user.phone %></p>
+              <% if (user.id !== "1") { %>
+                <button class="deleteUserButton" data-id="<%= user.id %>">Eliminar Usuario</button>
+              <% } %>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    <% } %>
+  </main>
+  
+  <style>
+    .deleteUserButton {
+      background-color: black;
+      color: white;
+      border-radius: 5px;
+      padding: 3px;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .deleteUserButton:hover{
+      background-color: crimson;
+      transform: scale(1.1);
+    }
+  </style>
+  <script>
+    document.querySelectorAll('.deleteUserButton').forEach(button => {
+      button.addEventListener('click', async () => {
+        const userId = button.getAttribute('data-id');
+        if (!confirm('¿Estás seguro de que deseas eliminar este usuario? Esta acción es irreversible.')) {
+          return;
+        }
+  
+        try {
+          const response = await fetch('/delete-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: userId })
+          });
+  
+          const result = await response.json();
+  
+          if (result.success) {
+            alert(result.message);
+            location.reload(); // Recargar la página después de eliminar
+          } else {
+            alert('Error: ' + result.message);
+          }
+        } catch (error) {
+          console.error('Error en la petición:', error);
+        }
+      });
+    });
+  </script>
+  <script src="/js/menuBurger.js"></script>
+</body>
+</html>

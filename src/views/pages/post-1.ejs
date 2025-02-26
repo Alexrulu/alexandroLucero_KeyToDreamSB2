@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/header.css">
+  <link rel="icon" href="/images/favicon.jpg" type="image/png">
+  <script src="https://kit.fontawesome.com/a4c24707d1.js" crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <a href="/"><img class="header-logo-top-icon" src="/images/favicon.jpg"></a>
+    <h2 class="header-logo-top-name">KEY TO DREAM</h2>
+    <div class="left-header">
+      <i class="fa-solid fa-bars"></i>
+      <h3><a href="/">INICIO</a></h3>
+      <h3 class="alquilar-h3"><a href="/alquilar" style="text-decoration: none; color: inherit;">ALQUILAR</a></h3>
+      <h3 class="comprar-h3"><a href="/comprar" style="text-decoration: none; color: inherit;">COMPRAR</a></h3>
+      <h3 class="masfiltros-button masfiltros-button-index">MÁS FILTROS<i class="fa-solid fa-angle-down"></i></h3>
+
+    </div>
+    <div class="right-header">
+      <h3>
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" placeholder="Ciudad" class="header-buscar"></input>
+      </h3>
+      <h3>
+        <i class="fa-solid fa-location-dot"></i>
+        <p class="header-ubicacion">Usá tu dirección y enconTrá rapidamente</p>
+      </h3>
+      <%- include('../layouts/userHeader', { user: user, propiedades: propiedades }) %>
+      <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
+      
+    </div>
+  </header>
+
+  <main class="post-1-box">
+    <div class="post-1-progress-box">
+      <p>1</p>
+      <span></span>
+      <p>2</p>
+      <span></span>
+      <p>3</p>
+      <span></span>
+      <p>4</p>
+    </div>
+    <div class="post-1-progress-word-box">
+      <p>PRINCIPAL</p>
+      <p>MULTIMEDIA</p>
+      <p>EXTRAS</p>
+      <p>PUBLICAR</p>
+    </div>
+    <form action="/property/save-property-step1" method="POST">
+      <!-- Operación y tipo de propiedad -->
+      <div class="post-1-first">
+        <p>OPERACIÓN Y TIPO DE PROPIEDAD</p>
+        <div>
+          <button type="submit" name="action" value="continue" class="submit-post1">CONTINUAR</button>
+        </div>
+      </div>
+  
+      <!-- Tipo de operación -->
+      <div class="post-1-second">
+        <p><label><input type="radio" name="type" value="venta" required> VENTA</label></p>
+        <p><label><input type="radio" name="type" value="alquiler"> ALQUILER</label></p>
+        <p><label><input type="radio" name="type" value="temporada"> TEMPORADA</label></p>
+      </div>
+  
+      <!-- Tipo de propiedad -->
+      <div class="post-1-third">
+        <p><label><input type="radio" name="model" value="casa" required> CASA</label></p>
+        <p><label><input type="radio" name="model" value="departamento"> DEPARTAMENTO</label></p>
+        <p><label><input type="radio" name="model" value="ph"> PH</label></p>
+        <p><label><input type="radio" name="model" value="condominio"> CONDOMINIO</label></p>
+      </div>
+  
+      <!-- Ubicación -->
+      <div class="adress-city-post-box">
+        <p>UBICACIÓN</p>
+        <label for="address">DIRECCIÓN</label>
+        <input type="text" id="address" name="address" placeholder="Ingresá la dirección" required>
+  
+        <label for="city">CIUDAD O BARRIO</label>
+        <input type="text" id="city" name="city" placeholder="Ingresá la ciudad o barrio" required>
+      </div>
+  
+      <!-- Características -->
+      <p class="caracteristicas-post">CARACTERÍSTICAS</p>
+      <div class="post-1-last">
+        <!-- Características numéricas -->
+        <div class="post-1-last-left">
+          <div>
+            <label for="total_area"><i class="fa-solid fa-ruler"></i></label>
+            <input type="number" id="total_area" name="total_area" min="0" placeholder="M² TOTALES">
+          </div>
+          <div>
+            <label for="covered_area"><i class="fa-regular fa-square-full"></i></label>
+            <input type="number" id="covered_area" name="covered_area" min="0" placeholder="M² CUBIERTOS">
+          </div>
+          <div>
+            <label for="rooms"><i class="fa-solid fa-door-open"></i> AMBIENTES</label>
+            <select id="rooms" name="rooms">
+              <option value="">Seleccionar</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3+</option>
+            </select>
+          </div>
+          <div>
+            <label for="bathrooms"><i class="fa-solid fa-toilet"></i> BAÑOS</label>
+            <select id="bathrooms" name="bathrooms">
+              <option value="">Seleccionar</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3+</option>
+            </select>
+          </div>
+          <div>
+            <label for="parking"><i class="fa-solid fa-car"></i> COCHES</label>
+            <select id="parking" name="parking">
+              <option value="">Seleccionar</option>
+              <option value="0">Sin cochera</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+          <div>
+            <label for="bedrooms"><i class="fa-solid fa-bed"></i> DORMITORIOS</label>
+            <select id="bedrooms" name="bedrooms">
+              <option value="">Seleccionar</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3+</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Características adicionales -->
+        <div class="post-1-last-right">
+          <div>
+            <p><label><input type="checkbox" name="features[]" value="cocina"> COCINA</label></p>
+            <p><label><input type="checkbox" name="features[]" value="piscina"> PISCINA</label></p>
+            <p><label><input type="checkbox" name="features[]" value="balcon"> BALCÓN</label></p>
+            <p><label><input type="checkbox" name="features[]" value="parrilla"> PARRILLA</label></p>
+          </div>
+          <div>
+            <p><label><input type="checkbox" name="features[]" value="lavadero"> LAVADERO</label></p>
+            <p><label><input type="checkbox" name="features[]" value="vigilancia"> VIGILANCIA</label></p>
+            <p><label><input type="checkbox" name="features[]" value="comedor"> L. COMEDOR</label></p>
+            <p><label><input type="checkbox" name="features[]" value="ascensor"> ASCENSOR</label></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+  <script src="/js/clickHeader.js"></script>
+  <script src="/js/clickPost.js"></script>
+  <script src="/js/menuBurger.js"></script>
+</body>
+</html>
