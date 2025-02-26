@@ -49,6 +49,7 @@ router.post('/process-register', async (req, res) => {
       dni,
       phone,
       cellphone,
+      favoritos: []
     };
     usersDatabase.push(newUser);
     guardarUsuarios(usersDatabase);

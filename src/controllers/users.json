@@ -25,8 +25,19 @@
     "dni": "123123",
     "phone": "11323231",
     "cellphone": "123123123",
-    "favoritos": [
-      9
-    ]
+    "favoritos": []
+  },
+  {
+    "id": "b24c5656-1fe4-49ec-b49d-fdff60f1cbd0",
+    "userType": "1",
+    "email": "alexandro7@gmail.com",
+    "password": "$2b$10$PketmPp2meXZ0/ODycxXAuMPn5Gay2qZyIR0hLhIMmusbAHJrNCFq",
+    "name": "123",
+    "razonSocial": "123",
+    "fiscalCondition": "1",
+    "dni": "123",
+    "phone": "123",
+    "cellphone": "123",
+    "favoritos": []
   }
 ]
