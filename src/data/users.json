@@ -10,9 +10,7 @@
     "dni": "00000000",
     "phone": "123456789",
     "cellphone": "987654321",
-    "favoritos": [
-      null
-    ]
+    "favoritos": []
   },
   {
     "id": "69dd363f-4355-4839-8320-0591aa007165",
@@ -25,7 +23,9 @@
     "dni": "123123",
     "phone": "11323231",
     "cellphone": "123123123",
-    "favoritos": []
+    "favoritos": [
+      5
+    ]
   },
   {
     "id": "b24c5656-1fe4-49ec-b49d-fdff60f1cbd0",

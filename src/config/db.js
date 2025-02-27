@@ -9,8 +9,6 @@ const usersFilePath = path.join(__dirname, '../data/users.json');
 function recargarPropiedades() {
   return JSON.parse(fs.readFileSync(propiedadesFilePath, 'utf-8'));
 }
-
-
 // Marcar una propiedad como favorita
 function marcarFavorito(req, id) {
   const userId = req.session.userId;
