@@ -116,4 +116,5 @@ module.exports = {
   obtenerFavoritos,
   eliminarPropiedad,
   modificarPropiedad,
+  recargarPropiedades
 };

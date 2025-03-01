@@ -152,16 +152,10 @@
         </p>
         <div class="announcer-box">
           <h4>CONTACTAR AL ANUNCIANTE</h4>
-          <p><b>Email</b>
-            <%= propiedad.email %>
-          </p>
-          <p><b>Teléfono</b>
-            <%= propiedad.phoneBusiness %>
-          </p>
+          <p>Email: <strong> <%= propiedad.email %> </strong></p>
+          <p>Teléfono: <strong> <%= propiedad.phoneBusiness %> </strong></p>
           <% if (propiedad.contact===2) { %>
-            <p><b>Teléfono personal</b>
-              <%= propiedad.phonePersonal %>
-            </p>
+            <p>Teléfono personal: <strong> <%= propiedad.phonePersonal %> </strong></p>
             <% } %>
         </div>
         <div class="myContact-box">

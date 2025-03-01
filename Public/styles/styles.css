@@ -23,8 +23,8 @@ body{
   display: flex;
   flex-wrap: wrap;
   height: 80vh;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
 }
 
 .index-main>img:first-child{ /* recomendado */
@@ -33,10 +33,10 @@ body{
   left: 0;
   width: 80vw;
   object-fit: cover;
-  height: 50vh;
-  border-bottom: 10px solid white;
+  height: 49vh;
   transition: all 0.2s ease;
   cursor: pointer;
+  border-radius: 10px;
 }
 .index-main>img:first-child:hover{
   height: 80vh;
@@ -68,6 +68,7 @@ body{
   transition: top 0.2s ease;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
   transform: translateY(-75%);
+  font-size: small;
 }
 .index-main>img:first-child:hover ~ .recomendado-text>div{
   top: 92%;
@@ -106,13 +107,12 @@ body{
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 30vw;
+  width: 29vw;
   object-fit: cover;
-  height: 30vh;
-  border-right: 10px solid white;
-  border-top: 10px solid white;
+  height: 28.5vh;
   transition: all 0.2s ease;
   cursor: pointer;
+  border-radius: 10px;
 }
 .index-main>img:nth-child(2):hover{
   height: 80vh;
@@ -142,7 +142,8 @@ body{
   width: 30vw;
   text-wrap: nowrap;
   pointer-events: none;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 1)
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+  font-size: small;
 }
 .index-main>img:nth-child(2):hover ~ .emprendimiento-text>p{
   top: 5%;
@@ -180,14 +181,13 @@ body{
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 50vw;
+  width: 49.5vw;
   object-fit: cover;
-  height: 30vh;
-  border-left: 10px white solid;
-  border-top: 10px solid white;
+  height: 28.5vh;
   transition: all 0.2s ease;
   cursor: pointer;
   z-index: 0;
+  border-radius: 10px;
 }
 .index-main>div:nth-child(3) ~ .mapa-text>p:first-child{
   position: absolute;
@@ -199,7 +199,7 @@ body{
   color: white;
   padding: 5px;
   font-weight: bold;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 .index-main>div:nth-child(3) ~ .mapa-text>p:nth-child(2){
   position: absolute;
@@ -289,7 +289,7 @@ body{
   transition: left 1s ease;
 }
 .index-main>img:nth-child(2):hover ~ .right-button-recomendado{
-  right: 0.5vw;
+  right: 0;
   transition: right 1s ease;
 }
 .left-button-mobile, .right-button-mobile, .left-button-mobile2, .right-button-mobile2{
@@ -305,11 +305,11 @@ body{
   pointer-events: none;
   z-index: 10;
   transition: all 0.2s ease;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5)
+  text-shadow: 2px 2px 5px white
 }
 .index-main>div:nth-child(3):hover ~ .lupa-mapa-hover{
   right: 30%;
-  transition: all 0.2s ease;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 .index-main>div:nth-child(3).expandida ~ .lupa-mapa-hover{
   bottom: 90%;
@@ -347,18 +347,15 @@ footer>a:hover{
   color: black;
 }
 .alexandrolucero-btn{
-  color: #56dac7;
-  background-color: #122b39;
+  color: white;
+  background-color: gray;
   padding: 4px 8px;
   border-radius: 5px;
   transition: all 0.2s ease;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  font-weight: 600;
 }
 .alexandrolucero-btn:hover{
-  color: #047d7d;
-  background-color: #b7d4d4;
-  box-shadow: 2px 2px 5px #b7d4d4;
+  color: #56dac7;
+  background-color: #122b39;
 }
 
 
@@ -381,6 +378,7 @@ footer>a:hover{
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-1-progress-box>p:nth-child(3){
   width: 50px;
@@ -389,6 +387,7 @@ footer>a:hover{
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-1-progress-box>p:nth-child(5){
   width: 50px;
@@ -397,6 +396,7 @@ footer>a:hover{
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-1-progress-box>p:nth-child(7){
   width: 50px;
@@ -405,6 +405,7 @@ footer>a:hover{
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-1-progress-word-box{
   display: flex;
@@ -429,6 +430,8 @@ footer>a:hover{
   color: white;
   border: none;
   transition: background-color 0.2s ease;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .submit-post1:hover{
   background-color: dodgerblue;
@@ -440,6 +443,7 @@ footer>a:hover{
   justify-content: space-between;
   border: 2px solid gray;
   padding: 5px;
+  border-radius: 5px;
 }
 .post-1-second input{
   display: none;
@@ -458,6 +462,7 @@ footer>a:hover{
   border: 2px solid gray;
   padding: 5px;
   margin-top: 30px;
+  border-radius: 5px;
 }
 .post-1-third input{
   display: none;
@@ -555,6 +560,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-2-progress-box>p:nth-child(3){
   width: 50px;
@@ -563,6 +569,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-2-progress-box>p:nth-child(5){
   width: 50px;
@@ -571,6 +578,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-2-progress-box>p:nth-child(7){
   width: 50px;
@@ -579,6 +587,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-2-progress-word-box{
   display: flex;
@@ -609,6 +618,8 @@ outline:none
   color: white;
   border: none;
   transition: background-color 0.2s ease;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .post-2-first div>button:hover{
   background-color: dodgerblue;
@@ -659,6 +670,7 @@ outline:none
   padding: 5px 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border-radius: 5px;
 }
 .custom-file-upload.uploaded {
   background-color: dodgerblue;
@@ -688,6 +700,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-3-progress-box>p:nth-child(3){
   width: 50px;
@@ -696,6 +709,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-3-progress-box>p:nth-child(5){
   width: 50px;
@@ -704,6 +718,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-3-progress-box>p:nth-child(7){
   width: 50px;
@@ -712,6 +727,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-3-progress-word-box{
   display: flex;
@@ -741,6 +757,8 @@ outline:none
   color: white;
   border: none;
   transition: background-color 0.2s ease;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .post-3-first>button:hover{
   background-color: dodgerblue;
@@ -805,6 +823,7 @@ outline:none
   color: white;
   margin-bottom: 5px;
   font-size: x-large;
+  border-radius: 5px;
 }
 .post-4-progress-word-box{
   display: flex;
@@ -857,6 +876,7 @@ outline:none
   margin-top: 30px;
   border: black 2px solid;
   transition: border 0.2s ease;
+  border-radius: 10px;
 }
 .post-4-second textarea:focus{
   outline: none;
@@ -870,6 +890,7 @@ outline:none
   border: none;
   margin-top: 10px;
   transition: background-color 0.2s ease;
+  border-radius: 5px;
 }
 .post-4-second>button:nth-child(3):hover{
   background-color: dodgerblue;
@@ -983,13 +1004,13 @@ outline:none
     width: 90vw;
   }
   .index-main>img:nth-child(2){
-    width: 35vw;
+    width: 34.2vw;
   }
   .index-main>img:nth-child(2):hover{
     width: 90vw;
   }
   .index-main>div:nth-child(3){
-    width: 55vw;
+    width: 54.2vw;
   }
   .index-main>div:nth-child(3).expandida{
     width: 90vw;
@@ -1035,13 +1056,13 @@ outline:none
     width: 96vw;
   }
   .index-main>img:nth-child(2){
-    width: 38vw;
+    width: 37vw;
   }
   .index-main>img:nth-child(2):hover{
     width: 96vw;
   }
   .index-main>div:nth-child(3){
-    width: 58vw;
+    width: 57vw;
   }
   .index-main>div:nth-child(3).expandida{
     width: 96vw;

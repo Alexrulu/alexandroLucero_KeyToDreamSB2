@@ -1,8 +1,5 @@
-
 /* 1280 */
-
 /* Main */
-
 .article-box{
   display: flex;
   background-color: rgb(233, 233, 233);
@@ -12,6 +9,7 @@
   position: relative;
   z-index: 10;
   transition: all 0.2s ease;
+  border-radius: 10px;
 }
 .article-box:hover{
   background-color: gainsboro;
@@ -21,12 +19,14 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: 10px;
 }
 .img-imagendealquiler{
   width: 25vw;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: 10px;
 }
 .img-imagendefavoritos{
   width: 25vw;
@@ -71,6 +71,7 @@
   background-color: white;
   font-size:x-large;
   margin: 10px 10px 0 0;
+  border-radius: 5px;
 }
 
 /* ADMIN SECTION */

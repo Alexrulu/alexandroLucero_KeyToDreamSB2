@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 
-const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const session = require('express-session');

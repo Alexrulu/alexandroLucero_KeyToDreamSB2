@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { marcarFavorito, desmarcarFavorito, obtenerFavoritos } = require('../config/db');
+const { marcarFavorito, desmarcarFavorito, obtenerFavoritos, recargarPropiedades } = require('../config/db');
 const propiedades = require('../config/db').propiedades;
 
 // Ruta para marcar una propiedad como favorita
@@ -39,8 +39,11 @@ router.get('/', async (req, res) => {
   if (!userId) {
     return res.redirect('/login');
   }
+  // Obtén las propiedades actualizadas directamente de la base de datos
   const favoritos = await obtenerFavoritos(userId);
-  res.render('favoritos', { propiedadesFavoritas: favoritos, todasPropiedades: propiedades });
+  const propiedadesActualizadas = await recargarPropiedades();
+
+  res.render('favoritos', { propiedadesFavoritas: favoritos, todasPropiedades: propiedadesActualizadas});
 });
 
 // Ruta para la página de propiedades en alquiler

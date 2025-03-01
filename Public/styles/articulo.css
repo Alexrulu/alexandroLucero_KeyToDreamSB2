@@ -8,6 +8,8 @@
     "a a b c"
     "a a d e";
   gap: 10px;
+  overflow: hidden;
+  border-radius: 10px;
 }
 .article-img-box>img{
   width: 100%;
@@ -15,6 +17,11 @@
   object-fit: cover;
   object-position: center;
   aspect-ratio: 2/1;
+  transition: all 0.2s ease;
+}
+.article-img-box>img:hover{
+  filter: brightness(0.8);
+  cursor: pointer;
 }
 .article-img-box>img:first-child{
   grid-area: a;
@@ -187,9 +194,9 @@
 .articulo-personalName>i{
   padding: 5px;
   background-color: ghostwhite;
-  border: 2px solid gainsboro;
   font-size: x-large;
   border-radius: 5px;
+  border: 1px solid gainsboro;
 }
 .announcer-box{
   display: flex;
@@ -199,7 +206,8 @@
   padding: 20px;
   margin-left: 20px;
   text-align: center;
-  border-top: gainsboro solid 2px;
+  border: gainsboro solid 1px;
+  border-radius: 10px;
 }
 .announcer-box h4, .announcer-box b{
   font-weight: normal;
@@ -210,9 +218,10 @@
 }
 .myContact-box textarea{
   margin: 10px 0 0 20px;
-  border: 2px solid whitesmoke;
   padding: 10px;
   resize: vertical;
+  border: 1px solid gainsboro;
+  border-radius: 10px 10px 0 0;
 }
 .myContact-box textarea:focus{
   outline: none;
@@ -224,6 +233,9 @@
   background-color: whitesmoke;
   padding: 5px;
   margin-bottom: 20px;
+  border: 1px solid gainsboro;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
 }
 .myContact-box div>button{
   background-color: whitesmoke;
