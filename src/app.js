@@ -19,7 +19,6 @@ app.set('view engine', 'ejs');
 const PORT = process.env.PORT || 3000;
 
 // rutas
-const verificarSesion = require('./routes/jwtRoutes');
 const authRoutes = require('./routes/authRoutes');
 const favoritosRoutes = require('./routes/favRoutes');
 const postPropertyRoutes = require('./routes/postPropertyRoutes');
@@ -44,11 +43,12 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: null,
+    maxAge: null,  // Deja como null para que no persista si no se elige "Recordarme"
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production'
   }
 }));
+
 
 // pasar usuario a todas las vistas
 app.use((req, res, next) => {
@@ -57,7 +57,6 @@ app.use((req, res, next) => {
 });
 
 // rutas
-app.use(verificarSesion);
 app.use('/favoritos', favoritosRoutes);
 app.use('/', interactionsWithPropertyRoutes);
 app.use('/auth', authRoutes);

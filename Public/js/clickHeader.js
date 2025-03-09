@@ -10,9 +10,7 @@ clickHeader.forEach(clickHeader => {
 const mismensajesButton = document.querySelector('.mismensajes-button');
 const mensajesClick = document.querySelector('.mismensajes-click');
 const backMensajesButton = document.querySelector('.mismensajes-click > p');
-
 let isOpen1 = false; // Para rastrear si .mismensajes-click está abierto
-
 // Función para abrir/cerrar mismensajes-click
 mismensajesButton.addEventListener('click', () => {
   if (isOpen1) {
@@ -22,9 +20,8 @@ mismensajesButton.addEventListener('click', () => {
     mensajesClick.classList.add('open1'); // Añadir clase para abrir
     mismensajesButton.classList.add('clickHeaderAlternate');
   }
-  isOpen1 = !isOpen1; // Alternar el estado
+  isOpen1 = !isOpen1;
 });
-
 // Función para cerrar mismensajes-click al hacer clic en "ATRÁS"
 backMensajesButton.addEventListener('click', () => {
   if (isOpen1) {
@@ -40,9 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mispropiedadesClick = document.querySelector('.mispropiedades-click');
   const backMispropiedadesButton = document.querySelector('.mispropiedades-click > p');
   const adminButton = document.getElementById("mispropiedades-admin-button"); // Botón del admin
-  
   let isOpen2 = false; // Para rastrear si .mispropiedades-click está abierto
-
   // Evitar que el admin active el toggle de apertura
   if (adminButton) {
     adminButton.addEventListener("click", (event) => {
@@ -50,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     return; // Sale de la función para que el código siguiente no se ejecute para el admin
   }
-
   // Función para abrir/cerrar mispropiedadesClick (solo para usuarios normales)
   mispropiedadesButton.addEventListener('click', () => {
     if (isOpen2) {
@@ -62,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     isOpen2 = !isOpen2; // Alternar el estado
   });
-
   // Función para cerrar mispropiedadesClick al hacer clic en "ATRÁS"
   backMispropiedadesButton.addEventListener('click', () => {
     if (isOpen2) {
@@ -73,15 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 //-----------------------(click unico - HISTORIAL)
 document.addEventListener("DOMContentLoaded", () => {
   const historialButtons = document.querySelectorAll(".historial-button");
   const historialClick = document.querySelector(".historial-click");
   const backHistorialButton = document.querySelector(".historial-click > p");
-
   let isOpen3 = false; // Para rastrear si el modal está abierto
-
   historialButtons.forEach(button => {
     button.addEventListener("click", (event) => {
       if (button.id === "usuarios-admin-button") {
@@ -89,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = button.href; // Redirige manualmente
         return;
       }
-
       // Alternar apertura del modal para usuarios normales
       if (isOpen3) {
         historialClick.classList.remove("open3");
@@ -101,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
       isOpen3 = !isOpen3;
     });
   });
-
   // Función para cerrar el modal al hacer clic en "ATRÁS"
   if (backHistorialButton) {
     backHistorialButton.addEventListener("click", () => {
@@ -119,9 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const micuentaButton = document.querySelector('.micuenta-button');
 const micuentaClick = document.querySelector('.micuenta-click');
 const backMicuentaButton = document.querySelector('.micuenta-click>p');
-
 let isOpen4 = false; // Para rastrear si .mismensajes-click está abierto
-
 // Función para abrir/cerrar mismensajes-click
 micuentaButton.addEventListener('click', () => {
   if (isOpen4) {
@@ -133,7 +119,6 @@ micuentaButton.addEventListener('click', () => {
   }
   isOpen4 = !isOpen4; // Alternar el estado
 });
-
 // Función para cerrar mismensajes-click al hacer clic en "ATRÁS"
 backMicuentaButton.addEventListener('click', () => {
   if (isOpen4) {
@@ -142,14 +127,11 @@ backMicuentaButton.addEventListener('click', () => {
     isOpen4 = false;
   }
 });
-
 //-----------------(click unico - AYUDA)
 const ayudaButton = document.querySelector('.ayuda-button');
 const ayudaClick = document.querySelector('.ayuda-click');
 const backAyudaButton = document.querySelector('.ayuda-click>p:first-child');
-
 let isOpen5 = false; // Para rastrear si .mismensajes-click está abierto
-
 // Función para abrir/cerrar mismensajes-click
 ayudaButton.addEventListener('click', () => {
   if (isOpen5) {
@@ -161,7 +143,6 @@ ayudaButton.addEventListener('click', () => {
   }
   isOpen5 = !isOpen5; // Alternar el estado
 });
-
 // Función para cerrar mismensajes-click al hacer clic en "ATRÁS"
 backAyudaButton.addEventListener('click', () => {
   if (isOpen5) {
@@ -172,13 +153,10 @@ backAyudaButton.addEventListener('click', () => {
 });
 
 //------------------(click unico - MÁS FILTROS)
-
 const filtrosButton = document.querySelector('.masfiltros-button');
 const filtrosClick = document.querySelector('.masfiltros-open');
 const backFiltrosButton = document.querySelector('.ayuda-click>p:first-child');
-
 let isOpen6 = false;
-
 filtrosButton.addEventListener('click', () => {
   if (isOpen6) {
     filtrosClick.classList.remove('open6'); 
@@ -189,7 +167,6 @@ filtrosButton.addEventListener('click', () => {
   }
   isOpen6 = !isOpen6; 
 });
-
 backFiltrosButton.addEventListener('click', () => {
   if (isOpen6) {
     filtrosClick.classList.remove('open6'); // Quitar clase para cerrar
@@ -198,32 +175,25 @@ backFiltrosButton.addEventListener('click', () => {
   }
 });
 
-
-
 //-----------------------------(Cerrar sesión- ventana emergente)
 const logoutButton = document.getElementById('logoutButton');
 const logoutPopup = document.getElementById('logoutPopup');
 const progressBar = logoutPopup.querySelector('.progress');
-
 // Agregar evento de click
 logoutButton.addEventListener('click', () => {
   // Mostrar la ventana emergente
   logoutPopup.classList.remove('ventana-logout');
-
   // Animar la barra de progreso
   let progress = 0;
   const interval = setInterval(() => {
     progress += 100;
     progressBar.style.width = `${progress}%`;
-
     if (progress >= 100) {
       clearInterval(interval);
-
       // Esperar que la animación termine antes de redirigir y hacer logout
       setTimeout(() => {
         // Aquí hacemos la redirección a la ruta de logout
         window.location.href = '/logout'; 
-
         // Después de 1.5 segundos de la redirección, la página se recargará automáticamente
         setTimeout(() => {
           location.reload(); // Recargar la página después de logout
@@ -232,5 +202,3 @@ logoutButton.addEventListener('click', () => {
     }
   }, 30); // Intervalo de animación
 });
-
-

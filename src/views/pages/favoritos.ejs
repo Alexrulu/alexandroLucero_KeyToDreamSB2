@@ -36,6 +36,9 @@
       <h3><a href="/favoritos"><i class="fa-solid fa-heart"></i></a></h3>
     </div>
   </header>
+
+  <div class="fake-div"></div>
+
   <main>
   <% 
   function getPropertyType(typeValue) {
@@ -85,22 +88,29 @@
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Eliminar el artículo del DOM
+        // Seleccionamos el artículo correspondiente
         const article = document.querySelector(`[data-id="${id}"]`).closest('.article-box');
-        article.remove();
 
-        // Verificar si ya no hay propiedades favoritas
-        const listaFavoritos = document.querySelectorAll('.article-box');
-        if (listaFavoritos.length === 0) {
-          // Mostrar el mensaje de "No tienes propiedades favoritas"
-          document.getElementById('no-favoritos').style.display = 'block';
-        }
+        // Agregar clase de animación antes de eliminar
+        article.classList.add('removing');
+
+        // Esperar la animación antes de eliminar el elemento
+        setTimeout(() => {
+          article.remove();
+
+          // Verificar si ya no hay propiedades favoritas
+          const listaFavoritos = document.querySelectorAll('.article-box');
+          if (listaFavoritos.length === 0) {
+            document.getElementById('no-favoritos').style.display = 'block';
+          }
+        }, 300); // 300ms debe coincidir con el tiempo de la animación en CSS
       } else {
         console.error('No se pudo desmarcar la propiedad.');
       }
     })
     .catch(error => console.error('Error:', error));
 }
+
 </script>
   <script src="/js/clickHeader.js"></script>
   <script src="/js/menuBurger.js"></script>

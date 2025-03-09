@@ -41,6 +41,8 @@
     </div>
   </header>
 
+  <div class="fake-div"></div>
+
   <main>
 
     <% propiedades.forEach(propiedad=> { %>
@@ -66,9 +68,8 @@
           <i class="fa-solid fa-phone"></i>
           <i class="fa-solid fa-envelope"></i>
           <!-- Cambiamos la clase del ícono dependiendo de si está en favoritos -->
-          <i class="<%= favoritos.includes(Number(propiedad.id)) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" 
-            data-id="<%= propiedad.id %>">
-         </i>
+          <i class="<%= favoritos.includes(propiedad.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>" data-id="<%= propiedad.id %>"></i>
+
         </div>
       </article>
       <% }) %>

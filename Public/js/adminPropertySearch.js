@@ -1,4 +1,4 @@
-//----- transiciones al filtrar propiedades -----
+// transiciones al filtrar propiedades (Admin)
 document.addEventListener("DOMContentLoaded", function () {
   const btnAlquileres = document.getElementById("filtrar-alquileres");
   const btnVentas = document.getElementById("filtrar-ventas");
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const ventaPropiedades = document.querySelectorAll(".venta-propiedades");
   function ocultarInstantaneamente(elementos) {
     elementos.forEach(el => {
-        el.style.transition = "none";  // Quitamos la transición
+        el.style.transition = "none";
         el.style.opacity = "0";
         el.style.pointerEvents = "none";
         el.style.position = "absolute";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   function mostrarConTransicion(elementos) {
     elementos.forEach(el => {
-        el.style.transition = "opacity 0.5s ease"; // Aplicamos transición al mostrar
+        el.style.transition = "opacity 0.5s ease";
         el.style.opacity = "1";
         el.style.pointerEvents = "all";
         el.style.position = "relative";
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnVentas.addEventListener("click", () => mostrar("venta"));
     btnMostrarTodo.addEventListener("click", () => mostrar("todas"));
   });
-//----- buscar propiedades por input -----
+// buscar propiedades por input
 document.addEventListener("DOMContentLoaded", () => {
   const searchIcon = document.querySelector(".admin-lupa");
   const cityInput = document.querySelector(".admin-buscar");
@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Filtrar propiedades por ciudad
     propiedades.forEach((propiedad) => {
       const ciudadPropiedad = propiedad.querySelector("p:nth-of-type(2)").textContent.trim().toLowerCase();
-
       if (ciudadPropiedad.includes(city)) {
         propiedad.style.display = "block";
       } else {

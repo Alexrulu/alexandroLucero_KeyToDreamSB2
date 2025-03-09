@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const img = document.querySelector(`#carrusel${id.charAt(0).toUpperCase() + id.slice(1)}`);
     const images = carruseles[id];
     const totalImages = images.length;
-    // Generar un array aleatorio con índices únicos
+    // generar un array aleatorio con índices únicos
     const randomIndices = Array.from({ length: totalImages }, (_, i) => i).sort(() => Math.random() - 0.5);
-    let currentPosition = 0; // Forzar inicio en la posición correcta
-    // Función para actualizar la propiedad según el índice actual
+    let currentPosition = 0; // forzar inicio en la posición correcta
+    // función para actualizar la propiedad según el índice actual
     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAcAAAA="; 
     const actualizarDatosPropiedad = () => {
-      const currentIndex = randomIndices[currentPosition]; // Asegurar que sea el primer índice del viaje generado
+      const currentIndex = randomIndices[currentPosition]; // asegurar que sea el primer índice del viaje generado
       const propiedadActual = images[currentIndex];
       setTimeout(actualizarDatosPropiedad, 0);
-      // Forzar actualización de imagen
+      // forzar actualización de imagen
       img.src = propiedadActual.principalImage;
       if (id === "recomendado") {
         city.innerText = propiedadActual.city.toUpperCase();
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       img.dataset.url = `/articulo/${propiedadActual.id}`;
     };
-    // Asegurar que la primera imagen sea la correcta
+    // asegurar que la primera imagen sea la correcta
     setTimeout(actualizarDatosPropiedad, 0);
     img.addEventListener('click', (event) => {
       const imgWidth = img.clientWidth;

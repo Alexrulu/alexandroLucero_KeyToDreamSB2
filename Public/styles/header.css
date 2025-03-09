@@ -246,6 +246,7 @@ body.touch-screen .lupa-tactil {
   font-size: small;
   justify-content: space-between;
   width: 275px;
+  border-radius: 10px;
 }
 .mensajes-scrollbox>div>div{
   display: flex;
@@ -259,6 +260,7 @@ body.touch-screen .lupa-tactil {
   padding: 2px;
   width: 80px;
   text-align: center;
+  border-radius: 5px;
 }
 .fecha-mensajes{
   display: flex;
@@ -271,22 +273,26 @@ body.touch-screen .lupa-tactil {
   width: 60px;
   height: 60px;
   object-fit: cover;
+  border-radius: 5px;
 }
 .mensajes-scrollbox{
   display: flex;
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
+  border-radius: 5px;
 }
 .mensajes-scrollbox::-webkit-scrollbar{
   width: 8px;
 }
 .mensajes-scrollbox::-webkit-scrollbar-track{
   background-color: gainsboro;
+  border-radius: 5px 0 0 5px;
 }
 .mensajes-scrollbox::-webkit-scrollbar-thumb{
   background-color: gray;
+  border-radius: 5px 0 0 5px;
 }
 
 /* mispropiedades click*/
@@ -340,6 +346,7 @@ body.touch-screen .lupa-tactil {
   width: 60px;
   height: 60px;
   object-fit: cover;
+  border-radius: 5px;
 }
 .mispropiedades-scrollbox{
   display: flex;
@@ -348,12 +355,15 @@ body.touch-screen .lupa-tactil {
   overflow-y: scroll;
   scroll-behavior: smooth;
 }
+.mispropiedades-scrollbox::-webkit-scrollbar-track {
+  border-radius: 5px 0 0 5px;
+}
 .mispropiedades-scrollbox>a{
   transition: all 0.2s ease;
+  border-radius: 5px;
 }
 .mispropiedades-scrollbox>a:hover{
-  background-color:black;
-  color: white;
+  background-color: gainsboro;
 }
 .mispropiedades-scrollbox::-webkit-scrollbar{
   width: 8px;
@@ -404,6 +414,7 @@ body.touch-screen .lupa-tactil {
   font-size: small;
   justify-content: space-between;
   width: 275px;
+  border-radius: 10px;
 }
 .historial-scrollbox>div>div{
   display: flex;
@@ -433,16 +444,19 @@ body.touch-screen .lupa-tactil {
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
+  border-radius: 5px;
 }
 .historial-scrollbox::-webkit-scrollbar{
   width: 8px;
 }
 .historial-scrollbox::-webkit-scrollbar-track{
   background-color: gainsboro;
+  border-radius: 5px 0 0 5px;
 }
 .historial-scrollbox::-webkit-scrollbar-thumb{
   background-color: gray;
+  border-radius: 5px 0 0 5px;
 }
 
 /* micuenta click */
@@ -1143,14 +1157,15 @@ body.touch-screen .lupa-tactil {
     background-color: white;
     padding: 10px 0;
     left: 0;
-    border-top: 2px solid gainsboro;
-    border-right: 2px solid gainsboro;
-    border-left: 2px solid gainsboro;
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    border-left: 2px solid white;
     opacity: 0;
     pointer-events: none;
     transition: all 0.2s ease;
     width: 200px;
     text-align: center;
+    border-radius: 10px 10px 0 0;
   }
   .comprar-h3{
     top: 10%;
@@ -1158,14 +1173,15 @@ body.touch-screen .lupa-tactil {
     background-color: white;
     padding: 10px 0;
     left: 0;
-    border-bottom: 2px solid gainsboro;
-    border-right: 2px solid gainsboro;
-    border-left: 2px solid gainsboro;
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    border-left: 2px solid white;
     opacity: 0;
     pointer-events: none;
     transition: all 0.2s ease;
     width: 200px;
     text-align: center;
+    border-radius: 0 0 10px 10px;
   }
   .comprar-h3-admin{
     transform: translateY(38px);
@@ -1189,10 +1205,10 @@ body.touch-screen .lupa-tactil {
     left: 1.2vw;
     pointer-events: auto;
     opacity: 1;
-    box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.3);
   }
   .fa-bars.openBars ~ .noshadow{
-    box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
   }
   .login-button{
     margin-left: 15px;

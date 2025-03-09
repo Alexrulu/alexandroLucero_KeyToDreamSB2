@@ -3,3 +3,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('touch-screen');
   }
 });
+// detecta si el usuario utiliza un dispositivo con pantalla táctil, y si es así, agrega la clase 'touch-screen' al body

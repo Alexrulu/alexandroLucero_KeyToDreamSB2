@@ -1,4 +1,4 @@
-//------------
+// popup emergente en /index en caso de publicación exitosa
 document.addEventListener('DOMContentLoaded', () => {
   const successPopup = document.getElementById('successPopup');
   const closePopupButton = document.getElementById('closePopup');

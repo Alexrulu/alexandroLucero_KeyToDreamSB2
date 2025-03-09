@@ -1,142 +1,136 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
+const db = require('../database/config/db'); // Conexión a MySQL
+const functions = require('../services/functions');
+const propiedades_type = functions.propiedades_type;
 
-// base de datos y propiedades
-const db = require('../config/db');
-const usersFilePath = path.join(__dirname, '../data/users.json');
-const propiedades_type = db.propiedades_type;
-
-// funciones
-function obtenerFavoritos(userId) {
-  const users = JSON.parse(fs.readFileSync(usersFilePath, 'utf8'));
-  const user = users.find(u => u.id === userId);
-  return user ? user.favoritos.map(id => Number(id)) : [];
-}
-function cargarPropiedades() {
-  const filePath = path.join(__dirname, '../data/propiedades.json'); // Ajusta la ruta si es necesario
-  const data = fs.readFileSync(filePath, 'utf8');
-  return JSON.parse(data);
-}
-function leerUsuarios() {
+// Función para obtener los favoritos del usuario desde la base de datos
+async function obtenerFavoritos(userId) {
   try {
-    const data = fs.readFileSync(usersFilePath, 'utf8');
-    return JSON.parse(data);
+    const [rows] = await db.query('SELECT favoritos FROM users WHERE id = ?', [userId]);
+    if (rows.length === 0 || !rows[0].favoritos) return [];
+    // Verificamos si ya es un array
+    return Array.isArray(rows[0].favoritos) ? rows[0].favoritos : [];
   } catch (error) {
-    console.error('Error al leer users.json:', error);
+    console.error('Error obteniendo favoritos:', error);
     return [];
   }
 }
 
-// rutas
-router.get('/', (req, res) => {
-  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+// Función para obtener todas las propiedades
+async function cargarPropiedades() {
+  try {
+    const [propiedades] = await db.query('SELECT * FROM properties');
+    return propiedades;
+  } catch (error) {
+    console.error('Error obteniendo propiedades:', error);
+    return [];
+  }
+}
+
+// Función para obtener todos los usuarios
+async function cargarUsuarios() {
+  try {
+    const [users] = await db.query('SELECT * FROM users');
+    return users;
+  } catch (error) {
+    console.error('Error obteniendo usuarios:', error);
+    return [];
+  }
+}
+
+// Rutas
+router.get('/', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   const carruseles = { recomendado: propiedades, emprendimiento: propiedades };
   res.render('index', { carruseles, propiedades });
 });
 
-router.get('/alquilar', (req, res) => {
-  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+router.get('/alquilar', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   let favoritos = [];
   if (req.session.userId) {
-    favoritos = obtenerFavoritos(req.session.userId);
+    favoritos = await obtenerFavoritos(req.session.userId);
   }
-  // Obtener el parámetro de búsqueda de ciudad
   const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
-  // Filtrar propiedades por tipo ALQUILER
   let propiedadesAlquiler = propiedades.filter(prop => prop.type === propiedades_type.ALQUILER);
-  // Si hay una ciudad especificada, filtrar propiedades por ciudad
   if (city) {
-    propiedadesAlquiler = propiedadesAlquiler.filter(prop => 
-      prop.city.toLowerCase().includes(city)
-    );
+    propiedadesAlquiler = propiedadesAlquiler.filter(prop => prop.city.toLowerCase().includes(city));
   }
-  // Renderizar la vista y pasar la variable city
-  res.render('alquilar', { propiedades: propiedadesAlquiler, todasPropiedades: propiedades, favoritos, city: city});
+  res.render('alquilar', { propiedades: propiedadesAlquiler, todasPropiedades: propiedades, favoritos, city });
 });
 
-router.get('/comprar', (req, res) => {
-  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
+router.get('/comprar', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   let favoritos = [];
   if (req.session.userId) {
-    favoritos = obtenerFavoritos(req.session.userId);
+    favoritos = await obtenerFavoritos(req.session.userId);
   }
   const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
-  // Filtrar propiedades por tipo VENTA
   let propiedadesVenta = propiedades.filter(prop => prop.type === propiedades_type.VENTA);
-  // Si hay una ciudad especificada, filtrar propiedades por ciudad
   if (city) {
-    propiedadesVenta = propiedadesVenta.filter(prop => 
-      prop.city.toLowerCase().includes(city)
-    );
+    propiedadesVenta = propiedadesVenta.filter(prop => prop.city.toLowerCase().includes(city));
   }
-  res.render('comprar', { propiedades: propiedadesVenta, todasPropiedades: propiedades, favoritos, city: city});
+  res.render('comprar', { propiedades: propiedadesVenta, todasPropiedades: propiedades, favoritos, city });
 });
 
-// Ruta para artículos
-router.get('/articulo/:id', (req, res) => {
-  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
-
+router.get('/articulo/:id', async (req, res) => {
+  const propiedadId = parseInt(req.params.id);
+  const propiedades = await cargarPropiedades();
   let favoritos = [];
   if (req.session.userId) {
-    favoritos = obtenerFavoritos(req.session.userId);
+    favoritos = await obtenerFavoritos(req.session.userId);
   }
-  const propiedades_type_invertido = Object.fromEntries(
-    Object.entries(propiedades_type).map(([key, value]) => [value, key])
-  );
-  const propiedadId = parseInt(req.params.id);
   const propiedad = propiedades.find(p => p.id === propiedadId);
   if (propiedad) {
-    res.render('articulo', { propiedad, propiedades_type_invertido,todasPropiedades: propiedades, favoritos });
+    res.render('articulo', { propiedad, todasPropiedades: propiedades, favoritos });
   } else {
     res.status(404).send('Propiedad no encontrada');
   }
 });
 
 //---------ADMINISTRADOR--------
-router.get('/propiedadesAdmin', (req, res) => {
-  if (!req.session.user || req.session.user.userType !== 'admin') {
+// Ruta para ver todas las propiedades en la vista de administrador
+router.get('/propiedadesAdmin', async (req, res) => {
+  if (!req.session.user || req.session.user.userType !== 0) {
     return res.status(403).send('Acceso denegado'); // Bloquea si no es admin
   }
-  const propiedades = cargarPropiedades(); // 📌 Leer el archivo en cada request
-  // Obtener el parámetro de búsqueda de ciudad
+  const propiedades = await cargarPropiedades();
   const city = req.query.city ? req.query.city.trim().toLowerCase() : null;
-  // Filtrar propiedades por tipo VENTA
-  res.render('propiedadesAdmin', { propiedades: propiedades, city: city});
+  res.render('propiedadesAdmin', { propiedades, city });
 });
 
-router.get('/usuariosAdmin', (req, res) => {
-  // Verifica si el usuario es un administrador
-  if (!req.session.user || req.session.user.userType !== 'admin') {
+// Ruta para ver la lista de usuarios en la vista de administrador
+router.get('/usuariosAdmin', async (req, res) => {
+  if (!req.session.user || req.session.user.userType !== 0) {
     return res.status(403).send('Acceso denegado'); // Bloquea si no es admin
   }
-  const searchQuery = req.query.search?.toLowerCase() || ''; // Si no hay búsqueda, se pasa un valor vacío
-  const users = leerUsuarios(); // Obtener usuarios del JSON
+  const searchQuery = req.query.search?.toLowerCase() || '';
+  const users = await cargarUsuarios();
   // Filtra los usuarios según la búsqueda (si hay)
   const filteredUsers = searchQuery
     ? users.filter(user => user.name.toLowerCase().includes(searchQuery))
     : users;
-  // Pasamos los usuarios filtrados y la variable searchQuery a la vista
-  res.render('usuariosAdmin', { users: filteredUsers, searchQuery: searchQuery });
+  res.render('usuariosAdmin', { users: filteredUsers, searchQuery });
 });
 
-// publicar una propiedad desde 4 vistas
-router.get('/post1', (req, res) => {
-  const propiedades = cargarPropiedades();
+
+// Rutas para publicar una propiedad desde 4 vistas
+router.get('/post1', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   res.render('post-1', { propiedades });
-})
-router.get('/post2', (req, res) => {
-  const propiedades = cargarPropiedades();
+});
+router.get('/post2', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   res.render('post-2', { propiedades });
-})
-router.get('/post3', (req, res) => {
-  const propiedades = cargarPropiedades();
+});
+router.get('/post3', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   res.render('post-3', { propiedades });
-})
-router.get('/post4', (req, res) => {
-  const propiedades = cargarPropiedades();
+});
+router.get('/post4', async (req, res) => {
+  const propiedades = await cargarPropiedades();
   res.render('post-4', { propiedades });
-})
+});
 
 module.exports = router;

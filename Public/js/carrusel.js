@@ -32,7 +32,7 @@ window.onload = function () {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0, // No mostrar decimales
-      maximumFractionDigits: 0, // No mostrar decimales
+      maximumFractionDigits: 0,
     }).format(propiedad.price);
   }
 
@@ -42,14 +42,14 @@ window.onload = function () {
     window.currentIndices.emprendimiento = randomIndexEmprendimiento;
     const propiedad = window.carruseles.emprendimiento[randomIndexEmprendimiento];
     carruselEmprendimiento.src = propiedad.principalImage;
-    carruselEmprendimiento.dataset.url = `/articulo/${propiedad.id}`; // Asignar data-url
+    carruselEmprendimiento.dataset.url = `/articulo/${propiedad.id}`;
     city2.innerText = propiedad.city.toUpperCase();
     adress2.innerText = propiedad.adress.toUpperCase();
     price2.innerText = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      minimumFractionDigits: 0, // No mostrar decimales
-      maximumFractionDigits: 0, // No mostrar decimales
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     }).format(propiedad.price);
   }
 };
