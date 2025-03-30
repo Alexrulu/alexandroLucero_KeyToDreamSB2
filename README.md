@@ -15,16 +15,25 @@ KEYTODREAM, Una web sobre venta/alquiler de propiedades en Argentina, hecha por 
 - Correo: alexandro@gmail.com
 - Contraseña: superAdmin123
 
+### Cargar la estructura y datos de la Base de Datos
+- Conectate a tu servidor en MySQL
+- Dentro de MySQL, crea una nueva base de datos con el comando `CREATE DATABASE tunombrepreferido`, ejecutar
+- Selecciona la nueva base de datos creada con `USE tunombrepreferido` o recargando la interfaz y doble click.
+- Ve a File -> Open SQL Script... -> Selecciona el archivo keytodreamdb_backup.sql (se encuentra en la raiz del proyecto)
+- Selecciona todo y ejecuta el comando con el rayo amarillo ⚡, o CTRL + ENTER
+- Ahora nos vamos a vsc, una vez el proyecto haya sido clonado nos dirijimos a dos archivos, config.js y db.js, ambos dentro de src/database/config, cambiamos la linea de `"database": "keytodreamDB"` por `"database": "tunombrepreferido"` o el que hayamos definido.
+- Listo, tu servidor debería estar correctamente conectado y listo para usarse.
+
 ### Configuración del entorno
-1. El archivo `.env.example` renómbralo como `.env`.
-2. Rellena las variables con tus propias credenciales (no modificar NODE_ENV).
-3. Guarda los cambios y ejecuta el proyecto.
+- El archivo `.env.example` renómbralo como `.env`.
+- Rellena las variables con tus propias credenciales (no modificar `NODE_ENV`).
+- Guarda los cambios y ejecuta el proyecto.
 
 Ejemplo de `.env`:
-SESSION_SECRET=miclave123
-JWT_SECRET=miclave456
-NODE_ENV=development
-DB_PASSWORD=miclaveDB
+`SESSION_SECRET=miclave123`
+`JWT_SECRET=miclave456`
+`NODE_ENV=development`
+`DB_PASSWORD=miclaveDB`
 
 -------------------------------------
 
