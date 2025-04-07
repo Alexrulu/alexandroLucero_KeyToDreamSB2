@@ -219,7 +219,7 @@
       <p>PERSONALES</p>
       <div>
         <p id="nameDisplay1" style="display: block;"><%= user.name %></p>
-        <input type="text" id="nameInput" name="name" value="<%= user.name %>" style="display: none;">
+        <input type="text" id="nameInput" placeholder="3 caracteres min." name="name" value="<%= user.name %>" minlength="3" required style="display: none;">
         <p id="dniDisplay" style="display: block;"><%= user.dni || '' %></p>
       </div>
       <p>CONTACTO</p>
@@ -307,6 +307,13 @@
   });
 
   document.getElementById('saveButton').addEventListener('click', async () => {
+
+    const input = document.getElementById('nameInput');
+  if (input.offsetParent !== null && input.value.trim().length < 3) {
+    e.preventDefault();
+    alert('El nombre debe tener al menos 3 caracteres.');
+    input.focus();
+  }
     const userId = document.getElementById('userId').value;
     const newName = document.getElementById('nameInput').value;
     const newPhone = document.getElementById('phoneInput').value;

@@ -6,7 +6,7 @@ const db = require('../database/config/db');
 
 //----------------------------------------------------------REGISTER---------------
 router.post('/process-register', async (req, res) => {
-  const { userType, email, password, name, razonSocial, fiscalCondition, dni, phone, cellphone, terms, privacyPolicy } = req.body;
+  const { userType, email, password, name, fiscalCondition, dni, phone, cellphone, terms, privacyPolicy } = req.body;
   if (!userType || !email || !password || !name || !dni || !cellphone || !terms || !privacyPolicy) {
     return res.status(400).send('Por favor, complete todos los campos requeridos.');
   }
@@ -22,7 +22,7 @@ router.post('/process-register', async (req, res) => {
       email,
       password: hashedPassword,
       name,
-      razonSocial,
+      razonSocial: null, // asignamos null para evitar errores en la db, ya que la eliminamos del registro, (eliminar desde sql en caso de ser necesario)
       fiscalCondition,
       dni,
       phone,
@@ -39,6 +39,22 @@ router.post('/process-register', async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 });
+
+// Ruta: GET /auth/check-email?email=ejemplo@mail.com
+router.get('/check-email', async (req, res) => {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ exists: false });
+
+  try {
+    const [users] = await db.execute('SELECT email FROM users WHERE email = ?', [email]);
+    res.json({ exists: users.length > 0 });
+  } catch (error) {
+    console.error('Error al verificar email:', error);
+    res.status(500).json({ exists: false });
+  }
+});
+
+
 
 //-----------------------------------------------------------LOGIN-----------------
 router.post('/process-login', async (req, res) => {

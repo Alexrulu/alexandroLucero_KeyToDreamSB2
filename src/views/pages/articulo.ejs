@@ -41,6 +41,9 @@
   </header>
 
   <main>
+
+
+
     <div class="article-img-box">
       <img src="<%= propiedad.principalImage %>" alt="Imagen principal">
       <!-- Mostrar imágenes secundarias -->
@@ -49,6 +52,10 @@
         <% }) %>
     </div>
 
+
+
+
+    
     <div class="description-box">
       <div class="description-left-box">
         <p class="articulo-precio-box">USD $<%= propiedad.price.toLocaleString('en-US') %>
@@ -117,15 +124,15 @@
               </div>
               <div class="editArticle">
                 <label>Dirección:</label>
-                <input type="text" name="adress" value="<%= propiedad.adress %>" required>
+                <input type="text" name="adress" value="<%= propiedad.adress %>" required minlength="5">
               </div>
               <div class="editArticle">
                 <label>Ciudad:</label>
-                <input type="text" name="city" value="<%= propiedad.city %>" required>
+                <input type="text" name="city" value="<%= propiedad.city %>" required minglenth="3">
               </div>
               <div class="editArticle">
                 <label>Descripción:</label>
-                <textarea name="description"><%= propiedad.description %></textarea>
+                <textarea name="description" minlength="20" maxlength="500"><%= propiedad.description %></textarea>
               </div>
               <div class="editArticle">
                 <label>Superficie Total:</label>

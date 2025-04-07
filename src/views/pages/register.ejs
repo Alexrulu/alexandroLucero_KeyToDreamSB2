@@ -28,10 +28,7 @@
       <input class="email-register-input" placeholder="Email" type="email" name="email" required>
       <input class="password-register-input" placeholder="Contraseña" type="password" name="password" minlength="9" required>
       <p class="datos-register">DATOS</p>
-      <div class="datos-box-register">
-        <input type="text" name="name" placeholder="Nombre" required>
-        <input type="text" name="razonSocial" placeholder="Razón Social">
-      </div>
+      <input class="datos-box-register-input" type="text" name="name" placeholder="Nombre Completo" minlength="2" required>
       <p class="fiscal-register">CONDICIÓN FISCAL</p>
       <div class="fiscal-dni-box-register">
         <select name="fiscalCondition" required>
@@ -57,5 +54,102 @@
       <button class="register-button" type="submit">REGISTRARME</button>
     </form>
   </main>
+  
+  <script>
+    // Alerta reutilizable
+    function showCustomAlert(message) {
+      const existingAlert = document.querySelector('.custom-alert-overlay');
+      if (existingAlert) existingAlert.remove();
+  
+      const overlay = document.createElement('div');
+      overlay.className = 'custom-alert-overlay';
+  
+      const box = document.createElement('div');
+      box.className = 'custom-alert-box';
+  
+      const closeButton = document.createElement('button');
+      closeButton.className = 'custom-alert-close';
+      closeButton.innerText = 'Cerrar';
+      closeButton.onclick = () => overlay.remove();
+  
+      const msg = document.createElement('p');
+      msg.innerText = message;
+  
+      box.appendChild(closeButton);
+      box.appendChild(msg);
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+    }
+  
+    // Validación de email por GET
+    const emailInput = document.querySelector('.email-register-input');
+    let timeout = null;
+  
+    emailInput.addEventListener('blur', () => {
+      clearTimeout(timeout);
+      const email = emailInput.value.trim();
+      if (!email) return;
+  
+      timeout = setTimeout(async () => {
+        try {
+          const response = await fetch(`/auth/check-email?email=${encodeURIComponent(email)}`);
+          const result = await response.json();
+  
+          if (result.exists) {
+            showCustomAlert('Este correo ya está registrado.');
+            emailInput.classList.add('input-error');
+          } else {
+            emailInput.classList.remove('input-error');
+          }
+        } catch (err) {
+          console.error(err);
+          showCustomAlert('Error al verificar el correo.');
+        }
+      }, 100);
+    });
+  
+    // Validación completa por POST
+    document.querySelector('form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+  
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+  
+      try {
+        const response = await fetch('/auth/process-register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+  
+        if (!response.ok) {
+          const errorText = await response.text();
+          showCustomAlert(errorText);
+          return;
+        }
+  
+        showCustomAlert('Registro exitoso. Redirigiendo al login...');
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 2000);
+  
+      } catch (err) {
+        console.error(err);
+        showCustomAlert('Error del servidor. Intente más tarde.');
+      }
+    });
+    //precarga de GET para evitar delay en comprobacion de email
+    window.onload = () => {
+      fetch('/auth/check-email?email=__dummy__');
+    };
+
+  </script>
+  
+
+
 </body>
+
 </html>

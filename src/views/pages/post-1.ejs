@@ -80,10 +80,10 @@
       <div class="adress-city-post-box">
         <p>UBICACIÓN</p>
         <label for="address">DIRECCIÓN</label>
-        <input type="text" id="address" name="adress" placeholder="Ingresá la dirección" required>
+        <input type="text" id="address" name="adress" placeholder="Ingresá la dirección" required minlength="5">
   
         <label for="city">CIUDAD O BARRIO</label>
-        <input type="text" id="city" name="city" placeholder="Ingresá la ciudad o barrio" required>
+        <input type="text" id="city" name="city" placeholder="Ingresá la ciudad o barrio" required minlength="3">
       </div>
   
       <!-- Características -->
@@ -93,11 +93,11 @@
         <div class="post-1-last-left">
           <div>
             <label for="total_area"><i class="fa-solid fa-ruler"></i></label>
-            <input type="number" id="total_area" name="total_area" min="0" placeholder="M² TOTALES">
+            <input type="number" id="total_area" name="total_area" min="0" placeholder="M² TOTALES" required>
           </div>
           <div>
             <label for="covered_area"><i class="fa-regular fa-square-full"></i></label>
-            <input type="number" id="covered_area" name="covered_area" min="0" placeholder="M² CUBIERTOS">
+            <input type="number" id="covered_area" name="covered_area" min="0" placeholder="M² CUBIERTOS" required>
           </div>
           <div>
             <label for="rooms"><i class="fa-solid fa-door-open"></i> AMBIENTES</label>

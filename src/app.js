@@ -25,12 +25,31 @@ const postPropertyRoutes = require('./routes/postPropertyRoutes');
 const interactionsWithPropertyRoutes = require('./routes/interactionsWithPropertyRoutes');
 const updateDeleteRoutes = require('./routes/updateDeleteRoutes');
 
-// multer
+// Almacenamiento
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '../public/images')),
-  filename: (req, file, cb) => cb(null, file.originalname),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname), // se recomienda evitar duplicados
 });
-const upload = multer({ storage });
+
+// Filtro de archivos
+const fileFilter = (req, file, cb) => {
+  const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+
+  if (
+    (file.fieldname === 'mainImage' || file.fieldname === 'secondaryImages') &&
+    allowedImageTypes.includes(file.mimetype)
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error('Tipo de archivo no permitido.'));
+  }
+};
+
+// Middleware multer con seguridad
+const upload = multer({
+  storage,
+  fileFilter,
+});
 
 // mddleware
 app.use(cookieParser());
@@ -48,7 +67,6 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production'
   }
 }));
-
 
 // pasar usuario a todas las vistas
 app.use((req, res, next) => {

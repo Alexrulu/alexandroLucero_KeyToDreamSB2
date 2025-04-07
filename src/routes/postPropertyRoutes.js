@@ -8,9 +8,24 @@ module.exports = (upload) => {
   router.post('/save-property-step1', (req, res) => {
     const data = req.body;
     const user = req.session.user;
+  
     if (!user) {
       return res.status(401).send('Debes iniciar sesión para publicar una propiedad.');
     }
+  
+    // Validación de campos obligatorios
+    const requiredFields = ['type', 'model', 'adress', 'city', 'total_area', 'covered_area'];
+    for (const field of requiredFields) {
+      if (!data[field] || data[field].toString().trim() === '') {
+        return res.status(400).send(`El campo "${field}" es obligatorio.`);
+      }
+    }
+  
+    // Validación de números válidos en total_area y covered_area
+    if (isNaN(data.total_area) || isNaN(data.covered_area)) {
+      return res.status(400).send('Los campos "total_area" y "covered_area" deben ser números válidos.');
+    }
+  
     req.session.propertyData = {
       ownerId: user.id,
       type: propiedades_type[data.type.toUpperCase()],
@@ -30,44 +45,73 @@ module.exports = (upload) => {
       laundry: data.features?.includes('lavadero') ? 1 : 0,
       vigilance: data.features?.includes('vigilancia') ? 1 : 0
     };
+  
     res.redirect('/post2');
   });
+  
 
   router.post('/save-property-step2', upload.fields([
     { name: 'mainImage', maxCount: 1 },
     { name: 'secondaryImages', maxCount: 4 },
-    { name: 'video', maxCount: 1 }
   ]), (req, res) => {
     if (!req.session.propertyData) {
       return res.status(400).send('No se encontró la propiedad en la sesión.');
     }
+  
     const files = req.files;
-    req.session.propertyData.mainImage = files.mainImage ? `/images/${files.mainImage[0].originalname}` : null;
-    req.session.propertyData.secondaryImages = files.secondaryImages ? JSON.stringify(files.secondaryImages.map(file => `/images/${file.originalname}`)) : '[]';
-    req.session.propertyData.video = files.video ? `/images/${files.video[0].originalname}` : null;
+  
+    // Validación: mainImage es obligatoria
+    if (!files || !files.mainImage || files.mainImage.length === 0) {
+      return res.status(400).send('La imagen principal (mainImage) es obligatoria.');
+    }
+  
+    req.session.propertyData.mainImage = `/images/${files.mainImage[0].originalname}`;
+    req.session.propertyData.secondaryImages = files.secondaryImages
+      ? JSON.stringify(files.secondaryImages.map(file => `/images/${file.originalname}`))
+      : '[]';
+  
     res.redirect('/post3');
   });
+  
 
   router.post('/save-property-step3', (req, res) => {
     if (!req.session.propertyData) {
       return res.status(400).send('No se encontró la propiedad en la sesión.');
     }
+  
     const data = req.body;
+  
+    // Validación de email obligatorio
+    if (!data.email || data.email.trim() === '') {
+      return res.status(400).send('El correo electrónico es obligatorio.');
+    }
+  
+    // Validación de al menos un teléfono
+    const hasPhoneBusiness = data.phone && data.phone.trim() !== '';
+    const hasPhonePersonal = data.cell && data.cell.trim() !== '';
+    if (!hasPhoneBusiness && !hasPhonePersonal) {
+      return res.status(400).send('Debes ingresar al menos un número de teléfono.');
+    }
+  
+    // Si pasa la validación, se guarda en la sesión
     req.session.propertyData.contact = data.contactType === 'inmobiliaria' ? 1 : 2;
-    req.session.propertyData.email = data.email;
-    req.session.propertyData.personalName = data.fullName;
-    req.session.propertyData.phoneBusiness = data.phone || null;
-    req.session.propertyData.phonePersonal = data.cell || null;
+    req.session.propertyData.email = data.email.trim();
+    req.session.propertyData.personalName = data.fullName?.trim() || null;
+    req.session.propertyData.phoneBusiness = hasPhoneBusiness ? data.phone.trim() : null;
+    req.session.propertyData.phonePersonal = hasPhonePersonal ? data.cell.trim() : null;
+  
     res.redirect('/post4');
   });
+  
 
   router.post('/publish-property', async (req, res) => {
     if (!req.session.propertyData) {
       return res.status(400).send('No se encontró la propiedad en la sesión.');
     }
-    if (!req.body.price || !req.body.description) {
+    if (!req.body.price || !req.body.description || req.body.description.trim().length < 20) {
       return res.redirect(`/post4?error=Faltan datos para finalizar la publicación.`);
     }
+    
     try {
       const propertyData = req.session.propertyData;
       const [result] = await db.query(
